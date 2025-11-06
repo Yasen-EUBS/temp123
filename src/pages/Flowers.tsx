@@ -1,38 +1,60 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import piaflorClassic from "@/assets/flowers/piaflor-classic.jpg";
+import piaflorLuxury from "@/assets/flowers/piaflor-luxury.jpg";
+import bouquetElegant from "@/assets/flowers/bouquet-elegant.jpg";
+import bouquetRoses from "@/assets/flowers/bouquet-roses.jpg";
+import basketComposition from "@/assets/flowers/basket-composition.jpg";
 
 const Flowers = () => {
   const arrangements = [
     {
       name: "Пиафлор Класик",
-      price: "от 60 лв",
-      description: "Традиционен пиафлор с бели хризантеми"
+      sizes: [
+        { size: "Малък", price: "60 лв" },
+        { size: "Среден", price: "90 лв" },
+        { size: "Голям", price: "120 лв" }
+      ],
+      description: "Традиционен пиафлор с бели хризантеми",
+      image: piaflorClassic
     },
     {
       name: "Пиафлор Луксозен",
-      price: "от 120 лв",
-      description: "Богат пиафлор с микс от сезонни цветя"
+      sizes: [
+        { size: "Малък", price: "120 лв" },
+        { size: "Среден", price: "160 лв" },
+        { size: "Голям", price: "200 лв" }
+      ],
+      description: "Богат пиафлор с микс от сезонни цветя",
+      image: piaflorLuxury
     },
     {
-      name: "Траурен Букет",
-      price: "от 40 лв",
-      description: "Елегантен букет с бели рози и лилиуми"
+      name: "Траурен Букет Елегант",
+      sizes: [
+        { size: "Стандарт", price: "70 лв" }
+      ],
+      description: "Елегантен букет с бели рози и лилиуми",
+      image: bouquetElegant
     },
     {
-      name: "Букет Рози",
-      price: "от 50 лв",
-      description: "Букет от 25 бели или червени рози"
+      name: "Букет от 25 Рози",
+      sizes: [
+        { size: "Бели рози", price: "90 лв" },
+        { size: "Червени рози", price: "90 лв" }
+      ],
+      description: "Класически букет от 25 свежи рози",
+      image: bouquetRoses
     },
     {
       name: "Композиция Кошница",
-      price: "от 80 лв",
-      description: "Кошница с разнообразни свежи цветя"
-    },
-    {
-      name: "Аранжимент Персонализиран",
-      price: "от 100 лв",
-      description: "Специален дизайн според вашите предпочитания"
+      sizes: [
+        { size: "Малка", price: "80 лв" },
+        { size: "Средна", price: "120 лв" },
+        { size: "Голяма", price: "160 лв" }
+      ],
+      description: "Кошница с разнообразни свежи цветя",
+      image: basketComposition
     }
   ];
 
@@ -51,10 +73,25 @@ const Flowers = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {arrangements.map((item, index) => (
-              <Card key={index} className="hover:shadow-2xl transition-all duration-300 border-border bg-card">
+              <Card key={index} className="hover:shadow-2xl transition-all duration-300 overflow-hidden border-border bg-card">
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card/90 to-transparent" />
+                </div>
                 <CardHeader>
-                  <CardTitle className="text-2xl">{item.name}</CardTitle>
-                  <div className="text-2xl font-bold text-secondary mt-2">{item.price}</div>
+                  <CardTitle className="text-2xl mb-4">{item.name}</CardTitle>
+                  <div className="space-y-2">
+                    {item.sizes.map((sizeOption, idx) => (
+                      <div key={idx} className="flex justify-between items-center">
+                        <span className="text-muted-foreground">{sizeOption.size}</span>
+                        <span className="text-lg font-bold text-secondary">{sizeOption.price}</span>
+                      </div>
+                    ))}
+                  </div>
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-base leading-relaxed">{item.description}</CardDescription>
