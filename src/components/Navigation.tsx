@@ -23,8 +23,8 @@ export const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo and Title */}
-          <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-            <img src={logo} alt="Кипарис лого" className="h-12 w-auto" />
+          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <img src={logo} alt="Кипарис Траурна Агенция" className="h-10 w-auto brightness-0 invert" />
           </Link>
 
           {/* Phone - Desktop */}
