@@ -28,15 +28,15 @@ export const Contact = () => {
   ];
 
   return (
-    <section id="contacts" className="py-20 bg-primary/50">
+    <section id="contacts" className="py-12 md:py-20 bg-primary/50 pb-24 md:pb-20">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Контакти</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+        <div className="text-center mb-10 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4">Контакти</h2>
+          <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
             Винаги сме на разположение да ви помогнем
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto mb-8 md:mb-12">
           {contactInfo.map((info, index) => (
             <Card key={index} className="text-center hover:shadow-xl transition-all duration-300">
               <CardHeader>
@@ -61,7 +61,7 @@ export const Contact = () => {
         
         {/* Google Maps */}
         <div className="max-w-4xl mx-auto">
-          <div className="w-full h-[450px] rounded-lg overflow-hidden shadow-xl border border-border">
+          <div className="w-full h-[300px] md:h-[450px] rounded-lg overflow-hidden shadow-xl border border-border">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2933.2!2d23.3206!3d42.6954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa85776f96dc15%3A0x123456789!2z0YPQuy4g4oCe0J_RgNC-0YTQtdGB0L7RgCDQkNGB0LXQvSDQl9C70LDRgtCw0YDQvtCy4oCcIOKEljgsINCh0L7RhNC40Y8!5e0!3m2!1sbg!2sbg!4v1234567890"
               width="100%"

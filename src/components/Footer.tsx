@@ -2,12 +2,12 @@ import { MapPin, Phone, Mail } from "lucide-react";
 
 export const Footer = () => {
   return (
-    <footer className="bg-primary border-t border-border py-12">
+    <footer className="bg-primary border-t border-border py-8 md:py-12">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8">
           {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold mb-4">Траурна Агенция Кипарис</h3>
+          <div className="space-y-3 md:space-y-4">
+            <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Траурна Агенция Кипарис</h3>
             <p className="text-muted-foreground mb-6">
               Професионални траурни услуги с уважение и съпричастност
             </p>
@@ -41,7 +41,7 @@ export const Footer = () => {
           </div>
           
           {/* Google Maps */}
-          <div className="w-full h-[300px] rounded-lg overflow-hidden shadow-lg">
+          <div className="w-full h-[250px] md:h-[300px] rounded-lg overflow-hidden shadow-lg">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2933.2!2d23.3206!3d42.6954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa85776f96dc15%3A0x123456789!2z0YPQuy4g4oCe0J_RgNC-0YTQtdGB0L7RgCDQkNGB0LXQvSDQl9C70LDRgtCw0YDQvtCy4oCcIOKEljgsINCh0L7RhNC40Y8!5e0!3m2!1sbg!2sbg!4v1234567890"
               width="100%"
