@@ -23,7 +23,7 @@ export const Navigation = () => {
       {/* Fixed Call Button - Mobile Only */}
       <a
         href="tel:028465524"
-        className="lg:hidden fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-secondary text-secondary-foreground px-6 py-4 rounded-full shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
+        className="lg:hidden fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-cta text-cta-foreground px-6 py-4 rounded-full shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
         aria-label="Обадете се сега"
       >
         <Phone className="h-6 w-6" />

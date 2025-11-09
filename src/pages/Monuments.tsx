@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { SEO } from "@/components/SEO";
 import monumentImage from "@/assets/monument.jpg";
 
 const Monuments = () => {
@@ -54,6 +55,11 @@ const Monuments = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Надгробни паметници в София | Траурна агенция Кипарис"
+        description="Пълна организация на надгробни паметници. Денонощно: 02 846 55 24."
+        serviceName="Надгробни паметници"
+      />
       <Navigation />
       
       <section className="py-20 bg-background">

@@ -2,6 +2,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heart, Car, Flower2, FileText, Users, Clock } from "lucide-react";
+import { SEO } from "@/components/SEO";
 
 const FuneralServices = () => {
   const services = [
@@ -57,6 +58,11 @@ const FuneralServices = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Погребални услуги в София | Траурна агенция Кипарис"
+        description="Пълна организация на погребални услуги. Денонощно: 02 846 55 24."
+        serviceName="Погребални услуги"
+      />
       <Navigation />
       
       <section className="py-20 bg-background">

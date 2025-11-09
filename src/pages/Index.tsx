@@ -4,10 +4,12 @@ import { Services } from "@/components/Services";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { SEO } from "@/components/SEO";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <SEO />
       <Navigation />
       <Hero />
       <Services />

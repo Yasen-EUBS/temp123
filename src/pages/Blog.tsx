@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { SEO } from "@/components/SEO";
 
 const Blog = () => {
   const articles = [
@@ -44,6 +45,10 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Блог | Траурна агенция Кипарис"
+        description="Полезна информация, съвети и традиции свързани с траурните церемонии. Денонощно: 02 846 55 24."
+      />
       <Navigation />
       
       <section className="py-20 bg-background">

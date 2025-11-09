@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { SEO } from "@/components/SEO";
 import piaflorClassic from "@/assets/flowers/piaflor-classic.jpg";
 import piaflorLuxury from "@/assets/flowers/piaflor-luxury.jpg";
 import bouquetElegant from "@/assets/flowers/bouquet-elegant.jpg";
@@ -60,6 +61,11 @@ const Flowers = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Траурни венци, пиафлори и букети в София | Траурна агенция Кипарис"
+        description="Пълна организация на траурни венци, пиафлори и букети. Денонощно: 02 846 55 24."
+        serviceName="Траурни венци, пиафлори и букети"
+      />
       <Navigation />
       
       <section className="py-20 bg-background">

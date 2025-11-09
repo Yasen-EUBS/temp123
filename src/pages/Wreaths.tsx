@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { SEO } from "@/components/SEO";
 import wreathTraditional from "@/assets/wreaths/wreath-white-traditional.jpg";
 import wreathLuxury from "@/assets/wreaths/wreath-luxury.jpg";
 import wreathHeart from "@/assets/wreaths/wreath-heart.jpg";
@@ -63,6 +64,11 @@ const Wreaths = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Траурни венци в София | Траурна агенция Кипарис"
+        description="Пълна организация на траурни венци. Денонощно: 02 846 55 24."
+        serviceName="Траурни венци"
+      />
       <Navigation />
       
       <section className="py-20 bg-background">
