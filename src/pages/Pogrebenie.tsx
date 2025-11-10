@@ -183,7 +183,7 @@ const Pogrebenie = () => {
           {/* Steps Section */}
           <div className="mt-20">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Как протича процесът</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
               {steps.map((step, index) => (
                 <Card key={index} className="border-border bg-card hover:shadow-xl transition-all duration-300">
                   <CardHeader>
@@ -201,7 +201,7 @@ const Pogrebenie = () => {
           {/* Trust Section */}
           <div className="mt-20">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Защо да изберете нас</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {trustPoints.map((point, index) => (
                 <Card key={index} className="text-center border-border bg-card hover:shadow-xl transition-all duration-300">
                   <CardHeader>
@@ -216,13 +216,13 @@ const Pogrebenie = () => {
           {/* Related Links */}
           <div className="mt-20">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Вижте още наши услуги</h2>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
               {relatedLinks.map((link, index) => (
                 <Button 
                   key={index} 
                   variant="outline" 
                   asChild
-                  className="hover:bg-secondary hover:text-secondary-foreground transition-all"
+                  className="hover:bg-secondary hover:text-secondary-foreground transition-all w-full"
                 >
                   <Link to={link.url}>{link.label}</Link>
                 </Button>
