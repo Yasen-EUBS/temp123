@@ -1,114 +1,244 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, Car, Flower2, FileText, Users, Clock } from "lucide-react";
+import { Phone, FileCheck, MapPin, TruckIcon, Church, Heart, Shield, Clock, HandshakeIcon, ChevronDown } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { useState } from "react";
 
 const Pogrebenie = () => {
-  const services = [
+  const [openPackage1, setOpenPackage1] = useState(false);
+  const [openPackage2, setOpenPackage2] = useState(false);
+
+  const offers = [
+    { name: "Икономичен пакет", price: "1512", priceCurrency: "BGN" },
+    { name: "Луксозен пакет", price: "2769", priceCurrency: "BGN" }
+  ];
+
+  const breadcrumbs = [
+    { name: "Начало", url: "/" },
+    { name: "Погребални услуги", url: "/pogrebalni-uslugi" },
+    { name: "Погребение", url: "/pogrebenie" }
+  ];
+
+  const steps = [
     {
-      icon: <Heart className="w-12 h-12" />,
-      title: "Превоз на Покойник",
-      description: "Професионален превоз на покойници с дискретност и уважение. Осигуряваме превоз на територията на цялата страна и в чужбина с специализирани траурни автомобили."
+      icon: <Phone className="w-10 h-10" />,
+      title: "Обаждане 24/7",
+      description: "Денонощна линия за спешни случаи и консултации"
     },
     {
-      icon: <Car className="w-12 h-12" />,
-      title: "Траурен Автомобил",
-      description: "Луксозни траурни автомобили за достойно изпращане. Включва транспорт на семейството и близките до последния път."
+      icon: <FileCheck className="w-10 h-10" />,
+      title: "Изваждане на акт за смърт и документи",
+      description: "Оформяме всички необходими документи и удостоверения"
     },
     {
-      icon: <Flower2 className="w-12 h-12" />,
-      title: "Погребална Церемония",
-      description: "Пълна организация на погребални церемонии според традициите и желанията на семейството. Съдействие при избор на място и време."
+      icon: <MapPin className="w-10 h-10" />,
+      title: "Резервиране на ден и час и гробно място",
+      description: "Организираме дата, час и гробно място според желанията"
     },
     {
-      icon: <FileText className="w-12 h-12" />,
-      title: "Документи и Формалности",
-      description: "Помощ при оформянето на всички необходими документи - констативен протокол, разрешително за погребение, удостоверения."
+      icon: <TruckIcon className="w-10 h-10" />,
+      title: "Подготовка и транспорт",
+      description: "Професионална подготовка и превоз до гробищен парк"
     },
     {
-      icon: <Users className="w-12 h-12" />,
-      title: "Гробокопачи",
-      description: "Осигуряване на професионални гробокопачи за подготовка на гробното място. Цялостна организация на процеса."
+      icon: <Church className="w-10 h-10" />,
+      title: "Церемония и опело при желание",
+      description: "Организация на опело и церемония според традициите"
     },
     {
-      icon: <Clock className="w-12 h-12" />,
-      title: "24/7 Денонощна Линия",
-      description: "Винаги на разположение за спешни случаи. Професионална консултация и незабавна реакция във всеки момент."
+      icon: <Heart className="w-10 h-10" />,
+      title: "Подкрепа след ритуала",
+      description: "Съдействие и консултации и след приключване на церемонията"
     }
   ];
 
-  const coffins = [
+  const trustPoints = [
     {
-      name: "Ковчег Стандарт",
-      price: "от 150 лв",
-      description: "Качествен дървен ковчег с тапицерия"
+      icon: <Shield className="w-8 h-8" />,
+      title: "Над 20 години опит"
     },
     {
-      name: "Ковчег Луксозен",
-      price: "от 300 лв",
-      description: "Висококачествен ковчег с богата декорация"
+      icon: <Clock className="w-8 h-8" />,
+      title: "Денонощно обслужване"
     },
     {
-      name: "Ковчег Премиум",
-      price: "от 500 лв",
-      description: "Ексклузивен ковчег с изискана изработка"
+      icon: <HandshakeIcon className="w-8 h-8" />,
+      title: "Прозрачни цени"
     }
+  ];
+
+  const relatedLinks = [
+    { label: "Кремация", url: "/kremacia" },
+    { label: "Превоз на покойник", url: "/transport-na-pokojnik" },
+    { label: "Венци и букети", url: "/venci" },
+    { label: "Ковчези", url: "/kovchezi" },
+    { label: "Надгробни паметници", url: "/nadgrobni-pametnici" }
   ];
 
   return (
     <div className="min-h-screen">
       <SEO 
         title="Погребение в София | Траурна агенция Кипарис"
-        description="Пълна организация на погребение в София. Денонощно: 02 846 55 24."
+        description="Пълна организация на погребение в София. Реални крайни цени. Денонощно обслужване."
         serviceName="Погребение"
+        offers={offers}
+        breadcrumbs={breadcrumbs}
       />
       <Navigation />
       
-      <section className="py-20 bg-background">
+      {/* Hero Section */}
+      <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Погребение</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Пълен спектър от професионални погребални услуги с уважение и съпричастност
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Погребение в София</h1>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              Поемаме пълната организация с уважение и точност. Предлагаме денонощна консултация и съдействие на близките в трудния момент.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-            {services.map((service, index) => (
-              <Card key={index} className="hover:shadow-2xl transition-all duration-300 border-border bg-card">
-                <CardHeader>
-                  <div className="mb-4 text-secondary">{service.icon}</div>
-                  <CardTitle className="text-2xl">{service.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base leading-relaxed">{service.description}</CardDescription>
-                </CardContent>
-              </Card>
-            ))}
+          {/* Package Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-8">
+            {/* Package 1 - Икономичен */}
+            <Card className="border-border bg-card hover:shadow-xl transition-all duration-300">
+              <CardHeader>
+                <CardTitle className="text-2xl md:text-3xl">Икономичен пакет</CardTitle>
+                <div className="text-3xl md:text-4xl font-bold text-secondary mt-4">1512 лв с ДДС</div>
+                <p className="text-sm text-muted-foreground mt-2">При нов гроб се изисква дървена каса.</p>
+              </CardHeader>
+              <CardContent>
+                <Collapsible open={openPackage1} onOpenChange={setOpenPackage1}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full text-left font-medium hover:text-secondary transition-colors">
+                    Виж всичко включено
+                    <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${openPackage1 ? 'rotate-180' : ''}`} />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="mt-4">
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li>• Административно обслужване и общински такси</li>
+                      <li>• Изваждане на акт за смърт</li>
+                      <li>• Оформяне на документи и вписване в регистър</li>
+                      <li>• Организационна такса</li>
+                      <li>• Катафалка в гробищен парк</li>
+                      <li>• Изкопаване и зариване на ново гробно място</li>
+                      <li>• Ковчег и покров, подготовка и украса на ковчега</li>
+                      <li>• 5 бр. некролози и 10 бр. траурни ленти</li>
+                      <li>• Надгробен знак</li>
+                      <li>• Съхранение в хладилна камера 24 ч.</li>
+                      <li>• Извозване от адрес/болница до камера и от камера до гробищен парк</li>
+                      <li>• Товаро-разтоварна дейност</li>
+                    </ul>
+                  </CollapsibleContent>
+                </Collapsible>
+              </CardContent>
+            </Card>
+
+            {/* Package 2 - Луксозен */}
+            <Card className="border-border bg-card hover:shadow-xl transition-all duration-300">
+              <CardHeader>
+                <CardTitle className="text-2xl md:text-3xl">Луксозен пакет</CardTitle>
+                <div className="text-3xl md:text-4xl font-bold text-secondary mt-4">2769 лв с ДДС</div>
+                <p className="text-sm text-muted-foreground mt-2">Включва опело в църква и осигуряване на безплатно ново гробно място.</p>
+              </CardHeader>
+              <CardContent>
+                <Collapsible open={openPackage2} onOpenChange={setOpenPackage2}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full text-left font-medium hover:text-secondary transition-colors">
+                    Виж всичко включено
+                    <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${openPackage2 ? 'rotate-180' : ''}`} />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="mt-4">
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li>• Административни дейности и организация на агенцията за целия процес</li>
+                      <li>• Резервация ден и час и гробно място, вписване в регистъра</li>
+                      <li>• Катафалка и вътрешен транспорт по изискване на парковете</li>
+                      <li>• Взимане от адрес/болница, подготовка на ковчег</li>
+                      <li>• Товаро-разтоварителни дейности</li>
+                      <li>• Съхранение в хладилна камера</li>
+                      <li>• Обличане, къпане, бръснене/грим</li>
+                      <li>• Драпиране и аранжиране</li>
+                      <li>• Ковчег масив (каталог №8), драперия от сатен</li>
+                      <li>• Кръст дървен с изписани имена</li>
+                      <li>• Портрет с рамка А4</li>
+                      <li>• Цветя върху пиафлора</li>
+                      <li>• Комплекти за раздаване, ритуално жито и погача</li>
+                      <li>• Свещи за опело</li>
+                      <li>• Забележка: Таксата за опело се заплаща в съответния храм.</li>
+                    </ul>
+                  </CollapsibleContent>
+                </Collapsible>
+              </CardContent>
+            </Card>
           </div>
 
+          <p className="text-center text-lg font-semibold text-foreground mb-16">
+            Реална крайна цена, без скрити такси.
+          </p>
+
+          {/* Steps Section */}
           <div className="mt-20">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Ковчези</h2>
-              <p className="text-lg text-muted-foreground">
-                Предлагаме висококачествени ковчези в различни ценови категории
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {coffins.map((coffin, index) => (
-                <Card key={index} className="text-center hover:shadow-2xl transition-all duration-300 border-border bg-card">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Как протича процесът</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {steps.map((step, index) => (
+                <Card key={index} className="border-border bg-card hover:shadow-xl transition-all duration-300">
                   <CardHeader>
-                    <CardTitle className="text-2xl">{coffin.name}</CardTitle>
-                    <div className="text-3xl font-bold text-secondary mt-4">{coffin.price}</div>
+                    <div className="mb-4 text-secondary">{step.icon}</div>
+                    <CardTitle className="text-xl">{step.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-base">{coffin.description}</CardDescription>
+                    <CardDescription className="text-base">{step.description}</CardDescription>
                   </CardContent>
                 </Card>
               ))}
             </div>
+          </div>
+
+          {/* Trust Section */}
+          <div className="mt-20">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Защо да изберете нас</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              {trustPoints.map((point, index) => (
+                <Card key={index} className="text-center border-border bg-card hover:shadow-xl transition-all duration-300">
+                  <CardHeader>
+                    <div className="mx-auto mb-3 text-secondary">{point.icon}</div>
+                    <CardTitle className="text-lg">{point.title}</CardTitle>
+                  </CardHeader>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* Related Links */}
+          <div className="mt-20">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Вижте още наши услуги</h2>
+            <div className="flex flex-wrap justify-center gap-4">
+              {relatedLinks.map((link, index) => (
+                <Button 
+                  key={index} 
+                  variant="outline" 
+                  asChild
+                  className="hover:bg-secondary hover:text-secondary-foreground transition-all"
+                >
+                  <Link to={link.url}>{link.label}</Link>
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Local SEO Block */}
+          <div className="mt-20 text-center max-w-2xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Обслужваме София и района Оборище</h2>
+            <p className="text-lg text-muted-foreground mb-6">
+              Обслужваме София и района Оборище. Вижте контактите и картата.
+            </p>
+            <Button variant="secondary" asChild size="lg">
+              <Link to="/kontakti">Вижте нашите контакти</Link>
+            </Button>
           </div>
         </div>
       </section>
