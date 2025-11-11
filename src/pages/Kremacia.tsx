@@ -64,7 +64,7 @@ const Kremacia = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+          <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-20">
             {services.map((service, index) => (
               <Card key={index} className="hover:shadow-2xl transition-all duration-300 border-border bg-card">
                 <CardHeader>
@@ -86,7 +86,7 @@ const Kremacia = () => {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-3 md:grid-cols-3 gap-4 md:gap-8 max-w-5xl mx-auto">
               {urns.map((urn, index) => (
                 <Card key={index} className="text-center hover:shadow-2xl transition-all duration-300 border-border bg-card">
                   <CardHeader>
