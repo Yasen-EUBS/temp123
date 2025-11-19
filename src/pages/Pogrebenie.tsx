@@ -10,7 +10,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import churchBackground from "@/assets/church-background.png";
 import coffinEkonomichen from "@/assets/coffin-ekonomichen.jpg";
 import coffinLuksozen from "@/assets/coffin-luksozen.jpg";
@@ -18,6 +18,18 @@ import coffinLuksozen from "@/assets/coffin-luksozen.jpg";
 const Pogrebenie = () => {
   const [openPackage1, setOpenPackage1] = useState(false);
   const [openPackage2, setOpenPackage2] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+
+    const handleChange = () => setIsDesktop(mediaQuery.matches);
+
+    handleChange();
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   const offers = [
     { name: "Икономичен пакет", price: "1512", priceCurrency: "BGN" },
@@ -104,7 +116,7 @@ const Pogrebenie = () => {
           backgroundImage: `linear-gradient(to bottom, #1b2b1b 0%, rgba(27, 43, 27, 0.85) 30%, rgba(27, 43, 27, 0.4) 70%, transparent 100%), linear-gradient(rgba(0, 20, 0, 0.65), rgba(0, 20, 0, 0.65)), url(${churchBackground})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center 40%',
-          backgroundAttachment: window.innerWidth >= 768 ? 'fixed' : 'scroll',
+          backgroundAttachment: isDesktop ? 'fixed' : 'scroll',
           backgroundBlendMode: 'normal, overlay, normal'
         }}
       >
