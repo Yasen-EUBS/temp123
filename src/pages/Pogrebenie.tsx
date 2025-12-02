@@ -58,32 +58,32 @@ const Pogrebenie = () => {
 
   const steps = [
     {
-      icon: <Phone className="w-10 h-10" />,
+      icon: Phone,
       title: "Обаждане 24/7",
       description: "Денонощна линия за спешни случаи и консултации"
     },
     {
-      icon: <FileCheck className="w-10 h-10" />,
+      icon: FileCheck,
       title: "Изваждане на акт за смърт и документи",
       description: "Оформяме всички необходими документи и удостоверения"
     },
     {
-      icon: <MapPin className="w-10 h-10" />,
+      icon: MapPin,
       title: "Резервиране на ден и час и гробно място",
       description: "Организираме дата, час и гробно място според желанията"
     },
     {
-      icon: <TruckIcon className="w-10 h-10" />,
+      icon: TruckIcon,
       title: "Подготовка и транспорт",
       description: "Професионална подготовка и превоз до гробищен парк"
     },
     {
-      icon: <Church className="w-10 h-10" />,
+      icon: Church,
       title: "Церемония и опело при желание",
       description: "Организация на опело и церемония според традициите"
     },
     {
-      icon: <Heart className="w-10 h-10" />,
+      icon: Heart,
       title: "Подкрепа след ритуала",
       description: "Съдействие и консултации и след приключване на церемонията"
     }
@@ -121,23 +121,27 @@ const Pogrebenie = () => {
             </p>
           </div>
 
-          {/* SEO Article Section - 2 Column */}
-          <article className="max-w-5xl mx-auto mb-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <div className="text-left">
-                <h2 className="text-2xl md:text-3xl font-bold mb-6">Пълна организация на погребение в София</h2>
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-4">
+          {/* SEO Article Section - Premium Split Layout */}
+          <article className="max-w-[1200px] mx-auto mb-16 px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              <div className="text-left flex flex-col justify-center">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-foreground">Пълна организация на погребение в София</h2>
+                <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed mb-4">
                   Траурна агенция Кипарис предлага пълно денонощно съдействие: от констатиране на смърт и издаване на смъртен акт до организацията на ритуала. Работим с всички гробищни паркове в София (Централни софийски гробища, Малашевци, Бакърена фабрика, Бояна и др.).
                 </p>
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed">
                   Нашият екип поема цялата грижа за транспорта, избора на ковчег и заплащането на общинските такси, за да можете да изпратите близкия си с достойнство и спокойствие, без административни тежести.
                 </p>
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center lg:justify-end">
                 <img 
                   src={churchTable} 
                   alt="Ритуална трапеза в църква - погребение София" 
-                  className="rounded-lg shadow-lg w-full max-w-md object-cover"
+                  className="rounded-lg w-full max-w-md lg:max-w-lg object-cover"
+                  style={{
+                    border: '1px solid hsl(var(--accent))',
+                    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)'
+                  }}
                   loading="lazy"
                 />
               </div>
@@ -260,20 +264,25 @@ const Pogrebenie = () => {
           </section>
 
           {/* Steps Section */}
-          <div className="mt-20">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Как протича процесът</h2>
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-            {steps.map((step, index) => (
-                <Card key={index} className="border-border bg-card hover:shadow-xl transition-all duration-300">
-                  <CardHeader>
-                    <div className="mb-4 text-secondary">{step.icon}</div>
-                    <CardTitle className="text-xl">{step.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-base">{step.description}</CardDescription>
-                  </CardContent>
-                </Card>
-              ))}
+          <div className="mt-20 max-w-[1200px] mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">Как протича процесът</h2>
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6">
+              {steps.map((step, index) => {
+                const IconComponent = step.icon;
+                return (
+                  <Card key={index} className="border-border bg-card hover:shadow-xl transition-all duration-300 p-2 md:p-0">
+                    <CardHeader className="p-2 md:p-6 pb-1 md:pb-2">
+                      <div className="mb-1 md:mb-4 text-secondary">
+                        <IconComponent className="w-6 h-6 md:w-10 md:h-10" />
+                      </div>
+                      <CardTitle className="text-[0.8rem] leading-tight md:text-xl">{step.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-2 pt-0 md:p-6 md:pt-0">
+                      <CardDescription className="text-[0.7rem] leading-snug md:text-base hidden md:block">{step.description}</CardDescription>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </div>
 
