@@ -121,36 +121,38 @@ const Pogrebenie = () => {
             </p>
           </div>
 
-          {/* SEO Article Section - Premium Split Layout */}
-          <article className="max-w-[1200px] mx-auto mb-16 px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-              <div className="text-left flex flex-col justify-center">
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-foreground">Пълна организация на погребение в София</h2>
-                <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed mb-4">
-                  Траурна агенция Кипарис предлага пълно денонощно съдействие: от констатиране на смърт и издаване на смъртен акт до организацията на ритуала. Работим с всички гробищни паркове в София (Централни софийски гробища, Малашевци, Бакърена фабрика, Бояна и др.).
-                </p>
-                <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed">
-                  Нашият екип поема цялата грижа за транспорта, избора на ковчег и заплащането на общинските такси, за да можете да изпратите близкия си с достойнство и спокойствие, без административни тежести.
-                </p>
+          {/* Mobile-first: Flex container for reordering - Prices first on mobile */}
+          <div className="flex flex-col">
+            {/* SEO Article Section - order-2 on mobile (appears second), order-1 on desktop (appears first) */}
+            <article className="max-w-[1200px] mx-auto mb-16 px-4 order-2 md:order-1">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div className="text-left flex flex-col justify-center">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-foreground">Пълна организация на погребение в София</h2>
+                  <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed mb-4">
+                    Траурна агенция Кипарис предлага пълно денонощно съдействие: от констатиране на смърт и издаване на смъртен акт до организацията на ритуала. Работим с всички гробищни паркове в София (Централни софийски гробища, Малашевци, Бакърена фабрика, Бояна и др.).
+                  </p>
+                  <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed">
+                    Нашият екип поема цялата грижа за транспорта, избора на ковчег и заплащането на общинските такси, за да можете да изпратите близкия си с достойнство и спокойствие, без административни тежести.
+                  </p>
+                </div>
+                <div className="hidden md:flex justify-center lg:justify-end">
+                  <img 
+                    src={churchTable} 
+                    alt="Ритуална трапеза в църква - погребение София" 
+                    className="rounded-lg w-full max-w-md lg:max-w-lg object-cover"
+                    style={{
+                      border: '1px solid hsl(var(--accent))',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)'
+                    }}
+                    loading="lazy"
+                  />
+                </div>
               </div>
-              <div className="flex justify-center lg:justify-end">
-                <img 
-                  src={churchTable} 
-                  alt="Ритуална трапеза в църква - погребение София" 
-                  className="rounded-lg w-full max-w-md lg:max-w-lg object-cover"
-                  style={{
-                    border: '1px solid hsl(var(--accent))',
-                    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)'
-                  }}
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </article>
+            </article>
 
-          {/* Package Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-8">
-            {/* Package 1 - Икономичен */}
+            {/* Package Cards - order-1 on mobile (appears first), order-2 on desktop */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-8 order-1 md:order-2">
+              {/* Package 1 - Икономичен */}
             <Card 
               className="border-border bg-card hover:shadow-xl transition-all duration-300 relative overflow-hidden"
               style={{
@@ -234,6 +236,7 @@ const Pogrebenie = () => {
                 </Collapsible>
               </CardContent>
             </Card>
+            </div>
           </div>
 
           <p className="text-center text-lg font-semibold text-foreground mb-12">
@@ -277,8 +280,8 @@ const Pogrebenie = () => {
                       </div>
                       <CardTitle className="text-[0.8rem] leading-tight md:text-xl">{step.title}</CardTitle>
                     </CardHeader>
-                    <CardContent className="p-2 pt-0 md:p-6 md:pt-0">
-                      <CardDescription className="text-[0.7rem] leading-snug md:text-base hidden md:block">{step.description}</CardDescription>
+                    <CardContent className="p-1 pt-0 md:p-6 md:pt-0">
+                      <CardDescription className="text-[10px] leading-tight md:text-base">{step.description}</CardDescription>
                     </CardContent>
                   </Card>
                 );
