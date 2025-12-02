@@ -1,115 +1,266 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Flame, FileText, Heart, Package } from "lucide-react";
+import { Phone, FileCheck, Flame, TruckIcon, Package, Heart, ChevronDown } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { useState } from "react";
+import churchBackground from "@/assets/church-background.png";
 
 const Kremacia = () => {
-  const services = [
+  const [openPackage1, setOpenPackage1] = useState(false);
+  const [openPackage2, setOpenPackage2] = useState(false);
+
+  const offers = [
+    { name: "Икономичен пакет", price: "822.26", priceCurrency: "EUR" },
+    { name: "Луксозен пакет", price: "1778.84", priceCurrency: "EUR" }
+  ];
+
+  const productSchema = [
     {
-      icon: <Flame className="w-12 h-12" />,
-      title: "Кремация",
-      description: "Професионална организация на кремация с пълно спазване на законодателството и достойно отношение."
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Икономичен пакет Кремация",
+      "description": "Пълна организация на кремация в София - икономичен пакет.",
+      "offers": {
+        "@type": "Offer",
+        "price": "822.26",
+        "priceCurrency": "EUR"
+      }
     },
     {
-      icon: <FileText className="w-12 h-12" />,
-      title: "Документи",
-      description: "Оформяне на всички необходими документи за кремация - разрешително, удостоверения и други."
-    },
-    {
-      icon: <Heart className="w-12 h-12" />,
-      title: "Церемония",
-      description: "Организация на траурна церемония преди кремацията според желанията на семейството."
-    },
-    {
-      icon: <Package className="w-12 h-12" />,
-      title: "Урни",
-      description: "Широк избор от урни в различни ценови категории и дизайни."
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Луксозен пакет Кремация",
+      "description": "Луксозна организация на кремация в София с ритуал в Централни софийски гробища.",
+      "offers": {
+        "@type": "Offer",
+        "price": "1778.84",
+        "priceCurrency": "EUR"
+      }
     }
   ];
 
-  const urns = [
+  const breadcrumbs = [
+    { name: "Начало", url: "/" },
+    { name: "Погребални услуги", url: "/pogrebalni-uslugi" },
+    { name: "Кремация", url: "/kremacia" }
+  ];
+
+  const steps = [
     {
-      name: "Урна Стандарт",
-      price: "от 50 лв",
-      description: "Качествена урна от дърво или метал"
+      icon: Phone,
+      title: "Обаждане 24/7",
+      description: "Денонощна линия за спешни случаи и консултации"
     },
     {
-      name: "Урна Луксозна",
-      price: "от 150 лв",
-      description: "Изискана урна с декорация"
+      icon: FileCheck,
+      title: "Документи и разрешително",
+      description: "Оформяме всички документи и разрешително за кремация"
     },
     {
-      name: "Урна Мраморна",
-      price: "от 250 лв",
-      description: "Представителна урна от естествен мрамор"
+      icon: TruckIcon,
+      title: "Транспорт и съхранение",
+      description: "Превоз до хладилна камера и до крематориума"
+    },
+    {
+      icon: Flame,
+      title: "Кремация",
+      description: "Професионална кремация в Софийския крематориум"
+    },
+    {
+      icon: Package,
+      title: "Урнополагане",
+      description: "Полагане на урната в гроб или колумбарийна ниша"
+    },
+    {
+      icon: Heart,
+      title: "Подкрепа след ритуала",
+      description: "Съдействие и консултации след приключване на церемонията"
     }
   ];
+
 
   return (
     <div className="min-h-screen">
       <SEO 
         title="Кремация в София | Траурна агенция Кипарис"
-        description="Пълна организация на кремация в София. Денонощно: 02 846 55 24."
+        description="Пълна организация на кремация в София. Реални крайни цени от 822 EUR. Денонощно: 02 846 55 24."
         serviceName="Кремация"
+        offers={offers}
+        breadcrumbs={breadcrumbs}
       />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
       <Navigation />
       
-      <section className="py-20 bg-background">
+      {/* Hero Section */}
+      <section 
+        className="py-16 md:py-24 relative bg-background"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, #1b2b1b 0%, rgba(27, 43, 27, 0.85) 30%, rgba(27, 43, 27, 0.4) 70%, transparent 100%), linear-gradient(rgba(0, 20, 0, 0.65), rgba(0, 20, 0, 0.65)), url(${churchBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 40%',
+          backgroundAttachment: window.innerWidth >= 768 ? 'fixed' : 'scroll',
+          backgroundBlendMode: 'normal, overlay, normal'
+        }}
+      >
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Кремация</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Професионална организация на кремация с уважение и достойнство
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Кремация в София</h1>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              Професионална организация на кремация с уважение и достойнство. Денонощна консултация и пълно съдействие.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-20">
-            {services.map((service, index) => (
-              <Card key={index} className="hover:shadow-2xl transition-all duration-300 border-border bg-card">
+          {/* Mobile-first: Flex container for reordering - Prices first on mobile */}
+          <div className="flex flex-col">
+            {/* SEO Article Section - order-2 on mobile (appears second), order-1 on desktop (appears first) */}
+            <article className="max-w-[1200px] mx-auto mb-16 px-4 order-2 md:order-1">
+              <div className="max-w-3xl mx-auto text-center">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-foreground">Организация на кремация в София</h2>
+                <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed">
+                  Траурна агенция Кипарис предлага пълно съдействие при организиране на кремация в Софийския крематориум. 
+                  Ние поемаме грижата за всички документи, запазване на час и урнополагане в съществуващ гроб или колумбарийна стена.
+                </p>
+              </div>
+            </article>
+
+            {/* Package Cards - order-1 on mobile (appears first), order-2 on desktop */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-8 order-1 md:order-2">
+              {/* Package 1 - Икономичен */}
+              <Card className="border-border bg-card/95 hover:shadow-xl transition-all duration-300 relative overflow-hidden">
                 <CardHeader>
-                  <div className="mb-4 text-secondary">{service.icon}</div>
-                  <CardTitle className="text-2xl">{service.title}</CardTitle>
+                  <CardTitle className="text-2xl md:text-3xl">Икономичен пакет</CardTitle>
+                  <div className="text-3xl md:text-4xl font-bold text-secondary mt-4">822.26 EUR</div>
+                  <p className="text-xs md:text-sm text-secondary/80 font-medium mt-2">Крайна цена без скрити такси</p>
+                  <p className="text-sm text-muted-foreground mt-2">Административно обслужване и кремация.</p>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-base leading-relaxed">{service.description}</CardDescription>
+                  <Collapsible open={openPackage1} onOpenChange={setOpenPackage1}>
+                    <CollapsibleTrigger className="flex items-center justify-between w-full text-left font-medium hover:text-secondary transition-colors">
+                      Виж всичко включено
+                      <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${openPackage1 ? 'rotate-180' : ''}`} />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="mt-4">
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        <li>• Административно обслужване и такси</li>
+                        <li>• Изваждане на смъртен акт и оформяне на документи</li>
+                        <li>• Такса Кремация (София)</li>
+                        <li>• Ковчег и подготовка</li>
+                        <li>• Транспорт (Катафалка в гробищен парк)</li>
+                        <li>• Извозване от адрес/болница до хладилна камера</li>
+                        <li>• Съхранение в хладилна камера (24 часа)</li>
+                        <li>• Урна с табелка</li>
+                        <li>• 5 бр. некролози и 10 бр. траурни ленти</li>
+                      </ul>
+                    </CollapsibleContent>
+                  </Collapsible>
                 </CardContent>
               </Card>
-            ))}
+
+              {/* Package 2 - Луксозен */}
+              <Card className="border-border bg-card/95 hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                <CardHeader>
+                  <CardTitle className="text-2xl md:text-3xl">Луксозен пакет</CardTitle>
+                  <div className="text-3xl md:text-4xl font-bold text-secondary mt-4">1778.84 EUR</div>
+                  <p className="text-xs md:text-sm text-secondary/80 font-medium mt-2">Крайна цена без скрити такси</p>
+                  <p className="text-sm text-muted-foreground mt-2">Луксозно изпълнение с ритуал в Централни софийски гробища.</p>
+                </CardHeader>
+                <CardContent>
+                  <Collapsible open={openPackage2} onOpenChange={setOpenPackage2}>
+                    <CollapsibleTrigger className="flex items-center justify-between w-full text-left font-medium hover:text-secondary transition-colors">
+                      Виж всичко включено
+                      <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${openPackage2 ? 'rotate-180' : ''}`} />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="mt-4">
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        <li>• Всички административни такси и организация</li>
+                        <li>• Ритуал в Голяма ритуална зала (Централни гробища)</li>
+                        <li>• Свещеник или обредник + Ритуалчик с озвучаване</li>
+                        <li>• Луксозен ковчег (Масив ПДЧ №8) с драперия</li>
+                        <li>• Урна от черен гранит + Урнова табела</li>
+                        <li>• Кетъринг за 30 човека (Комплект №4) + Салон за раздаване</li>
+                        <li>• Пълна подготовка на покойник (Къпане, бръснене, грим, обличане)</li>
+                        <li>• Цветя: Рози, лилиум, гербер + зеленина (пияфлора)</li>
+                        <li>• Транспорт и товаро-разтоварителна дейност</li>
+                      </ul>
+                    </CollapsibleContent>
+                  </Collapsible>
+                </CardContent>
+              </Card>
+            </div>
           </div>
 
-          <div className="mt-20">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Урни</h2>
-              <p className="text-lg text-muted-foreground">
-                Предлагаме широк избор от урни в различни стилове и материали
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 max-w-5xl mx-auto">
-              {urns.map((urn, index) => (
-                <Card key={index} className="text-center hover:shadow-2xl transition-all duration-300 border-border bg-card">
-                  <CardHeader>
-                    <CardTitle className="text-2xl">{urn.name}</CardTitle>
-                    <div className="text-3xl font-bold text-secondary mt-4">{urn.price}</div>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-base">{urn.description}</CardDescription>
-                  </CardContent>
-                </Card>
-              ))}
+          <p className="text-center text-lg font-semibold text-foreground mb-12">
+            Реална крайна цена, без скрити такси.
+          </p>
+
+          {/* Necessary Documents Section */}
+          <section className="max-w-4xl mx-auto mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-foreground">Необходими документи за кремация</h2>
+            <ul className="space-y-3 text-base md:text-lg text-muted-foreground">
+              <li className="flex items-start gap-3">
+                <FileCheck className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
+                <span>Съобщение за смърт.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <FileCheck className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
+                <span>Разрешително за кремация (Талон от лекар).</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <FileCheck className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
+                <span>Лична карта на починалия.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <FileCheck className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
+                <span>Лична карта на заявителя (родствена връзка).</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <FileCheck className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
+                <span>Декларация за идентичност (попълва се в офиса).</span>
+              </li>
+            </ul>
+          </section>
+
+          {/* Steps Section */}
+          <div className="mt-20 max-w-[1200px] mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12">Как протича процесът</h2>
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6">
+              {steps.map((step, index) => {
+                const IconComponent = step.icon;
+                return (
+                  <Card key={index} className="border-border bg-card hover:shadow-xl transition-all duration-300 p-2 md:p-0">
+                    <CardHeader className="p-2 md:p-6 pb-1 md:pb-2">
+                      <div className="mb-1 md:mb-4 text-secondary">
+                        <IconComponent className="w-6 h-6 md:w-10 md:h-10" />
+                      </div>
+                      <CardTitle className="text-[0.8rem] leading-tight md:text-xl">{step.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-1 pt-0 md:p-6 md:pt-0">
+                      <CardDescription className="text-[10px] leading-tight md:text-base">{step.description}</CardDescription>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </div>
 
-          <div className="mt-16 max-w-3xl mx-auto text-center bg-card p-8 rounded-lg border border-border">
-            <h2 className="text-2xl font-bold mb-4">Информация за Кремация</h2>
-            <p className="text-muted-foreground mb-4">
-              Кремацията е съвременна алтернатива на традиционното погребение. 
-              Осигуряваме пълна организация на процеса, включително всички необходими документи и разрешителни.
+
+          {/* Local SEO Block */}
+          <div className="mt-20 text-center max-w-2xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Обслужваме София и района Оборище</h2>
+            <p className="text-lg text-muted-foreground mb-6">
+              Софийският крематориум се намира в Централни софийски гробища. Свържете се с нас за повече информация.
             </p>
-            <p className="text-lg font-semibold text-secondary">
-              За консултация: 02 846 55 24 (денонощно)
-            </p>
+            <Button variant="secondary" asChild size="lg">
+              <Link to="/kontakti">Вижте нашите контакти</Link>
+            </Button>
           </div>
         </div>
       </section>
