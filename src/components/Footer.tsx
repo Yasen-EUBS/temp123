@@ -5,7 +5,7 @@ export const Footer = () => {
   return (
     <footer className="bg-primary border-t border-border py-8 md:py-12">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-6 md:mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-6 md:mb-8">
           {/* Contact Info */}
           <div className="space-y-3 md:space-y-4">
             <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Траурна Агенция Кипарис</h3>
@@ -59,6 +59,19 @@ export const Footer = () => {
               </Link>
             </nav>
           </div>
+
+          {/* Legal Info Column */}
+          <div className="space-y-3 md:space-y-4">
+            <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Правна информация</h3>
+            <nav className="flex flex-col space-y-2">
+              <Link to="/privacy-policy" className="text-muted-foreground hover:text-secondary transition-colors">
+                Политика за поверителност
+              </Link>
+              <Link to="/terms" className="text-muted-foreground hover:text-secondary transition-colors">
+                Общи условия
+              </Link>
+            </nav>
+          </div>
           
           {/* Google Maps */}
           <div className="w-full h-[250px] md:h-[300px] rounded-lg overflow-hidden shadow-lg md:col-span-2 lg:col-span-1">
@@ -76,9 +89,13 @@ export const Footer = () => {
           </div>
         </div>
         
-        <div className="pt-6 border-t border-border text-center">
+        {/* Company Details & Copyright */}
+        <div className="pt-6 border-t border-border text-center space-y-2">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Траурна Агенция Кипарис. Всички права запазени.
+            © 2025 Траурна агенция Кипарис. Всички права запазени.
+          </p>
+          <p className="text-xs text-muted-foreground">
+            „ТРАУРНА АГЕНЦИЯ КИПАРИС" ЕООД | ЕИК: 203898716 | Адрес: София 1504, ул. проф. Асен Златаров 8
           </p>
         </div>
       </div>
