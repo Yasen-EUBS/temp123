@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { CookieConsent } from "@/components/CookieConsent";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Pogrebenie from "./pages/Pogrebenie";
@@ -14,6 +15,8 @@ import Flowers from "./pages/Flowers";
 import Monuments from "./pages/Monuments";
 import ContactPage from "./pages/ContactPage";
 import Blog from "./pages/Blog";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +43,10 @@ const App = () => (
           <Route path="/contact" element={<Navigate to="/kontakti" replace />} />
           <Route path="/blog" element={<Blog />} />
           
+          {/* Legal pages */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<Terms />} />
+          
           {/* 301 Redirects from old English slugs to BG slugs */}
           <Route path="/funeral-services" element={<Navigate to="/pogrebenie" replace />} />
           <Route path="/monuments" element={<Navigate to="/nadgrobni-pametnici" replace />} />
@@ -47,6 +54,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <CookieConsent />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
