@@ -17,6 +17,11 @@ export const CookieConsent = () => {
     setIsVisible(false);
   };
 
+  const handleDecline = () => {
+    localStorage.setItem("cookie-consent", "declined");
+    setIsVisible(false);
+  };
+
   if (!isVisible) return null;
 
   return (
@@ -26,7 +31,7 @@ export const CookieConsent = () => {
           Този уебсайт използва бисквитки, за да подобри вашето преживяване. 
           Продължавайки да разглеждате сайта, вие се съгласявате с нашата политика.
         </p>
-        <div className="flex items-center gap-3 flex-shrink-0">
+        <div className="flex items-center gap-2 flex-shrink-0">
           <Link 
             to="/privacy-policy" 
             className="text-sm text-muted-foreground hover:text-foreground underline transition-colors"
@@ -34,8 +39,17 @@ export const CookieConsent = () => {
             Политика
           </Link>
           <Button 
+            onClick={handleDecline}
+            variant="outline"
+            size="sm"
+            className="px-4"
+          >
+            Отказвам
+          </Button>
+          <Button 
             onClick={handleAccept}
-            className="bg-accent text-accent-foreground hover:bg-accent/90 px-6"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 px-4"
+            size="sm"
           >
             Приемам
           </Button>

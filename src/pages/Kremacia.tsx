@@ -1,21 +1,13 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Phone, FileCheck, Flame, TruckIcon, Package, Heart, ChevronDown } from "lucide-react";
+import { Phone, FileCheck, Flame, TruckIcon, Package, Heart } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { useState } from "react";
 import churchBackground from "@/assets/church-background.png";
 
 const Kremacia = () => {
-  const [openPackage1, setOpenPackage1] = useState(false);
-  const [openPackage2, setOpenPackage2] = useState(false);
 
   const offers = [
     { name: "Икономичен пакет", price: "822.26", priceCurrency: "EUR" },
@@ -135,63 +127,45 @@ const Kremacia = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-8 order-1 md:order-2">
               {/* Package 1 - Икономичен */}
               <Card className="border-border bg-card/95 hover:shadow-xl transition-all duration-300 relative overflow-hidden">
-                <CardHeader>
-                  <CardTitle className="text-2xl md:text-3xl">Икономичен пакет</CardTitle>
-                  <div className="text-3xl md:text-4xl font-bold text-secondary mt-4">822.26 EUR</div>
-                  <p className="text-xs md:text-sm text-secondary/80 font-medium mt-2">Крайна цена без скрити такси</p>
-                  <p className="text-sm text-muted-foreground mt-2">Административно обслужване и кремация.</p>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-xl md:text-3xl">Икономичен пакет</CardTitle>
+                  <div className="text-2xl md:text-4xl font-bold text-secondary mt-2">822.26 EUR</div>
+                  <p className="text-xs text-secondary/80 font-medium mt-1">Крайна цена без скрити такси</p>
                 </CardHeader>
-                <CardContent>
-                  <Collapsible open={openPackage1} onOpenChange={setOpenPackage1}>
-                    <CollapsibleTrigger className="flex items-center justify-between w-full text-left font-medium hover:text-secondary transition-colors">
-                      Виж всичко включено
-                      <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${openPackage1 ? 'rotate-180' : ''}`} />
-                    </CollapsibleTrigger>
-                    <CollapsibleContent className="mt-4">
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li>• Административно обслужване и такси</li>
-                        <li>• Изваждане на смъртен акт и оформяне на документи</li>
-                        <li>• Такса Кремация (София)</li>
-                        <li>• Ковчег и подготовка</li>
-                        <li>• Транспорт (Катафалка в гробищен парк)</li>
-                        <li>• Извозване от адрес/болница до хладилна камера</li>
-                        <li>• Съхранение в хладилна камера (24 часа)</li>
-                        <li>• Урна с табелка</li>
-                        <li>• 5 бр. некролози и 10 бр. траурни ленти</li>
-                      </ul>
-                    </CollapsibleContent>
-                  </Collapsible>
+                <CardContent className="pt-2">
+                  <ul className="space-y-1.5 text-xs md:text-sm text-muted-foreground">
+                    <li>• Пълно административно обслужване (Смъртен акт, такси, документи)</li>
+                    <li>• Такса за Кремация (Крематориум София)</li>
+                    <li>• Стандартен ковчег с подготовка</li>
+                    <li>• Транспорт (Катафалка в гробищен парк)</li>
+                    <li>• Извозване от адрес/болница и съхранение в камера (24 ч.)</li>
+                    <li>• Урна с табелка</li>
+                    <li>• Комплект траурни аксесоари (5 некролога, 10 ленти)</li>
+                  </ul>
                 </CardContent>
               </Card>
 
               {/* Package 2 - Луксозен */}
               <Card className="border-border bg-card/95 hover:shadow-xl transition-all duration-300 relative overflow-hidden">
-                <CardHeader>
-                  <CardTitle className="text-2xl md:text-3xl">Луксозен пакет</CardTitle>
-                  <div className="text-3xl md:text-4xl font-bold text-secondary mt-4">1778.84 EUR</div>
-                  <p className="text-xs md:text-sm text-secondary/80 font-medium mt-2">Крайна цена без скрити такси</p>
-                  <p className="text-sm text-muted-foreground mt-2">Луксозно изпълнение с ритуал в Централни софийски гробища.</p>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-xl md:text-3xl">Луксозен пакет</CardTitle>
+                  <div className="text-2xl md:text-4xl font-bold text-secondary mt-2">1778.84 EUR</div>
+                  <p className="text-xs text-secondary/80 font-medium mt-1">Крайна цена без скрити такси</p>
+                  <p className="text-xs md:text-sm text-accent font-medium mt-2">Включва граждански/църковен ритуал и кетъринг</p>
                 </CardHeader>
-                <CardContent>
-                  <Collapsible open={openPackage2} onOpenChange={setOpenPackage2}>
-                    <CollapsibleTrigger className="flex items-center justify-between w-full text-left font-medium hover:text-secondary transition-colors">
-                      Виж всичко включено
-                      <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${openPackage2 ? 'rotate-180' : ''}`} />
-                    </CollapsibleTrigger>
-                    <CollapsibleContent className="mt-4">
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li>• Всички административни такси и организация</li>
-                        <li>• Ритуал в Голяма ритуална зала (Централни гробища)</li>
-                        <li>• Свещеник или обредник + Ритуалчик с озвучаване</li>
-                        <li>• Луксозен ковчег (Масив ПДЧ №8) с драперия</li>
-                        <li>• Урна от черен гранит + Урнова табела</li>
-                        <li>• Кетъринг за 30 човека (Комплект №4) + Салон за раздаване</li>
-                        <li>• Пълна подготовка на покойник (Къпане, бръснене, грим, обличане)</li>
-                        <li>• Цветя: Рози, лилиум, гербер + зеленина (пияфлора)</li>
-                        <li>• Транспорт и товаро-разтоварителна дейност</li>
-                      </ul>
-                    </CollapsibleContent>
-                  </Collapsible>
+                <CardContent className="pt-2">
+                  <ul className="space-y-1.5 text-xs md:text-sm text-muted-foreground">
+                    <li>• Всички административни и кремационни такси</li>
+                    <li>• Ритуал в Голяма ритуална зала (Централни гробища)</li>
+                    <li>• Ритуалчик / Свещеник + Професионално озвучаване</li>
+                    <li>• Луксозен ковчег (Масив ПДЧ) с драперия и аранжировка</li>
+                    <li>• Урна от черен гранит + Урнова табела</li>
+                    <li>• Кетъринг за 30 души (Меню №4) + Салон за раздаване</li>
+                    <li>• Пълна санитарна подготовка (Къпане, грим, обличане)</li>
+                    <li>• Цветна аранжировка (Рози, лилиум, гербер върху пиафлора)</li>
+                    <li>• Кръст с изписани имена и Портрет с рамка</li>
+                    <li>• Пълен транспорт и присъствие на траурен агент</li>
+                  </ul>
                 </CardContent>
               </Card>
             </div>
