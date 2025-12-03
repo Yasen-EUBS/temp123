@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
+import { useCookieConsent } from "@/hooks/useCookieConsent";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isVisible: isCookieBannerVisible } = useCookieConsent();
 
   const navItems = [
     { label: "Начало", href: "/" },
@@ -25,11 +27,14 @@ export const Navigation = () => {
       {/* Fixed Call Button - Mobile Only */}
       <a
         href="tel:028465524"
-        className="lg:hidden fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-cta text-cta-foreground px-6 py-4 rounded-full shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
+        className={cn(
+          "lg:hidden fixed right-4 z-50 flex items-center gap-2 bg-cta text-cta-foreground px-5 py-3 rounded-full shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95",
+          isCookieBannerVisible ? "bottom-20" : "bottom-4"
+        )}
         aria-label="Обадете се сега"
       >
-        <Phone className="h-6 w-6" />
-        <span className="font-bold text-sm">ДЕНОНОЩНО: 02 846 55 24</span>
+        <Phone className="h-5 w-5" />
+        <span className="font-bold text-xs">02 846 55 24</span>
       </a>
 
       <nav className="sticky top-0 z-50 w-full bg-primary/95 backdrop-blur-sm border-b border-border shadow-md">

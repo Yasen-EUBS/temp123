@@ -1,13 +1,17 @@
+import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Phone, FileCheck, Flame, TruckIcon, Package, Heart } from "lucide-react";
+import { Phone, FileCheck, Flame, TruckIcon, Package, Heart, ChevronDown } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { cn } from "@/lib/utils";
 import churchBackground from "@/assets/church-background.png";
 
 const Kremacia = () => {
+  const [economyExpanded, setEconomyExpanded] = useState(false);
+  const [luxuryExpanded, setLuxuryExpanded] = useState(false);
 
   const offers = [
     { name: "Икономичен пакет", price: "822.26", priceCurrency: "EUR" },
@@ -78,6 +82,36 @@ const Kremacia = () => {
     }
   ];
 
+  const economyItems = {
+    visible: [
+      "Пълно административно обслужване (Смъртен акт, такси, документи)",
+      "Такса за Кремация (Крематориум София)",
+      "Стандартен ковчег с подготовка"
+    ],
+    hidden: [
+      "Транспорт (Катафалка в гробищен парк)",
+      "Извозване от адрес/болница и съхранение в камера (24 ч.)",
+      "Урна с табелка",
+      "Комплект траурни аксесоари (5 некролога, 10 ленти)"
+    ]
+  };
+
+  const luxuryItems = {
+    visible: [
+      "Всички административни и кремационни такси",
+      "Ритуал в Голяма ритуална зала (Централни гробища)",
+      "Ритуалчик / Свещеник + Професионално озвучаване"
+    ],
+    hidden: [
+      "Луксозен ковчег (Масив ПДЧ) с драперия и аранжировка",
+      "Урна от черен гранит + Урнова табела",
+      "Кетъринг за 30 души (Меню №4) + Салон за раздаване",
+      "Пълна санитарна подготовка (Къпане, грим, обличане)",
+      "Цветна аранжировка (Рози, лилиум, гербер върху пиафлора)",
+      "Кръст с изписани имена и Портрет с рамка",
+      "Пълен транспорт и присъствие на траурен агент"
+    ]
+  };
 
   return (
     <div className="min-h-screen">
@@ -124,7 +158,7 @@ const Kremacia = () => {
             </article>
 
             {/* Package Cards - order-1 on mobile (appears first), order-2 on desktop */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-8 order-1 md:order-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-8 order-1 md:order-2">
               {/* Package 1 - Икономичен */}
               <Card className="border-border bg-card/95 hover:shadow-xl transition-all duration-300 relative overflow-hidden">
                 <CardHeader className="pb-2">
@@ -134,14 +168,31 @@ const Kremacia = () => {
                 </CardHeader>
                 <CardContent className="pt-2">
                   <ul className="space-y-1.5 text-xs md:text-sm text-muted-foreground">
-                    <li>• Пълно административно обслужване (Смъртен акт, такси, документи)</li>
-                    <li>• Такса за Кремация (Крематориум София)</li>
-                    <li>• Стандартен ковчег с подготовка</li>
-                    <li>• Транспорт (Катафалка в гробищен парк)</li>
-                    <li>• Извозване от адрес/болница и съхранение в камера (24 ч.)</li>
-                    <li>• Урна с табелка</li>
-                    <li>• Комплект траурни аксесоари (5 некролога, 10 ленти)</li>
+                    {economyItems.visible.map((item, index) => (
+                      <li key={index}>• {item}</li>
+                    ))}
                   </ul>
+                  {/* Hidden content for SEO - collapsible */}
+                  <div className={cn(
+                    "overflow-hidden transition-all duration-300",
+                    economyExpanded ? "max-h-96 opacity-100 mt-1.5" : "max-h-0 opacity-0"
+                  )}>
+                    <ul className="space-y-1.5 text-xs md:text-sm text-muted-foreground">
+                      {economyItems.hidden.map((item, index) => (
+                        <li key={index}>• {item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <button
+                    onClick={() => setEconomyExpanded(!economyExpanded)}
+                    className="flex items-center gap-1 text-xs text-secondary hover:text-secondary/80 mt-3 transition-colors"
+                  >
+                    <span>{economyExpanded ? "Скрий описанието" : "Виж пълното описание"}</span>
+                    <ChevronDown className={cn(
+                      "h-4 w-4 transition-transform duration-300",
+                      economyExpanded && "rotate-180"
+                    )} />
+                  </button>
                 </CardContent>
               </Card>
 
@@ -155,17 +206,31 @@ const Kremacia = () => {
                 </CardHeader>
                 <CardContent className="pt-2">
                   <ul className="space-y-1.5 text-xs md:text-sm text-muted-foreground">
-                    <li>• Всички административни и кремационни такси</li>
-                    <li>• Ритуал в Голяма ритуална зала (Централни гробища)</li>
-                    <li>• Ритуалчик / Свещеник + Професионално озвучаване</li>
-                    <li>• Луксозен ковчег (Масив ПДЧ) с драперия и аранжировка</li>
-                    <li>• Урна от черен гранит + Урнова табела</li>
-                    <li>• Кетъринг за 30 души (Меню №4) + Салон за раздаване</li>
-                    <li>• Пълна санитарна подготовка (Къпане, грим, обличане)</li>
-                    <li>• Цветна аранжировка (Рози, лилиум, гербер върху пиафлора)</li>
-                    <li>• Кръст с изписани имена и Портрет с рамка</li>
-                    <li>• Пълен транспорт и присъствие на траурен агент</li>
+                    {luxuryItems.visible.map((item, index) => (
+                      <li key={index}>• {item}</li>
+                    ))}
                   </ul>
+                  {/* Hidden content for SEO - collapsible */}
+                  <div className={cn(
+                    "overflow-hidden transition-all duration-300",
+                    luxuryExpanded ? "max-h-96 opacity-100 mt-1.5" : "max-h-0 opacity-0"
+                  )}>
+                    <ul className="space-y-1.5 text-xs md:text-sm text-muted-foreground">
+                      {luxuryItems.hidden.map((item, index) => (
+                        <li key={index}>• {item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <button
+                    onClick={() => setLuxuryExpanded(!luxuryExpanded)}
+                    className="flex items-center gap-1 text-xs text-secondary hover:text-secondary/80 mt-3 transition-colors"
+                  >
+                    <span>{luxuryExpanded ? "Скрий описанието" : "Виж пълното описание"}</span>
+                    <ChevronDown className={cn(
+                      "h-4 w-4 transition-transform duration-300",
+                      luxuryExpanded && "rotate-180"
+                    )} />
+                  </button>
                 </CardContent>
               </Card>
             </div>
