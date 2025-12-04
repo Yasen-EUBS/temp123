@@ -18,6 +18,7 @@ import ContactPage from "./pages/ContactPage";
 import Blog from "./pages/Blog";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
+import Polezno from "./pages/Polezno";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,9 @@ const App = () => (
             {/* Legal pages */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<Terms />} />
+            
+            {/* Info pages */}
+            <Route path="/polezno" element={<Polezno />} />
             
             {/* 301 Redirects from old English slugs to BG slugs */}
             <Route path="/funeral-services" element={<Navigate to="/pogrebenie" replace />} />

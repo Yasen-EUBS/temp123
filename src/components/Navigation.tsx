@@ -18,6 +18,7 @@ export const Navigation = () => {
     { label: "Надгробни Паметници", href: "/nadgrobni-pametnici" },
     { label: "Венци", href: "/wreaths" },
     { label: "Цветя и Букети", href: "/flowers" },
+    { label: "Полезно", href: "/polezno" },
     { label: "Контакти", href: "/contact" },
     { label: "Блог", href: "/blog" },
   ];
