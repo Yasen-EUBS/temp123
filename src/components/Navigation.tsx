@@ -29,13 +29,13 @@ export const Navigation = () => {
       <a
         href="tel:028465524"
         className={cn(
-          "lg:hidden fixed right-4 z-50 flex items-center gap-2 bg-cta text-cta-foreground px-5 py-3 rounded-full shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95",
+          "lg:hidden fixed right-4 z-50 flex items-center gap-2 bg-cta text-cta-foreground px-4 py-3 rounded-full shadow-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95",
           isCookieBannerVisible ? "bottom-20" : "bottom-4"
         )}
         aria-label="Обадете се сега"
       >
         <Phone className="h-5 w-5" />
-        <span className="font-bold text-xs">02 846 55 24</span>
+        <span className="font-bold text-xs">ДЕНОНОЩНО: 02 846 55 24</span>
       </a>
 
       <nav className="sticky top-0 z-50 w-full bg-primary/95 backdrop-blur-sm border-b border-border shadow-md">
