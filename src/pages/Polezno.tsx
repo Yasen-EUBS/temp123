@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/accordion";
 
 const Polezno = () => {
-  const faqs = [
+  const scenarioFaqs = [
     {
       question: "Какво се прави при смъртен случай в дома?",
       answer: "Първо се свържете с личния лекар за издаване на Съобщение за смърт. Ако е нощ или празник, позвънете на 112. След получаване на документа, обадете се на Траурна агенция Кипарис (02 846 55 24) за транспорт."
@@ -25,10 +25,35 @@ const Polezno = () => {
     }
   ];
 
+  const additionalFaqs = [
+    {
+      question: "Как се определя цената на погребението?",
+      answer: "Цената зависи от избрания пакет (Икономичен или Луксозен), вида на ковчега и допълнителните аксесоари. В Агенция Кипарис всички цени са крайни, без скрити такси за 'административни услуги' в последния момент."
+    },
+    {
+      question: "Имам ли право на помощ от държавата при смъртен случай?",
+      answer: "Да, близките имат право на еднократна помощ при смърт от НОИ. Агенция Кипарис съдейства безплатно с консултация за необходимите документи, за да получите тази помощ."
+    },
+    {
+      question: "Кога най-рано или най-късно може да се извърши погребението?",
+      answer: "По закон погребението трябва да се извърши не по-рано от 24 часа след констатиране на смъртта. Няма краен срок, но ако се налага отлагане (напр. чакате близки от чужбина), ние осигуряваме хладилна камера за съхранение."
+    },
+    {
+      question: "Какви дрехи са необходими за покойника?",
+      answer: "Необходими са дрехи, с които искате да изпратите близкия си – бельо, чорапи/чорапогащник, риза/блуза, панталон/пола, сако и обувки. Ние ще се погрижим за обличането и тоалета."
+    },
+    {
+      question: "Мога ли да запазят гробно място предварително?",
+      answer: "В София запазването на 'гробно място за бъдеще време' е силно ограничено и зависи от конкретния гробищен парк и семейното положение. Свържете се с нас за актуална справка според вашия район."
+    }
+  ];
+
+  const allFaqs = [...scenarioFaqs, ...additionalFaqs];
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
+    "mainEntity": allFaqs.map(faq => ({
       "@type": "Question",
       "name": faq.question,
       "acceptedAnswer": {
@@ -172,6 +197,33 @@ const Polezno = () => {
               </AccordionItem>
             </Accordion>
 
+            {/* FAQ Section */}
+            <div className="mt-12">
+              <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">
+                Често задавани въпроси
+              </h2>
+              <Accordion type="single" collapsible className="space-y-3">
+                {additionalFaqs.map((faq, index) => (
+                  <AccordionItem 
+                    key={index} 
+                    value={`faq-${index}`} 
+                    className="bg-card rounded-lg border border-border overflow-hidden"
+                  >
+                    <AccordionTrigger className="px-4 py-4 hover:no-underline hover:bg-muted/50 text-left">
+                      <span className="font-semibold text-sm md:text-base pr-2">
+                        {faq.question}
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4">
+                      <p className="text-sm md:text-base text-muted-foreground">
+                        {faq.answer}
+                      </p>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+
             {/* Additional CTA */}
             <div className="mt-8 text-center">
               <p className="text-muted-foreground mb-4 text-sm">
@@ -182,7 +234,7 @@ const Polezno = () => {
                 className="inline-flex items-center gap-2 bg-cta text-cta-foreground px-6 py-3 rounded-lg font-bold hover:opacity-90 transition-opacity"
               >
                 <Phone className="h-5 w-5" />
-                02 846 55 24
+                ДЕНОНОЩНО: 02 846 55 24
               </a>
             </div>
           </div>
