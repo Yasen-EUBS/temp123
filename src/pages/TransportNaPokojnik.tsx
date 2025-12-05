@@ -125,12 +125,12 @@ const TransportNaPokojnik = () => {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="text-center md:text-left">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">
-                Международен и вътрешен транспорт на покойник
+                Международен транспорт и репатриране до България
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-6">
                 Лицензиран специализиран превоз от Европа и цял свят. Пълно съдействие с документи и митническо обслужване.
               </p>
-              <Button asChild size="lg" className="bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+              <Button asChild size="lg" className="hidden md:inline-flex bg-secondary hover:bg-secondary/90 text-secondary-foreground">
                 <a href="tel:028465524" className="inline-flex items-center gap-2">
                   <Phone className="h-5 w-5" />
                   Денонощно: 02 846 55 24
@@ -140,7 +140,7 @@ const TransportNaPokojnik = () => {
             <div className="flex justify-center">
               <img 
                 src={hearseImage} 
-                alt="Специализиран траурен автомобил за международен превоз на покойник" 
+                alt="Специализирана катафалка за международен превоз на покойник" 
                 className="max-w-full h-auto max-h-[300px] object-contain"
               />
             </div>
