@@ -16,36 +16,42 @@ import monumentImage from "@/assets/monument.jpg";
 const TraurniStoki = () => {
   const categories = [
     {
+      id: "kovchezi",
       title: "Ковчези",
       description: "Богат избор на ковчези от масив и ПДЧ - от икономични до луксозни модели.",
       image: coffinLuxury,
       link: null,
     },
     {
+      id: "draperii",
       title: "Драперии",
       description: "Луксозни сатенени и памучни драперии и комплекти за ковчег.",
       image: coffinEconomy,
       link: null,
     },
     {
+      id: "urni",
       title: "Урни",
       description: "Висококачествени урни от керамика, метал, камък и дърво.",
       image: urnImage,
       link: null,
     },
     {
+      id: "venci",
       title: "Венци и Пиафлори",
       description: "Траурни венци от естествени цветя, пиафлори и букети за изказване на съболезнования.",
       image: wreathLuxury,
       link: null,
     },
     {
+      id: "ketering",
       title: "Кетъринг",
       description: "Ритуални питки, жито, вино и индивидуални пакети за раздаване.",
       image: churchTable,
       link: null,
     },
     {
+      id: "pametnici",
       title: "Паметници",
       description: "Проектиране и изработка на надгробни паметници от мрамор и гранит.",
       image: monumentImage,
@@ -97,10 +103,13 @@ const TraurniStoki = () => {
         {/* Product Categories Grid */}
         <section className="py-12 md:py-16">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 max-w-6xl mx-auto">
               {categories.map((category, index) => {
                 const cardContent = (
-                  <Card className={`h-full overflow-hidden border-border bg-card hover:shadow-lg transition-all duration-300 ${category.link ? "group-hover:border-secondary" : ""}`}>
+                  <Card 
+                    id={category.id}
+                    className={`h-full overflow-hidden border-border bg-card hover:shadow-lg transition-all duration-300 ${category.link ? "group-hover:border-secondary" : ""}`}
+                  >
                     <div className="aspect-[4/3] overflow-hidden">
                       <img
                         src={category.image}
@@ -108,16 +117,16 @@ const TraurniStoki = () => {
                         className={`w-full h-full object-cover ${category.link ? "group-hover:scale-105 transition-transform duration-500" : ""}`}
                       />
                     </div>
-                    <CardHeader className="pb-2">
-                      <CardTitle className={`text-xl ${category.link ? "group-hover:text-secondary transition-colors" : ""}`}>
+                    <CardHeader className="p-2 md:p-6 pb-1 md:pb-2">
+                      <CardTitle className={`text-sm md:text-xl ${category.link ? "group-hover:text-secondary transition-colors" : ""}`}>
                         {category.title}
                         {category.link && (
-                          <span className="ml-2 text-secondary">→</span>
+                          <span className="ml-1 md:ml-2 text-secondary">→</span>
                         )}
                       </CardTitle>
                     </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-base text-muted-foreground">
+                    <CardContent className="p-2 md:p-6 pt-0 md:pt-0">
+                      <CardDescription className="text-xs md:text-base text-muted-foreground line-clamp-3 md:line-clamp-none">
                         {category.description}
                       </CardDescription>
                     </CardContent>
