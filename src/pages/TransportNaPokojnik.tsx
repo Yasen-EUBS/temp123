@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -106,6 +107,15 @@ const TransportNaPokojnik = () => {
     "description": "Международен и вътрешен превоз на покойник. Лицензиран специализиран транспорт от Европа и цял свят с пълно съдействие за документи и митническо обслужване."
   };
 
+  const [openAccordion, setOpenAccordion] = useState<string | undefined>(undefined);
+
+  const handleCountryClick = () => {
+    setOpenAccordion("documents");
+    setTimeout(() => {
+      document.getElementById("documents-section")?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
@@ -188,22 +198,23 @@ const TransportNaPokojnik = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
             {destinations.map((country, index) => (
-              <span 
-                key={index} 
-                className="px-4 py-2 bg-background rounded-full text-sm md:text-base border border-border hover:border-secondary transition-colors"
+              <button 
+                key={index}
+                onClick={handleCountryClick}
+                className="px-4 py-2 bg-background rounded-full text-sm md:text-base border border-border hover:border-secondary hover:bg-secondary/10 transition-colors cursor-pointer"
               >
                 {country}
-              </span>
+              </button>
             ))}
           </div>
         </div>
       </section>
 
       {/* Documents Accordion */}
-      <section className="py-12 md:py-16">
+      <section id="documents-section" className="py-12 md:py-16">
         <div className="container mx-auto px-4 max-w-3xl">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Необходими документи</h2>
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion type="single" collapsible className="w-full" value={openAccordion} onValueChange={setOpenAccordion}>
             <AccordionItem value="documents" className="border-border">
               <AccordionTrigger className="text-lg font-medium hover:no-underline">
                 <span className="flex items-center gap-2">
