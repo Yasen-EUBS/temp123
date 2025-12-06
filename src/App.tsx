@@ -11,14 +11,12 @@ import NotFound from "./pages/NotFound";
 import Pogrebenie from "./pages/Pogrebenie";
 import Kremacia from "./pages/Kremacia";
 import TransportNaPokojnik from "./pages/TransportNaPokojnik";
-import Wreaths from "./pages/Wreaths";
-import Flowers from "./pages/Flowers";
 import Monuments from "./pages/Monuments";
 import ContactPage from "./pages/ContactPage";
-import Blog from "./pages/Blog";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import Polezno from "./pages/Polezno";
+import TraurniStoki from "./pages/TraurniStoki";
 
 const queryClient = new QueryClient();
 
@@ -38,13 +36,11 @@ const App = () => (
             <Route path="/kremacia" element={<Kremacia />} />
             <Route path="/transport-na-pokojnik" element={<TransportNaPokojnik />} />
             <Route path="/nadgrobni-pametnici" element={<Monuments />} />
+            <Route path="/traurni-stoki" element={<TraurniStoki />} />
             
             {/* Other pages */}
-            <Route path="/wreaths" element={<Wreaths />} />
-            <Route path="/flowers" element={<Flowers />} />
             <Route path="/kontakti" element={<ContactPage />} />
             <Route path="/contact" element={<Navigate to="/kontakti" replace />} />
-            <Route path="/blog" element={<Blog />} />
             
             {/* Legal pages */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -56,6 +52,9 @@ const App = () => (
             {/* 301 Redirects from old English slugs to BG slugs */}
             <Route path="/funeral-services" element={<Navigate to="/pogrebenie" replace />} />
             <Route path="/monuments" element={<Navigate to="/nadgrobni-pametnici" replace />} />
+            <Route path="/wreaths" element={<Navigate to="/traurni-stoki" replace />} />
+            <Route path="/flowers" element={<Navigate to="/traurni-stoki" replace />} />
+            <Route path="/blog" element={<Navigate to="/polezno" replace />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

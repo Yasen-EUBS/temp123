@@ -16,11 +16,9 @@ export const Navigation = () => {
     { label: "Кремация", href: "/kremacia" },
     { label: "Превоз на Покойник", href: "/transport-na-pokojnik" },
     { label: "Надгробни Паметници", href: "/nadgrobni-pametnici" },
-    { label: "Венци", href: "/wreaths" },
-    { label: "Цветя и Букети", href: "/flowers" },
+    { label: "Траурни стоки", href: "/traurni-stoki" },
     { label: "Полезно", href: "/polezno" },
-    { label: "Контакти", href: "/contact" },
-    { label: "Блог", href: "/blog" },
+    { label: "Контакти", href: "/kontakti" },
   ];
 
   return (
