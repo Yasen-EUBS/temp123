@@ -90,7 +90,8 @@ export const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-6 pb-4">
-            <NavigationMenu>
+            <div className="relative flex justify-center">
+              <NavigationMenu>
               <NavigationMenuList className="gap-4">
                 {navItems.map((item) => (
                   item.hasSubmenu ? (
@@ -133,7 +134,8 @@ export const Navigation = () => {
                   )
                 ))}
               </NavigationMenuList>
-            </NavigationMenu>
+              </NavigationMenu>
+            </div>
           </div>
 
           {/* Mobile Navigation */}
