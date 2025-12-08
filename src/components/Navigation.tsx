@@ -95,7 +95,7 @@ export const Navigation = () => {
               <NavigationMenuList className="gap-4">
                 {navItems.map((item) => (
                   item.hasSubmenu ? (
-                    <NavigationMenuItem key={item.label}>
+                    <NavigationMenuItem key={item.label} className="relative">
                       <NavigationMenuTrigger className="bg-transparent hover:bg-transparent hover:text-secondary data-[state=open]:bg-transparent text-sm font-medium px-0">
                         <Link 
                           to={item.href} 
@@ -105,7 +105,7 @@ export const Navigation = () => {
                           {item.label}
                         </Link>
                       </NavigationMenuTrigger>
-                      <NavigationMenuContent>
+                      <NavigationMenuContent className="absolute left-0 top-full mt-1.5">
                         <ul className="grid w-48 gap-1 p-2 bg-card border border-border shadow-lg rounded-md">
                           {stokiSubItems.map((subItem) => (
                             <li key={subItem.label}>
