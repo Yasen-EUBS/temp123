@@ -109,13 +109,13 @@ const monumentsData: Monument[] = [
     description: "Нежен и класически дизайн от бял мрамор с богато орнаментирани рози, изразяващи любов и почит."
   },
   {
-    id: 'granit-siv-edinstvo',
-    title: "Модел Единство",
-    seoTitle: "Двоен семеен паметник от сив гранит с Кръст",
-    category: "granit",
-    image: "/assets/monuments/nadgroben-pametnik-siv-granit-dvoin-s-razrez-tri-snimki.webp",
-    alt: "Двоен семеен паметник от светъл сив гранит с дизайн на пресечен кръст",
-    description: "Масивен семеен модел от висококачествен сив гранит, символизиращ вечната връзка чрез централен кръст."
+    id: 'grey-marble-double-family',
+    title: "Двоен паметник от сив мрамор с вертикален разрез",
+    seoTitle: "Двоен надгробен паметник от сив мрамор | Кипарис",
+    category: "mramor",
+    image: "/assets/monuments/nadgroben-pametnik-siv-mramor-dvoin-s-razrez-tri-snimki.webp",
+    alt: "Двоен надгробен паметник от сив мрамор с три порцеланови снимки",
+    description: "Класически двоен паметник, изработен от висококачествен сив мрамор. Дизайнът се състои от две симетрични вертикални плочи, монтирани така, че празното пространство помежду им очертава формата на кръст."
   },
   {
     id: 'black-white-cross',
