@@ -9,6 +9,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 interface Monument {
   id: string;
   title: string;
+  seoTitle: string;
   category: "mramor" | "granit";
   image: string;
   alt: string;
@@ -17,32 +18,45 @@ interface Monument {
 
 const monumentsData: Monument[] = [
   {
-    id: 'mramor-rozarium',
-    title: "Модел Розариум",
+    id: 'siv-mramor-sartse',
+    title: "Модел Ангелска Обич",
+    seoTitle: "Надгробен паметник от сив мрамор - форма Сърце",
     category: "mramor",
-    image: "/assets/monuments/nadgroben-pametnik-byal-mramor-zaoblen-s-relefni-rozi-i-krast.webp",
-    alt: "Луксозен надгробен паметник от бял мрамор с релефни рози, изваян кръст и златен надпис",
-    description: "Изящен дизайн от бял мрамор с майсторски изработени релефни детайли, символизиращ чистота и вечна обич."
-  },
-  {
-    id: 'mramor-harmonia',
-    title: "Модел Хармония",
-    category: "mramor",
-    image: "/assets/monuments/nadgroben-pametnik-byal-mramor-asimetrichen-s-krast-i-lista.webp",
-    alt: "Асиметричен надгробен паметник от бял мрамор с релефни листа и кръст",
-    description: "Уникален асиметричен дизайн от бял мрамор с изящна дърворезба на листа и кръст, вдъхващ спокойствие и почит."
+    image: "/assets/monuments/nadgroben-pametnik-siv-mramor-sartse-forma-s-krast-i-snimka.webp",
+    alt: "Надгробен паметник от сив мрамор с форма на сърце, стилизирани криле и кръст",
+    description: "Трогателен дизайн от сив мрамор с форма на сърце и артистични релефни елементи, символизиращ неугасваща любов."
   },
   {
     id: 'mramor-arka-kotva',
     title: "Модел Надежда",
+    seoTitle: "Надгробен паметник от бял мрамор тип Арка с Котва",
     category: "mramor",
     image: "/assets/monuments/nadgroben-pametnik-byal-mramor-arka-kotva.webp",
-    alt: "Надгробен паметник от бял мрамор с форма на арка и гравиран златен символ котва",
-    description: "Класическа арка от висококачествен бял мрамор с гравиран символ на надеждата и златни надписи."
+    alt: "Надгробен паметник тип арка от бял мрамор с гравиран златен символ котва",
+    description: "Символичен модел с форма на арка и златен гравир на котва, олицетворяващ вярата и надеждата."
+  },
+  {
+    id: 'mramor-asim-list',
+    title: "Модел Хармония",
+    seoTitle: "Асиметричен надгробен паметник от бял мрамор с Кръст",
+    category: "mramor",
+    image: "/assets/monuments/nadgroben-pametnik-byal-mramor-asimetrichen-s-krast-i-lista.webp",
+    alt: "Асиметричен мраморен паметник с релефна украса от лаврови листа и каменен кръст",
+    description: "Артистичен асиметричен дизайн, съчетаващ природни мотиви и духовна символика в бял мрамор."
+  },
+  {
+    id: 'mramor-rozarium',
+    title: "Модел Розариум",
+    seoTitle: "Луксозен паметник от бял мрамор с релефни рози",
+    category: "mramor",
+    image: "/assets/monuments/nadgroben-pametnik-byal-mramor-zaoblen-s-relefni-rozi-i-krast.webp",
+    alt: "Луксозен паметник от бял мрамор със заоблен връх, релефни рози и златен надпис",
+    description: "Нежен и класически дизайн от бял мрамор с богато орнаментирани рози, изразяващи любов и почит."
   },
   {
     id: 'granit-siv-edinstvo',
     title: "Модел Единство",
+    seoTitle: "Двоен семеен паметник от сив гранит с Кръст",
     category: "granit",
     image: "/assets/monuments/nadgroben-pametnik-siv-granit-dvoin-s-razrez-tri-snimki.webp",
     alt: "Двоен семеен паметник от светъл сив гранит с дизайн на пресечен кръст",
