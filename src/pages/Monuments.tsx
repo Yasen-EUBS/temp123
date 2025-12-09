@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { SEO } from "@/components/SEO";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 interface Monument {
   id: string;
@@ -93,11 +94,62 @@ const services = [
 
 const Monuments = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [selectedMonument, setSelectedMonument] = useState<Monument | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const filteredMonuments = selectedCategory === "all" 
     ? monumentsData 
     : monumentsData.filter(m => m.category === selectedCategory);
+
+  const selectedMonument = selectedIndex !== null ? filteredMonuments[selectedIndex] : null;
+
+  const goToPrevious = useCallback(() => {
+    if (selectedIndex !== null && selectedIndex > 0) {
+      setSelectedIndex(selectedIndex - 1);
+    } else if (selectedIndex === 0) {
+      setSelectedIndex(filteredMonuments.length - 1);
+    }
+  }, [selectedIndex, filteredMonuments.length]);
+
+  const goToNext = useCallback(() => {
+    if (selectedIndex !== null && selectedIndex < filteredMonuments.length - 1) {
+      setSelectedIndex(selectedIndex + 1);
+    } else if (selectedIndex === filteredMonuments.length - 1) {
+      setSelectedIndex(0);
+    }
+  }, [selectedIndex, filteredMonuments.length]);
+
+  const closeLightbox = useCallback(() => {
+    setSelectedIndex(null);
+  }, []);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedIndex === null) return;
+      
+      switch (e.key) {
+        case 'ArrowLeft':
+          goToPrevious();
+          break;
+        case 'ArrowRight':
+          goToNext();
+          break;
+        case 'Escape':
+          closeLightbox();
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedIndex, goToPrevious, goToNext, closeLightbox]);
+
+  const openLightbox = (monumentId: string) => {
+    const index = filteredMonuments.findIndex(m => m.id === monumentId);
+    if (index !== -1) {
+      setSelectedIndex(index);
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -125,44 +177,80 @@ const Monuments = () => {
             </TabsList>
           </Tabs>
 
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-16">
+          {/* Mobile: 1 column, Desktop: 2-3 columns */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-16">
             {filteredMonuments.map((monument) => (
               <Card 
                 key={monument.id} 
-                className="hover:shadow-2xl transition-all duration-300 overflow-hidden border-border bg-card cursor-pointer group"
-                onClick={() => setSelectedMonument(monument)}
+                className="md:hover:shadow-2xl transition-all duration-300 overflow-hidden border-border bg-card cursor-pointer group"
+                onClick={() => openLightbox(monument.id)}
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
                   <img
                     src={monument.image}
                     alt={monument.alt}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover md:group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-card/90 via-transparent to-transparent" />
+                  {/* Gradient only at bottom - 20% height */}
+                  <div className="absolute bottom-0 left-0 right-0 h-[30%] bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+                  {/* Text overlay at bottom */}
                   <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h3 className="text-lg md:text-xl font-semibold text-foreground">{monument.title}</h3>
+                    <h3 className="text-base md:text-lg font-semibold text-white">{monument.title}</h3>
                   </div>
                 </div>
               </Card>
             ))}
           </div>
 
-          <Dialog open={!!selectedMonument} onOpenChange={() => setSelectedMonument(null)}>
-            <DialogContent className="max-w-3xl p-0 overflow-hidden">
+          {/* Lightbox Modal */}
+          <Dialog open={selectedIndex !== null} onOpenChange={() => setSelectedIndex(null)}>
+            <DialogContent className="max-w-[95vw] md:max-w-5xl h-[90vh] md:h-auto p-0 overflow-hidden bg-black/95 border-none">
               {selectedMonument && (
-                <div className="flex flex-col md:flex-row">
-                  <div className="md:w-1/2">
+                <div className="relative flex flex-col h-full">
+                  {/* Close button - large for touch */}
+                  <button
+                    onClick={closeLightbox}
+                    className="absolute top-4 right-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                    aria-label="Затвори"
+                  >
+                    <X className="w-6 h-6 md:w-5 md:h-5 text-white" />
+                  </button>
+
+                  {/* Navigation arrows */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
+                    className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-50 p-3 md:p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                    aria-label="Предишен"
+                  >
+                    <ChevronLeft className="w-8 h-8 md:w-6 md:h-6 text-white" />
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); goToNext(); }}
+                    className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-50 p-3 md:p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                    aria-label="Следващ"
+                  >
+                    <ChevronRight className="w-8 h-8 md:w-6 md:h-6 text-white" />
+                  </button>
+
+                  {/* Image container */}
+                  <div className="flex-1 flex items-center justify-center p-4 pt-16">
                     <img
                       src={selectedMonument.image}
                       alt={selectedMonument.alt}
-                      className="w-full h-full object-cover"
+                      className="max-h-[60vh] md:max-h-[70vh] w-auto object-contain"
                     />
                   </div>
-                  <div className="md:w-1/2 p-6 flex flex-col justify-center">
-                    <h2 className="text-2xl font-bold mb-4">{selectedMonument.title}</h2>
-                    <p className="text-muted-foreground mb-6">{selectedMonument.description}</p>
-                    <p className="text-lg">
+
+                  {/* Info section */}
+                  <div className="p-4 md:p-6 bg-black/80 text-white">
+                    <h2 className="text-xl md:text-2xl font-bold mb-2">{selectedMonument.title}</h2>
+                    <p className="text-white/80 text-sm md:text-base mb-3">{selectedMonument.description}</p>
+                    <p className="text-base md:text-lg">
                       За повече информация: <span className="font-bold text-secondary">02 846 55 24</span>
+                    </p>
+                    {/* Counter */}
+                    <p className="text-white/50 text-sm mt-2">
+                      {selectedIndex !== null ? selectedIndex + 1 : 0} / {filteredMonuments.length}
                     </p>
                   </div>
                 </div>
