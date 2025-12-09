@@ -11,7 +11,7 @@ interface Monument {
   id: string;
   title: string;
   seoTitle: string;
-  category: "mramor" | "granit";
+  category: "mramor" | "granit" | "both";
   image: string;
   alt: string;
   description: string;
@@ -116,6 +116,15 @@ const monumentsData: Monument[] = [
     image: "/assets/monuments/nadgroben-pametnik-siv-granit-dvoin-s-razrez-tri-snimki.webp",
     alt: "Двоен семеен паметник от светъл сив гранит с дизайн на пресечен кръст",
     description: "Масивен семеен модел от висококачествен сив гранит, символизиращ вечната връзка чрез централен кръст."
+  },
+  {
+    id: 'black-white-cross',
+    title: "Паметник тип Кръст от черен гранит и бял мрамор",
+    seoTitle: "Паметник Кръст - черен гранит и мрамор | Кипарис",
+    category: "both",
+    image: "/assets/monuments/nadgroben-pametnik-cheren-granit-byal-mramor-forma-krast.webp",
+    alt: "Надгробен паметник във форма на кръст от черен гранит и бял мрамор",
+    description: "Този модел се отличава със силния контраст между двата използвани материала. Централната част е от черен гранит, позволяващ прецизно лазерно гравиране на портрета, докато масивната рамка от бял мрамор очертава формата на стилизиран кръст."
   }
 ];
 
@@ -134,7 +143,7 @@ const Monuments = () => {
 
   const filteredMonuments = selectedCategory === "all" 
     ? monumentsData 
-    : monumentsData.filter(m => m.category === selectedCategory);
+    : monumentsData.filter(m => m.category === selectedCategory || m.category === "both");
 
   const selectedMonument = selectedIndex !== null ? filteredMonuments[selectedIndex] : null;
 
