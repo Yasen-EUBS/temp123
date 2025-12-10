@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -7,11 +6,7 @@ import { SEO } from "@/components/SEO";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { ChevronLeft, ChevronRight, X, Phone, Send } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { ChevronLeft, ChevronRight, X, Phone } from "lucide-react";
 
 type MonumentCategory = "mramor" | "granit" | "oformlenie" | "both";
 
@@ -296,9 +291,6 @@ const Monuments = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
-  const [formData, setFormData] = useState({ name: '', phone: '', message: '' });
-  const { toast } = useToast();
-  const isMobile = useIsMobile();
 
   // Filter monuments based on category
   const filteredMonuments = selectedCategory === "all" 
@@ -338,7 +330,6 @@ const Monuments = () => {
 
   const closeLightbox = useCallback(() => {
     setSelectedIndex(null);
-    setFormData({ name: '', phone: '', message: '' });
   }, []);
 
   // Keyboard navigation
@@ -368,27 +359,6 @@ const Monuments = () => {
     if (index !== -1) {
       setSelectedIndex(index);
     }
-  };
-
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name.trim() || !formData.phone.trim()) {
-      toast({
-        title: "Моля, попълнете задължителните полета",
-        variant: "destructive"
-      });
-      return;
-    }
-    
-    const phoneNumber = "35928465524";
-    window.open(`tel:${phoneNumber}`);
-    
-    toast({
-      title: "Благодарим за интереса!",
-      description: "Обадете се на посочения номер за консултация.",
-    });
-    
-    setFormData({ name: '', phone: '', message: '' });
   };
 
   return (
@@ -459,9 +429,9 @@ const Monuments = () => {
             </div>
           )}
 
-          {/* Immersive Lightbox Modal */}
+          {/* Immersive Lightbox Modal - Pure Image Viewer */}
           <Dialog open={selectedIndex !== null} onOpenChange={() => closeLightbox()}>
-            <DialogContent className="max-w-[98vw] md:max-w-5xl max-h-[95vh] p-0 overflow-hidden bg-background border-border">
+            <DialogContent className="max-w-[98vw] md:max-w-6xl max-h-[95vh] p-0 overflow-hidden bg-background border-border">
               {selectedMonument && (
                 <div className="relative flex flex-col md:flex-row h-full max-h-[95vh]">
                   {/* Close button */}
@@ -473,29 +443,29 @@ const Monuments = () => {
                     <X className="w-5 h-5 md:w-6 md:h-6 text-white" />
                   </button>
 
-                  {/* Left: Image Section */}
-                  <div className="relative flex-shrink-0 md:w-1/2 bg-black flex items-center justify-center">
-                    {/* Desktop: Navigation arrows on sides */}
-                    <button
-                      onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
-                      className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-white/20 hover:bg-white/40 transition-colors items-center justify-center"
-                      aria-label="Предишен"
-                    >
-                      <ChevronLeft className="w-7 h-7 text-white" />
-                    </button>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); goToNext(); }}
-                      className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-white/20 hover:bg-white/40 transition-colors items-center justify-center"
-                      aria-label="Следващ"
-                    >
-                      <ChevronRight className="w-7 h-7 text-white" />
-                    </button>
+                  {/* Desktop: Navigation arrows on sides - OUTSIDE content */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
+                    className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-black/40 hover:bg-black/60 transition-colors items-center justify-center"
+                    aria-label="Предишен"
+                  >
+                    <ChevronLeft className="w-8 h-8 text-white" />
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); goToNext(); }}
+                    className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-black/40 hover:bg-black/60 transition-colors items-center justify-center"
+                    aria-label="Следващ"
+                  >
+                    <ChevronRight className="w-8 h-8 text-white" />
+                  </button>
 
-                    {/* Image */}
+                  {/* Left: Image Section - Takes 70-75% on desktop */}
+                  <div className="relative flex-shrink-0 w-full md:w-[72%] bg-black flex items-center justify-center">
+                    {/* Image - Maximum size, never cropped */}
                     <img
                       src={selectedMonument.image}
                       alt={selectedMonument.alt}
-                      className="w-full h-48 md:h-[70vh] object-contain"
+                      className="w-full h-full max-h-[70vh] md:max-h-[85vh] object-contain"
                     />
 
                     {/* Counter overlay */}
@@ -505,18 +475,18 @@ const Monuments = () => {
                       </span>
                     </div>
 
-                    {/* Mobile: Navigation arrows at bottom corners */}
-                    <div className="md:hidden absolute bottom-12 left-0 right-0 flex justify-between px-4">
+                    {/* Mobile: Navigation arrows at bottom */}
+                    <div className="md:hidden absolute bottom-10 left-0 right-0 flex justify-between px-4">
                       <button
                         onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
-                        className="p-2 rounded-full bg-white/30 hover:bg-white/50 transition-colors"
+                        className="p-3 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
                         aria-label="Предишен"
                       >
                         <ChevronLeft className="w-6 h-6 text-white" />
                       </button>
                       <button
                         onClick={(e) => { e.stopPropagation(); goToNext(); }}
-                        className="p-2 rounded-full bg-white/30 hover:bg-white/50 transition-colors"
+                        className="p-3 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
                         aria-label="Следващ"
                       >
                         <ChevronRight className="w-6 h-6 text-white" />
@@ -524,83 +494,40 @@ const Monuments = () => {
                     </div>
                   </div>
 
-                  {/* Right: Info & Form Section */}
-                  <div className="flex-1 overflow-y-auto p-4 md:p-6 bg-card">
-                    <div className="space-y-4 md:space-y-5">
-                      {/* Header: Title */}
-                      <h2 className="text-xl md:text-2xl font-bold text-foreground">{selectedMonument.title}</h2>
+                  {/* Right: Minimalist Content Sidebar */}
+                  <div className="flex-1 overflow-y-auto p-4 md:p-5 bg-card flex flex-col">
+                    <div className="space-y-3 md:space-y-4 flex-1">
+                      {/* Header: Title - Gold color */}
+                      <h2 className="text-lg md:text-xl font-bold text-secondary">{selectedMonument.title}</h2>
                       
-                      {/* Sub-header: Personalization text (styled) */}
-                      <p className="text-sm md:text-base text-secondary italic font-medium">
-                        „Всички детайли (размер, вид камък, орнаменти и надписи) подлежат на пълна персонализация."
+                      {/* Sub-header: Personalization text (italic, muted) */}
+                      <p className="text-xs md:text-sm text-muted-foreground italic">
+                        „Всички детайли (размер, вид камък, орнаменти) подлежат на пълна персонализация."
                       </p>
 
                       {/* Body: Description */}
-                      <p className="text-muted-foreground text-sm md:text-base">{selectedMonument.description}</p>
+                      <p className="text-muted-foreground text-sm">{selectedMonument.description}</p>
 
                       {/* Specs badges */}
                       {selectedMonument.specs.features && selectedMonument.specs.features.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-1.5">
                           {selectedMonument.specs.features.map((feature, idx) => (
-                            <span key={idx} className="text-xs bg-secondary/20 text-secondary-foreground px-2 py-1 rounded-full">
+                            <span key={idx} className="text-xs bg-secondary/15 text-secondary px-2 py-0.5 rounded-full">
                               {feature}
                             </span>
                           ))}
                         </div>
                       )}
-
-                      {/* Footer: Intelligent Call CTA */}
-                      {isMobile ? (
-                        <a 
-                          href="tel:028465524"
-                          className="flex items-center justify-center gap-2 bg-secondary text-secondary-foreground py-3 rounded-lg font-bold hover:bg-secondary/90 transition-colors w-full"
-                        >
-                          <Phone className="w-5 h-5" />
-                          02 846 55 24
-                        </a>
-                      ) : (
-                        <Link 
-                          to="/kontakti"
-                          className="flex items-center justify-center gap-2 bg-secondary text-secondary-foreground py-3 rounded-lg font-bold hover:bg-secondary/90 transition-colors w-full"
-                        >
-                          <Phone className="w-5 h-5" />
-                          02 846 55 24
-                        </Link>
-                      )}
-
-                      {/* Lead Capture Form */}
-                      <div className="border-t border-border pt-4">
-                        <h3 className="font-semibold mb-3 text-foreground">Запитване за цена</h3>
-                        <form onSubmit={handleFormSubmit} className="space-y-3">
-                          <Input
-                            placeholder="Вашето име *"
-                            value={formData.name}
-                            onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                            className="bg-background border-border"
-                            required
-                          />
-                          <Input
-                            placeholder="Телефон за връзка *"
-                            type="tel"
-                            value={formData.phone}
-                            onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                            className="bg-background border-border"
-                            required
-                          />
-                          <Textarea
-                            placeholder="Допълнителна информация (размери, специфики...)"
-                            value={formData.message}
-                            onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-                            className="bg-background border-border min-h-[60px]"
-                            rows={2}
-                          />
-                          <Button type="submit" className="w-full bg-primary hover:bg-primary/90">
-                            <Send className="w-4 h-4 mr-2" />
-                            Изпрати запитване
-                          </Button>
-                        </form>
-                      </div>
                     </div>
+
+                    {/* Footer: CTA Button - Always tel: link */}
+                    <a 
+                      href="tel:028465524"
+                      className="flex items-center justify-center gap-3 bg-secondary text-secondary-foreground py-4 rounded-lg font-bold text-lg md:text-xl hover:bg-secondary/90 hover:scale-[1.02] transition-all w-full mt-4 shadow-lg"
+                    >
+                      <Phone className="w-6 h-6" />
+                      02 846 55 24
+                    </a>
                   </div>
                 </div>
               )}
