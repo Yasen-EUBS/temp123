@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -10,8 +11,16 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ChevronLeft, ChevronRight, X, Phone, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type MonumentCategory = "mramor" | "granit" | "oformlenie" | "both";
+
+interface MonumentSpecs {
+  material: string;
+  color: string;
+  features?: string[];
+  availability?: string;
+}
 
 interface Monument {
   id: string;
@@ -21,6 +30,7 @@ interface Monument {
   image: string;
   alt: string;
   description: string;
+  specs: MonumentSpecs;
 }
 
 const monumentsData: Monument[] = [
@@ -32,7 +42,8 @@ const monumentsData: Monument[] = [
     category: 'mramor',
     image: '/assets/monuments/nadgroben-pametnik-byal-mramor-koloni-krast-snimka.webp',
     alt: 'Луксозен надгробен паметник от бял мрамор с две масивни колони и голям кръст отгоре - изработка на Траурна агенция Кипарис',
-    description: 'Изящен модел от висококачествен бял мрамор. Композицията включва две странични колони, поддържащи арка с масивен кръст – символ на вярата. Включва мраморни вази и фенер.'
+    description: 'Изящен модел от висококачествен бял мрамор. Композицията включва две странични колони, поддържащи арка с масивен кръст – символ на вярата. Включва мраморни вази и фенер.',
+    specs: { material: 'Бял мрамор', color: 'Бял', features: ['Колони', 'Кръст', 'Вази', 'Фенер'] }
   },
   {
     id: 'byal-mramor-skulptura-krast-lista',
@@ -41,7 +52,8 @@ const monumentsData: Monument[] = [
     category: 'mramor',
     image: '/assets/monuments/nadgroben-pametnik-byal-mramor-skulptura-krast-snimka.webp',
     alt: 'Скулптурен надгробен паметник от бял мрамор с кръст и релефни листа',
-    description: 'Този изключителен модел е изработен от висококачествен бял мрамор, отличаващ се с детайлна ръчна обработка. Дизайнът обединява християнската символика чрез ясно изразен кръст в горната част и богата орнаментика от скулптирани лаврови листа.'
+    description: 'Този изключителен модел е изработен от висококачествен бял мрамор, отличаващ се с детайлна ръчна обработка. Дизайнът обединява християнската символика чрез ясно изразен кръст в горната част и богата орнаментика от скулптирани лаврови листа.',
+    specs: { material: 'Бял мрамор', color: 'Бял', features: ['Ръчна изработка', 'Релефни листа', 'Кръст'] }
   },
   {
     id: 'siv-mramor-asimetrichen-krast-bucharda',
@@ -50,7 +62,8 @@ const monumentsData: Monument[] = [
     category: 'mramor',
     image: '/assets/monuments/nadgroben-pametnik-siv-mramor-asimetrichen-s-krast-i-snimka.webp',
     alt: 'Надгробен паметник от сив мрамор с бучарда и гравиран венец',
-    description: 'Класически модел от сив мрамор, който впечатлява с интересната си игра на текстури. Дизайнът залага на контраста между идеално полираното лице за надписите и рамката тип „бучарда".'
+    description: 'Класически модел от сив мрамор, който впечатлява с интересната си игра на текстури. Дизайнът залага на контраста между идеално полираното лице за надписите и рамката тип „бучарда".',
+    specs: { material: 'Сив мрамор', color: 'Сив', features: ['Бучарда', 'Асиметричен', 'Кръст'] }
   },
   {
     id: 'byal-mramor-asimetrichen-krast-topka',
@@ -59,7 +72,8 @@ const monumentsData: Monument[] = [
     category: 'mramor',
     image: '/assets/monuments/nadgroben-pametnik-byal-mramor-asimetrichen-s-krast-snimka-i-topka.webp',
     alt: 'Надгробен паметник от бял мрамор с релефна футболна топка и кръст',
-    description: 'Този модел е отличен пример за персонализиран мемориален дизайн, изработен от бял мрамор. Основният акцент е детайлно скулптираната футболна топка в основата, символизираща любимото занимание на покойника.'
+    description: 'Този модел е отличен пример за персонализиран мемориален дизайн, изработен от бял мрамор. Основният акцент е детайлно скулптираната футболна топка в основата, символизираща любимото занимание на покойника.',
+    specs: { material: 'Бял мрамор', color: 'Бял', features: ['Персонализиран', 'Футболна топка', 'Кръст'] }
   },
   {
     id: 'byal-mramor-arkhitekturen-kolona-vaza',
@@ -68,7 +82,8 @@ const monumentsData: Monument[] = [
     category: 'mramor',
     image: '/assets/monuments/nadgroben-pametnik-byal-mramor-asimetrichen-s-kolona-i-vaza.webp',
     alt: 'Луксозен надгробен паметник от бял мрамор с колона и каменна ваза',
-    description: 'Изящен паметник с архитектурен стил, изработен от бял мрамор с характерни сиви жилки. Дизайнът включва масивна колона в дорийски стил от лявата страна и елегантна мраморна ваза върху специален постамент.'
+    description: 'Изящен паметник с архитектурен стил, изработен от бял мрамор с характерни сиви жилки. Дизайнът включва масивна колона в дорийски стил от лявата страна и елегантна мраморна ваза върху специален постамент.',
+    specs: { material: 'Бял мрамор', color: 'Бял', features: ['Колона', 'Ваза', 'Архитектурен стил'] }
   },
   {
     id: 'mramoren-pametnik-asimetrien-krast-klonka',
@@ -77,7 +92,8 @@ const monumentsData: Monument[] = [
     category: 'mramor',
     image: '/assets/monuments/nadgroben-pametnik-byal-mramor-asimetrien-s-krast-i-listo.webp',
     alt: 'Надгробен паметник от бял мрамор с релефен кръст, декоративна клонка и фенер - Траурна агенция Кипарис',
-    description: 'Красив паметник от бял мрамор с асиметричен дизайн. Декориран с дълбоко изрязан кръст върху бучарда (грапав фон) и изящна растителна орнаментика в дясната част.'
+    description: 'Красив паметник от бял мрамор с асиметричен дизайн. Декориран с дълбоко изрязан кръст върху бучарда (грапав фон) и изящна растителна орнаментика в дясната част.',
+    specs: { material: 'Бял мрамор', color: 'Бял', features: ['Асиметричен', 'Клонка', 'Бучарда'] }
   },
   {
     id: 'siv-mramor-sartse',
@@ -86,7 +102,8 @@ const monumentsData: Monument[] = [
     category: "mramor",
     image: "/assets/monuments/nadgroben-pametnik-siv-mramor-sartse-forma-s-krast-i-snimka.webp",
     alt: "Надгробен паметник от сив мрамор с форма на сърце, стилизирани криле и кръст",
-    description: "Трогателен дизайн от сив мрамор с форма на сърце и артистични релефни елементи, символизиращ неугасваща любов."
+    description: "Трогателен дизайн от сив мрамор с форма на сърце и артистични релефни елементи, символизиращ неугасваща любов.",
+    specs: { material: 'Сив мрамор', color: 'Сив', features: ['Форма сърце', 'Криле', 'Кръст'] }
   },
   {
     id: 'mramor-arka-kotva',
@@ -95,7 +112,8 @@ const monumentsData: Monument[] = [
     category: "mramor",
     image: "/assets/monuments/nadgroben-pametnik-byal-mramor-arka-kotva.webp",
     alt: "Надгробен паметник тип арка от бял мрамор с гравиран златен символ котва",
-    description: "Символичен модел с форма на арка и златен гравир на котва, олицетворяващ вярата и надеждата."
+    description: "Символичен модел с форма на арка и златен гравир на котва, олицетворяващ вярата и надеждата.",
+    specs: { material: 'Бял мрамор', color: 'Бял', features: ['Арка', 'Златен гравир', 'Котва'] }
   },
   {
     id: 'mramor-asim-list',
@@ -104,7 +122,8 @@ const monumentsData: Monument[] = [
     category: "mramor",
     image: "/assets/monuments/nadgroben-pametnik-byal-mramor-asimetrichen-s-krast-i-lista.webp",
     alt: "Асиметричен мраморен паметник с релефна украса от лаврови листа и каменен кръст",
-    description: "Артистичен асиметричен дизайн, съчетаващ природни мотиви и духовна символика в бял мрамор."
+    description: "Артистичен асиметричен дизайн, съчетаващ природни мотиви и духовна символика в бял мрамор.",
+    specs: { material: 'Бял мрамор', color: 'Бял', features: ['Асиметричен', 'Лаврови листа', 'Кръст'] }
   },
   {
     id: 'mramor-rozarium',
@@ -113,7 +132,8 @@ const monumentsData: Monument[] = [
     category: "mramor",
     image: "/assets/monuments/nadgroben-pametnik-byal-mramor-zaoblen-s-relefni-rozi-i-krast.webp",
     alt: "Луксозен паметник от бял мрамор със заоблен връх, релефни рози и златен надпис",
-    description: "Нежен и класически дизайн от бял мрамор с богато орнаментирани рози, изразяващи любов и почит."
+    description: "Нежен и класически дизайн от бял мрамор с богато орнаментирани рози, изразяващи любов и почит.",
+    specs: { material: 'Бял мрамор', color: 'Бял', features: ['Заоблен връх', 'Релефни рози', 'Златен надпис'] }
   },
   {
     id: 'grey-marble-double-family',
@@ -122,7 +142,8 @@ const monumentsData: Monument[] = [
     category: "mramor",
     image: "/assets/monuments/nadgroben-pametnik-siv-mramor-dvoin-s-razrez-tri-snimki.webp",
     alt: "Двоен надгробен паметник от сив мрамор с три порцеланови снимки",
-    description: "Класически двоен паметник, изработен от висококачествен сив мрамор. Дизайнът се състои от две симетрични вертикални плочи, монтирани така, че празното пространство помежду им очертава формата на кръст."
+    description: "Класически двоен паметник, изработен от висококачествен сив мрамор. Дизайнът се състои от две симетрични вертикални плочи, монтирани така, че празното пространство помежду им очертава формата на кръст.",
+    specs: { material: 'Сив мрамор', color: 'Сив', features: ['Двоен', 'Фамилен', 'Място за 3+ снимки'] }
   },
   {
     id: 'black-white-cross',
@@ -131,7 +152,8 @@ const monumentsData: Monument[] = [
     category: "both",
     image: "/assets/monuments/nadgroben-pametnik-cheren-granit-byal-mramor-forma-krast.webp",
     alt: "Надгробен паметник във форма на кръст от черен гранит и бял мрамор",
-    description: "Този модел се отличава със силния контраст между двата използвани материала. Централната част е от черен гранит, позволяващ прецизно лазерно гравиране на портрета, докато масивната рамка от бял мрамор очертава формата на стилизиран кръст."
+    description: "Този модел се отличава със силния контраст между двата използвани материала. Централната част е от черен гранит, позволяващ прецизно лазерно гравиране на портрета, докато масивната рамка от бял мрамор очертава формата на стилизиран кръст.",
+    specs: { material: 'Черен гранит & Бял мрамор', color: 'Черно-бял', features: ['Форма кръст', 'Комбинирани материали', 'Лазерно гравиране'] }
   },
   
   // === GRANITE PLACEHOLDERS ===
@@ -142,7 +164,8 @@ const monumentsData: Monument[] = [
     category: "granit",
     image: "/assets/monuments/nadgroben-pametnik-cheren-granit-byal-mramor-forma-krast.webp",
     alt: "Класически надгробен паметник от черен гранит",
-    description: "Елегантен паметник от полиран черен гранит с изчистен дизайн. Идеален за лазерно гравиране на портрет и надписи."
+    description: "Елегантен паметник от полиран черен гранит с изчистен дизайн. Идеален за лазерно гравиране на портрет и надписи.",
+    specs: { material: 'Черен гранит', color: 'Черен', features: ['Класически', 'Полиран', 'Лазерно гравиране'] }
   },
   {
     id: 'granit-cheren-pravougulen',
@@ -151,7 +174,8 @@ const monumentsData: Monument[] = [
     category: "granit",
     image: "/assets/monuments/nadgroben-pametnik-cheren-granit-byal-mramor-forma-krast.webp",
     alt: "Правоъгълен надгробен паметник от черен гранит",
-    description: "Строг и достолепен модел от първокласен черен гранит. Правоъгълната форма осигурява достатъчно площ за детайлна гравировка."
+    description: "Строг и достолепен модел от първокласен черен гранит. Правоъгълната форма осигурява достатъчно площ за детайлна гравировка.",
+    specs: { material: 'Черен гранит', color: 'Черен', features: ['Правоъгълен', 'Достатъчно площ', 'Детайлна гравировка'] }
   },
   {
     id: 'granit-cheren-zaoblen',
@@ -160,7 +184,8 @@ const monumentsData: Monument[] = [
     category: "granit",
     image: "/assets/monuments/nadgroben-pametnik-cheren-granit-byal-mramor-forma-krast.webp",
     alt: "Надгробен паметник от черен гранит със заоблен връх",
-    description: "Омекотен дизайн от черен гранит със заоблена горна част. Съчетава класика и модерност."
+    description: "Омекотен дизайн от черен гранит със заоблена горна част. Съчетава класика и модерност.",
+    specs: { material: 'Черен гранит', color: 'Черен', features: ['Заоблен връх', 'Модерен', 'Класически'] }
   },
   {
     id: 'granit-siv-eleganten',
@@ -169,7 +194,8 @@ const monumentsData: Monument[] = [
     category: "granit",
     image: "/assets/monuments/nadgroben-pametnik-cheren-granit-byal-mramor-forma-krast.webp",
     alt: "Елегантен надгробен паметник от сив гранит",
-    description: "Изискан модел от натурален сив гранит с фина текстура. Подходящ за различни стилове гравировка."
+    description: "Изискан модел от натурален сив гранит с фина текстура. Подходящ за различни стилове гравировка.",
+    specs: { material: 'Сив гранит', color: 'Сив', features: ['Елегантен', 'Фина текстура', 'Универсален'] }
   },
   {
     id: 'granit-cheren-dvoen',
@@ -178,7 +204,8 @@ const monumentsData: Monument[] = [
     category: "granit",
     image: "/assets/monuments/nadgroben-pametnik-cheren-granit-byal-mramor-forma-krast.webp",
     alt: "Двоен семеен паметник от черен гранит",
-    description: "Масивен семеен паметник от полиран черен гранит. Проектиран за два или повече портрета и надписи."
+    description: "Масивен семеен паметник от полиран черен гранит. Проектиран за два или повече портрета и надписи.",
+    specs: { material: 'Черен гранит', color: 'Черен', features: ['Двоен', 'Семеен', 'Масивен'] }
   },
   {
     id: 'granit-cheren-s-vaza',
@@ -187,7 +214,8 @@ const monumentsData: Monument[] = [
     category: "granit",
     image: "/assets/monuments/nadgroben-pametnik-cheren-granit-byal-mramor-forma-krast.webp",
     alt: "Надгробен паметник от черен гранит с вградена ваза",
-    description: "Практичен модел от черен гранит с интегрирана каменна ваза за цветя."
+    description: "Практичен модел от черен гранит с интегрирана каменна ваза за цветя.",
+    specs: { material: 'Черен гранит', color: 'Черен', features: ['С ваза', 'Практичен', 'Интегрирана ваза'] }
   },
 
   // === OFORMLENIE (DESIGNS/ARRANGEMENTS) PLACEHOLDERS ===
@@ -198,7 +226,8 @@ const monumentsData: Monument[] = [
     category: "oformlenie",
     image: "/assets/monuments/nadgroben-pametnik-byal-mramor-asimetrichen-s-kolona-i-vaza.webp",
     alt: "Цялостно оформление на гроб от бял мрамор",
-    description: "Комплексно решение включващо паметник, бордюри, плоча и декоративни елементи от бял мрамор."
+    description: "Комплексно решение включващо паметник, бордюри, плоча и декоративни елементи от бял мрамор.",
+    specs: { material: 'Бял мрамор', color: 'Бял', features: ['Комплексно', 'Бордюри', 'Плоча'] }
   },
   {
     id: 'oformlenie-bordyuri-granit',
@@ -207,7 +236,8 @@ const monumentsData: Monument[] = [
     category: "oformlenie",
     image: "/assets/monuments/nadgroben-pametnik-cheren-granit-byal-mramor-forma-krast.webp",
     alt: "Гранитни бордюри и плочи за гробно оформление",
-    description: "Изработка и монтаж на гранитни бордюри, плочи и пътеки за цялостно оформление на гробното място."
+    description: "Изработка и монтаж на гранитни бордюри, плочи и пътеки за цялостно оформление на гробното място.",
+    specs: { material: 'Гранит', color: 'Черен/Сив', features: ['Бордюри', 'Плочи', 'Пътеки'] }
   },
   {
     id: 'oformlenie-kombiniran',
@@ -216,7 +246,8 @@ const monumentsData: Monument[] = [
     category: "oformlenie",
     image: "/assets/monuments/nadgroben-pametnik-cheren-granit-byal-mramor-forma-krast.webp",
     alt: "Комбинирано оформление от гранит и мрамор",
-    description: "Уникално съчетание от гранит и мрамор за ефектен контраст и завършен вид на гробното място."
+    description: "Уникално съчетание от гранит и мрамор за ефектен контраст и завършен вид на гробното място.",
+    specs: { material: 'Гранит & Мрамор', color: 'Комбиниран', features: ['Контраст', 'Комбинирани', 'Уникален'] }
   },
   {
     id: 'oformlenie-mozaika',
@@ -225,7 +256,8 @@ const monumentsData: Monument[] = [
     category: "oformlenie",
     image: "/assets/monuments/nadgroben-pametnik-byal-mramor-asimetrichen-s-kolona-i-vaza.webp",
     alt: "Мозаечно оформление на гроб",
-    description: "Художествено оформление с мозаечни елементи и декоративни камъни за индивидуален вид."
+    description: "Художествено оформление с мозаечни елементи и декоративни камъни за индивидуален вид.",
+    specs: { material: 'Мозайка', color: 'Различни', features: ['Художествено', 'Мозаечни елементи', 'Индивидуален'] }
   },
   {
     id: 'oformlenie-cvetarnik',
@@ -234,7 +266,8 @@ const monumentsData: Monument[] = [
     category: "oformlenie",
     image: "/assets/monuments/nadgroben-pametnik-byal-mramor-asimetrichen-s-kolona-i-vaza.webp",
     alt: "Гробно оформление с вграден цветарник",
-    description: "Практично оформление с вграден цветарник за засаждане на живи цветя и зеленина."
+    description: "Практично оформление с вграден цветарник за засаждане на живи цветя и зеленина.",
+    specs: { material: 'Мрамор/Гранит', color: 'По избор', features: ['Цветарник', 'Практично', 'Зеленина'] }
   },
   {
     id: 'oformlenie-semeen-kompleks',
@@ -243,7 +276,8 @@ const monumentsData: Monument[] = [
     category: "oformlenie",
     image: "/assets/monuments/nadgroben-pametnik-siv-mramor-dvoin-s-razrez-tri-snimki.webp",
     alt: "Цялостно оформление на семеен гроб",
-    description: "Пълно оформление на фамилно гробно място с няколко паметника, обща рамка и декоративни елементи."
+    description: "Пълно оформление на фамилно гробно място с няколко паметника, обща рамка и декоративни елементи.",
+    specs: { material: 'По избор', color: 'По избор', features: ['Семеен', 'Няколко паметника', 'Обща рамка'] }
   }
 ];
 
@@ -264,6 +298,7 @@ const Monuments = () => {
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [formData, setFormData] = useState({ name: '', phone: '', message: '' });
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
   // Filter monuments based on category
   const filteredMonuments = selectedCategory === "all" 
@@ -345,8 +380,6 @@ const Monuments = () => {
       return;
     }
     
-    // Create WhatsApp/Phone message
-    const message = `Здравейте, интересувам се от паметник: ${selectedMonument?.title}. ${formData.message}`.trim();
     const phoneNumber = "35928465524";
     window.open(`tel:${phoneNumber}`);
     
@@ -428,7 +461,7 @@ const Monuments = () => {
 
           {/* Immersive Lightbox Modal */}
           <Dialog open={selectedIndex !== null} onOpenChange={() => closeLightbox()}>
-            <DialogContent className="max-w-[98vw] md:max-w-6xl max-h-[95vh] p-0 overflow-hidden bg-background border-border">
+            <DialogContent className="max-w-[98vw] md:max-w-5xl max-h-[95vh] p-0 overflow-hidden bg-background border-border">
               {selectedMonument && (
                 <div className="relative flex flex-col md:flex-row h-full max-h-[95vh]">
                   {/* Close button */}
@@ -442,20 +475,20 @@ const Monuments = () => {
 
                   {/* Left: Image Section */}
                   <div className="relative flex-shrink-0 md:w-1/2 bg-black flex items-center justify-center">
-                    {/* Navigation arrows - Desktop: sides, Mobile: bottom overlay */}
+                    {/* Desktop: Navigation arrows on sides */}
                     <button
                       onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 z-40 p-2 md:p-3 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+                      className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-white/20 hover:bg-white/40 transition-colors items-center justify-center"
                       aria-label="Предишен"
                     >
-                      <ChevronLeft className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                      <ChevronLeft className="w-7 h-7 text-white" />
                     </button>
                     <button
                       onClick={(e) => { e.stopPropagation(); goToNext(); }}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 z-40 p-2 md:p-3 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+                      className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-white/20 hover:bg-white/40 transition-colors items-center justify-center"
                       aria-label="Следващ"
                     >
-                      <ChevronRight className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                      <ChevronRight className="w-7 h-7 text-white" />
                     </button>
 
                     {/* Image */}
@@ -471,32 +504,69 @@ const Monuments = () => {
                         {selectedIndex !== null ? selectedIndex + 1 : 0} / {filteredMonuments.length}
                       </span>
                     </div>
+
+                    {/* Mobile: Navigation arrows at bottom corners */}
+                    <div className="md:hidden absolute bottom-12 left-0 right-0 flex justify-between px-4">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
+                        className="p-2 rounded-full bg-white/30 hover:bg-white/50 transition-colors"
+                        aria-label="Предишен"
+                      >
+                        <ChevronLeft className="w-6 h-6 text-white" />
+                      </button>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); goToNext(); }}
+                        className="p-2 rounded-full bg-white/30 hover:bg-white/50 transition-colors"
+                        aria-label="Следващ"
+                      >
+                        <ChevronRight className="w-6 h-6 text-white" />
+                      </button>
+                    </div>
                   </div>
 
                   {/* Right: Info & Form Section */}
                   <div className="flex-1 overflow-y-auto p-4 md:p-6 bg-card">
-                    <div className="space-y-4 md:space-y-6">
-                      {/* Title & Description */}
-                      <div>
-                        <h2 className="text-xl md:text-2xl font-bold mb-2 text-foreground">{selectedMonument.title}</h2>
-                        <p className="text-muted-foreground text-sm md:text-base">{selectedMonument.description}</p>
-                      </div>
+                    <div className="space-y-4 md:space-y-5">
+                      {/* Header: Title */}
+                      <h2 className="text-xl md:text-2xl font-bold text-foreground">{selectedMonument.title}</h2>
+                      
+                      {/* Sub-header: Personalization text (styled) */}
+                      <p className="text-sm md:text-base text-secondary italic font-medium">
+                        „Всички детайли (размер, вид камък, орнаменти и надписи) подлежат на пълна персонализация."
+                      </p>
 
-                      {/* Personalization SEO Text */}
-                      <div className="bg-secondary/10 border border-secondary/30 rounded-lg p-3 md:p-4">
-                        <p className="text-sm md:text-base text-foreground italic">
-                          „Всички детайли по модела (размер, вид камък, орнаменти и надписи) подлежат на пълна персонализация според Вашите изисквания."
-                        </p>
-                      </div>
+                      {/* Body: Description */}
+                      <p className="text-muted-foreground text-sm md:text-base">{selectedMonument.description}</p>
 
-                      {/* Quick Call CTA */}
-                      <a 
-                        href="tel:028465524" 
-                        className="flex items-center justify-center gap-2 bg-secondary text-secondary-foreground py-3 rounded-lg font-bold hover:bg-secondary/90 transition-colors"
-                      >
-                        <Phone className="w-5 h-5" />
-                        02 846 55 24
-                      </a>
+                      {/* Specs badges */}
+                      {selectedMonument.specs.features && selectedMonument.specs.features.length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                          {selectedMonument.specs.features.map((feature, idx) => (
+                            <span key={idx} className="text-xs bg-secondary/20 text-secondary-foreground px-2 py-1 rounded-full">
+                              {feature}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Footer: Intelligent Call CTA */}
+                      {isMobile ? (
+                        <a 
+                          href="tel:028465524"
+                          className="flex items-center justify-center gap-2 bg-secondary text-secondary-foreground py-3 rounded-lg font-bold hover:bg-secondary/90 transition-colors w-full"
+                        >
+                          <Phone className="w-5 h-5" />
+                          02 846 55 24
+                        </a>
+                      ) : (
+                        <Link 
+                          to="/kontakti"
+                          className="flex items-center justify-center gap-2 bg-secondary text-secondary-foreground py-3 rounded-lg font-bold hover:bg-secondary/90 transition-colors w-full"
+                        >
+                          <Phone className="w-5 h-5" />
+                          02 846 55 24
+                        </Link>
+                      )}
 
                       {/* Lead Capture Form */}
                       <div className="border-t border-border pt-4">
