@@ -25,31 +25,6 @@ const Pogrebenie = () => {
     { name: "Луксозен пакет", price: "1415", priceCurrency: "EUR" }
   ];
 
-  const productSchema = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Икономичен пакет Погребение",
-      "description": "Пълна организация на погребение в София - икономичен пакет.",
-      "offers": {
-        "@type": "Offer",
-        "price": "773",
-        "priceCurrency": "EUR"
-      }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Луксозен пакет Погребение",
-      "description": "Пълна организация на погребение в София - луксозен пакет.",
-      "offers": {
-        "@type": "Offer",
-        "price": "1415",
-        "priceCurrency": "EUR"
-      }
-    }
-  ];
-
   const breadcrumbs = [
     { name: "Начало", url: "/" },
     { name: "Погребални услуги", url: "/pogrebalni-uslugi" },
@@ -98,8 +73,8 @@ const Pogrebenie = () => {
         serviceName="Погребение"
         offers={offers}
         breadcrumbs={breadcrumbs}
+        schemaType="Product"
       />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
       <Navigation />
       
       {/* Hero Section */}
