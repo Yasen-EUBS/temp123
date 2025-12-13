@@ -14,8 +14,8 @@ const Kremacia = () => {
   const [luxuryExpanded, setLuxuryExpanded] = useState(false);
 
   const offers = [
-    { name: "Икономичен пакет", price: "822.26", priceCurrency: "EUR" },
-    { name: "Луксозен пакет", price: "1778.84", priceCurrency: "EUR" }
+    { name: "Икономичен пакет", price: "822", priceCurrency: "EUR" },
+    { name: "Луксозен пакет", price: "1779", priceCurrency: "EUR" }
   ];
 
   const productSchema = [
@@ -26,7 +26,7 @@ const Kremacia = () => {
       "description": "Пълна организация на кремация в София - икономичен пакет.",
       "offers": {
         "@type": "Offer",
-        "price": "822.26",
+        "price": "822",
         "priceCurrency": "EUR"
       }
     },
@@ -37,7 +37,7 @@ const Kremacia = () => {
       "description": "Луксозна организация на кремация в София с ритуал в Централни софийски гробища.",
       "offers": {
         "@type": "Offer",
-        "price": "1778.84",
+        "price": "1779",
         "priceCurrency": "EUR"
       }
     }
@@ -163,7 +163,7 @@ const Kremacia = () => {
               <Card className="border-border bg-card/95 hover:shadow-xl transition-all duration-300 relative overflow-hidden">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-xl md:text-3xl">Икономичен пакет</CardTitle>
-                  <div className="text-2xl md:text-4xl font-bold text-secondary mt-2">822.26 EUR</div>
+                  <div className="text-2xl md:text-4xl font-bold text-secondary mt-2">822 EUR</div>
                   <p className="text-xs text-secondary/80 font-medium mt-1">Крайна цена без скрити такси</p>
                 </CardHeader>
                 <CardContent className="pt-2">
@@ -200,7 +200,7 @@ const Kremacia = () => {
               <Card className="border-border bg-card/95 hover:shadow-xl transition-all duration-300 relative overflow-hidden">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-xl md:text-3xl">Луксозен пакет</CardTitle>
-                  <div className="text-2xl md:text-4xl font-bold text-secondary mt-2">1778.84 EUR</div>
+                  <div className="text-2xl md:text-4xl font-bold text-secondary mt-2">1779 EUR</div>
                   <p className="text-xs text-secondary/80 font-medium mt-1">Крайна цена без скрити такси</p>
                   <p className="text-xs md:text-sm text-accent font-medium mt-2">Включва граждански/църковен ритуал и кетъринг</p>
                 </CardHeader>
