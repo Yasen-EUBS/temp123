@@ -18,31 +18,6 @@ const Kremacia = () => {
     { name: "Луксозен пакет", price: "1779", priceCurrency: "EUR" }
   ];
 
-  const productSchema = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Икономичен пакет Кремация",
-      "description": "Пълна организация на кремация в София - икономичен пакет.",
-      "offers": {
-        "@type": "Offer",
-        "price": "822",
-        "priceCurrency": "EUR"
-      }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Луксозен пакет Кремация",
-      "description": "Луксозна организация на кремация в София с ритуал в Централни софийски гробища.",
-      "offers": {
-        "@type": "Offer",
-        "price": "1779",
-        "priceCurrency": "EUR"
-      }
-    }
-  ];
-
   const breadcrumbs = [
     { name: "Начало", url: "/" },
     { name: "Погребални услуги", url: "/pogrebalni-uslugi" },
@@ -121,8 +96,8 @@ const Kremacia = () => {
         serviceName="Кремация"
         offers={offers}
         breadcrumbs={breadcrumbs}
+        schemaType="Product"
       />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
       <Navigation />
       
       {/* Hero Section */}
