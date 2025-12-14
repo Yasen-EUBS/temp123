@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -348,9 +349,19 @@ const services = [
 const ITEMS_PER_PAGE = 12;
 
 const Monuments = () => {
+  const location = useLocation();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+
+  // Deep linking: set category based on URL hash
+  useEffect(() => {
+    const hash = location.hash.replace("#", "");
+    if (hash && ["granit", "mramor", "oformlenie"].includes(hash)) {
+      setSelectedCategory(hash);
+      setVisibleCount(ITEMS_PER_PAGE);
+    }
+  }, [location.hash]);
 
   // Filter monuments based on category
   const filteredMonuments = selectedCategory === "all" 

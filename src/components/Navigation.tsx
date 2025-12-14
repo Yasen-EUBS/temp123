@@ -17,6 +17,7 @@ import {
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isStokiSubmenuOpen, setIsStokiSubmenuOpen] = useState(false);
+  const [isPametnitsiSubmenuOpen, setIsPametnitsiSubmenuOpen] = useState(false);
   const { isVisible: isCookieBannerVisible } = useCookieConsent();
 
   const navItems = [
@@ -24,8 +25,8 @@ export const Navigation = () => {
     { label: "Погребение", href: "/pogrebenie" },
     { label: "Кремация", href: "/kremacia" },
     { label: "Превоз на Покойник", href: "/transport-na-pokojnik" },
-    { label: "Надгробни Паметници", href: "/nadgrobni-pametnici" },
-    { label: "Траурни стоки", href: "/traurni-stoki", hasSubmenu: true },
+    { label: "Надгробни Паметници", href: "/nadgrobni-pametnici", hasSubmenu: "pametnitsi" },
+    { label: "Траурни стоки", href: "/traurni-stoki", hasSubmenu: "stoki" },
     { label: "Полезно", href: "/polezno" },
     { label: "Контакти", href: "/kontakti" },
   ];
@@ -39,9 +40,16 @@ export const Navigation = () => {
     { label: "Паметници", href: "/nadgrobni-pametnici" },
   ];
 
+  const pametnitsiSubItems = [
+    { label: "Гранитни паметници", href: "/nadgrobni-pametnici#granit" },
+    { label: "Мраморни паметници", href: "/nadgrobni-pametnici#mramor" },
+    { label: "Цялостни оформления", href: "/nadgrobni-pametnici#oformlenie" },
+  ];
+
   const handleMobileNavClick = () => {
     setIsMenuOpen(false);
     setIsStokiSubmenuOpen(false);
+    setIsPametnitsiSubmenuOpen(false);
   };
 
   return (
@@ -93,8 +101,11 @@ export const Navigation = () => {
             <div className="relative flex justify-center">
               <NavigationMenu>
               <NavigationMenuList className="gap-4">
-                {navItems.map((item) => (
-                  item.hasSubmenu ? (
+                {navItems.map((item) => {
+                  const subItems = item.hasSubmenu === "stoki" ? stokiSubItems : 
+                                   item.hasSubmenu === "pametnitsi" ? pametnitsiSubItems : null;
+                  
+                  return subItems ? (
                     <NavigationMenuItem key={item.label} className="relative">
                       <NavigationMenuTrigger className="bg-transparent hover:bg-transparent hover:text-secondary data-[state=open]:bg-transparent text-sm font-medium px-0">
                         <Link 
@@ -107,7 +118,7 @@ export const Navigation = () => {
                       </NavigationMenuTrigger>
                       <NavigationMenuContent className="absolute left-0 top-full mt-1.5">
                         <ul className="grid w-48 gap-1 p-2 bg-card border border-border shadow-lg rounded-md">
-                          {stokiSubItems.map((subItem) => (
+                          {subItems.map((subItem) => (
                             <li key={subItem.label}>
                               <NavigationMenuLink asChild>
                                 <Link
@@ -131,8 +142,8 @@ export const Navigation = () => {
                         {item.label}
                       </Link>
                     </NavigationMenuItem>
-                  )
-                ))}
+                  );
+                })}
               </NavigationMenuList>
               </NavigationMenu>
             </div>
@@ -146,8 +157,18 @@ export const Navigation = () => {
             )}
           >
             <div className="py-4 space-y-3">
-              {navItems.map((item) => (
-                item.hasSubmenu ? (
+              {navItems.map((item) => {
+                const subItems = item.hasSubmenu === "stoki" ? stokiSubItems : 
+                                 item.hasSubmenu === "pametnitsi" ? pametnitsiSubItems : null;
+                const isSubmenuOpen = item.hasSubmenu === "stoki" ? isStokiSubmenuOpen : 
+                                      item.hasSubmenu === "pametnitsi" ? isPametnitsiSubmenuOpen : false;
+                const toggleSubmenu = item.hasSubmenu === "stoki" 
+                  ? () => setIsStokiSubmenuOpen(!isStokiSubmenuOpen)
+                  : item.hasSubmenu === "pametnitsi"
+                  ? () => setIsPametnitsiSubmenuOpen(!isPametnitsiSubmenuOpen)
+                  : () => {};
+
+                return subItems ? (
                   <div key={item.label}>
                     {/* Split Button Row */}
                     <div className="flex items-center justify-between">
@@ -159,14 +180,14 @@ export const Navigation = () => {
                         {item.label}
                       </Link>
                       <button
-                        onClick={() => setIsStokiSubmenuOpen(!isStokiSubmenuOpen)}
+                        onClick={toggleSubmenu}
                         className="p-2 hover:bg-accent/20 rounded-md transition-colors"
                         aria-label="Отвори подменю"
                       >
                         <ChevronDown 
                           className={cn(
                             "h-4 w-4 transition-transform duration-200",
-                            isStokiSubmenuOpen && "rotate-180"
+                            isSubmenuOpen && "rotate-180"
                           )} 
                         />
                       </button>
@@ -175,11 +196,11 @@ export const Navigation = () => {
                     <div
                       className={cn(
                         "overflow-hidden transition-all duration-200 ease-in-out",
-                        isStokiSubmenuOpen ? "max-h-60 opacity-100 mt-2" : "max-h-0 opacity-0"
+                        isSubmenuOpen ? "max-h-60 opacity-100 mt-2" : "max-h-0 opacity-0"
                       )}
                     >
                       <div className="pl-4 space-y-2 border-l-2 border-secondary/30">
-                        {stokiSubItems.map((subItem) => (
+                        {subItems.map((subItem) => (
                           <Link
                             key={subItem.label}
                             to={subItem.href}
@@ -201,8 +222,8 @@ export const Navigation = () => {
                   >
                     {item.label}
                   </Link>
-                )
-              ))}
+                );
+              })}
               <div className="pt-3 border-t border-border">
                 <a href="tel:028465524" className="flex items-center gap-2 text-secondary font-semibold">
                   <Phone className="h-4 w-4" />
