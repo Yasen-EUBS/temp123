@@ -41,7 +41,7 @@ export const Services = () => {
             Предлагаме пълен спектър от траурни услуги с професионализъм и съпричастност
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8 items-stretch">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-8 items-stretch">
           {services.map((service, index) => (
             <Link 
               key={index} 
@@ -56,11 +56,11 @@ export const Services = () => {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
-                <div className="p-4 md:p-6 flex-1 flex flex-col">
-                  <h3 className="text-lg md:text-xl font-semibold mb-2 text-card-foreground group-hover:text-primary transition-colors">
+                <div className="p-2 md:p-6 flex-1 flex flex-col">
+                  <h3 className="text-sm md:text-xl font-semibold mb-1 md:mb-2 text-card-foreground group-hover:text-primary transition-colors leading-tight">
                     {service.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm md:text-base">
+                  <p className="text-muted-foreground text-xs md:text-base leading-snug hidden md:block">
                     {service.description}
                   </p>
                 </div>
