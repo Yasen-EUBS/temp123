@@ -36,23 +36,23 @@ export const Contact = () => {
             Винаги сме на разположение да ви помогнем
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto mb-8 md:mb-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6 max-w-6xl mx-auto mb-8 md:mb-12">
           {contactInfo.map((info, index) => (
             <Card key={index} className="text-center hover:shadow-xl transition-all duration-300">
-              <CardHeader>
-                <div className="mx-auto mb-2 text-secondary">{info.icon}</div>
-                <CardTitle className="text-lg">{info.title}</CardTitle>
+              <CardHeader className="p-3 md:p-6">
+                <div className="mx-auto mb-1 md:mb-2 text-secondary">{info.icon}</div>
+                <CardTitle className="text-sm md:text-lg">{info.title}</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-3 pt-0 md:p-6 md:pt-0">
                 {info.link ? (
                   <a
                     href={info.link}
-                    className="text-foreground hover:text-secondary transition-colors duration-300 font-medium"
+                    className="text-foreground hover:text-secondary transition-colors duration-300 font-medium text-xs md:text-base break-all"
                   >
                     {info.content}
                   </a>
                 ) : (
-                  <p className="text-foreground font-medium">{info.content}</p>
+                  <p className="text-foreground font-medium text-xs md:text-base">{info.content}</p>
                 )}
               </CardContent>
             </Card>
