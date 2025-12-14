@@ -4,11 +4,15 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import { useRef } from "react";
 
 export const WhyChooseUs = () => {
+  const plugin = useRef(
+    Autoplay({ delay: 3500, stopOnInteraction: false })
+  );
+
   const features = [
     {
       icon: Award,
@@ -27,20 +31,20 @@ export const WhyChooseUs = () => {
     },
   ];
 
-  const FeatureCard = ({ feature, isMobile = false }: { feature: typeof features[0]; isMobile?: boolean }) => {
+  const FeatureCard = ({ feature }: { feature: typeof features[0] }) => {
     const IconComponent = feature.icon;
     return (
-      <Card className={`text-center hover:shadow-xl transition-all duration-300 h-full ${isMobile ? 'mx-2' : ''}`}>
-        <CardHeader className={isMobile ? "p-6" : "p-2 md:p-6"}>
+      <Card className="text-center hover:shadow-xl transition-all duration-300 h-full">
+        <CardHeader className="p-4 md:p-6">
           <div className="mx-auto mb-3 text-secondary" aria-hidden="true">
-            <IconComponent className={isMobile ? "w-10 h-10" : "w-6 h-6 md:w-10 md:h-10"} />
+            <IconComponent className="w-8 h-8 md:w-10 md:h-10" />
           </div>
-          <CardTitle className={isMobile ? "text-xl" : "text-[0.65rem] leading-tight md:text-xl"}>
+          <CardTitle className="text-base md:text-xl">
             {feature.title}
           </CardTitle>
         </CardHeader>
-        <CardContent className={isMobile ? "p-6 pt-0" : "p-1 md:p-6 pt-0"}>
-          <p className={`text-muted-foreground leading-relaxed ${isMobile ? 'text-base' : 'hidden md:block text-sm md:text-base'}`}>
+        <CardContent className="p-4 pt-0 md:p-6 md:pt-0">
+          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
             {feature.description}
           </p>
         </CardContent>
@@ -55,18 +59,23 @@ export const WhyChooseUs = () => {
           <h2 className="text-xl md:text-4xl font-bold mb-2 md:mb-4">Защо да изберете нас</h2>
         </div>
 
-        {/* Mobile Carousel */}
+        {/* Mobile Carousel with Peeking & Autoplay */}
         <div className="md:hidden">
-          <Carousel className="w-full max-w-sm mx-auto">
-            <CarouselContent>
+          <Carousel
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+            plugins={[plugin.current]}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2">
               {features.map((feature, index) => (
-                <CarouselItem key={index}>
-                  <FeatureCard feature={feature} isMobile />
+                <CarouselItem key={index} className="pl-2 basis-[85%]">
+                  <FeatureCard feature={feature} />
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="left-0" />
-            <CarouselNext className="right-0" />
           </Carousel>
         </div>
 
