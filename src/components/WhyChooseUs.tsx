@@ -61,25 +61,25 @@ export const WhyChooseUs = () => {
           <h2 className="text-xl md:text-4xl font-bold mb-2 md:mb-4">Защо да изберете нас</h2>
         </div>
 
-        {/* Mobile Carousel with Autoplay */}
+        {/* Mobile Carousel with Peeking & Autoplay */}
         <div className="md:hidden">
           <Carousel
             opts={{
-              align: "start",
+              align: "center",
               loop: true,
             }}
             plugins={[plugin.current]}
-            className="w-full max-w-sm mx-auto"
+            className="w-full"
           >
-            <CarouselContent>
+            <CarouselContent className="-ml-4">
               {features.map((feature, index) => (
-                <CarouselItem key={index}>
+                <CarouselItem key={index} className="pl-4 basis-[85%]">
                   <FeatureCard feature={feature} />
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="left-0" />
-            <CarouselNext className="right-0" />
+            <CarouselPrevious className="left-2 h-8 w-8 opacity-70" />
+            <CarouselNext className="right-2 h-8 w-8 opacity-70" />
           </Carousel>
         </div>
 
