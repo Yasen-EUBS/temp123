@@ -4,13 +4,15 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
 
 export const WhyChooseUs = () => {
   const plugin = useRef(
-    Autoplay({ delay: 3500, stopOnInteraction: false })
+    Autoplay({ delay: 6000, stopOnInteraction: true })
   );
 
   const features = [
@@ -59,23 +61,25 @@ export const WhyChooseUs = () => {
           <h2 className="text-xl md:text-4xl font-bold mb-2 md:mb-4">Защо да изберете нас</h2>
         </div>
 
-        {/* Mobile Carousel with Peeking & Autoplay */}
+        {/* Mobile Carousel with Autoplay */}
         <div className="md:hidden">
           <Carousel
             opts={{
-              align: "center",
+              align: "start",
               loop: true,
             }}
             plugins={[plugin.current]}
-            className="w-full"
+            className="w-full max-w-sm mx-auto"
           >
-            <CarouselContent className="-ml-2">
+            <CarouselContent>
               {features.map((feature, index) => (
-                <CarouselItem key={index} className="pl-2 basis-[85%]">
+                <CarouselItem key={index}>
                   <FeatureCard feature={feature} />
                 </CarouselItem>
               ))}
             </CarouselContent>
+            <CarouselPrevious className="left-0" />
+            <CarouselNext className="right-0" />
           </Carousel>
         </div>
 
