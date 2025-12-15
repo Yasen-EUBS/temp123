@@ -274,66 +274,36 @@ const monumentsData: Monument[] = [
     specs: { material: 'Cherven Granit', color: 'Red Brown', features: ['Релефен кръст', 'Слънчеви лъчи', 'Каменна роза', 'Вграден портрет', 'Неправилна форма'], availability: 'PreOrder' }
   },
 
-  // === OFORMLENIE (DESIGNS/ARRANGEMENTS) PLACEHOLDERS ===
+  // === OFORMLENIE (ЦЯЛОСТНИ ОФОРМЛЕНИЯ) ===
   {
-    id: 'oformlenie-palno-mramor',
-    title: "Пълно оформление от бял мрамор",
-    seoTitle: "Цялостно гробно оформление от мрамор | Кипарис",
+    id: 'brown-granite-layout-full-cover-cross-cutout',
+    title: "Цялостно гробно оформление от кафяв гранит с врязан кръст",
+    seoTitle: "Гробно оформление от кафяв гранит - затворен тип | Кипарис",
     category: "oformlenie",
-    image: "/assets/monuments/nadgroben-pametnik-byal-mramor-asimetrichen-s-kolona-i-vaza.webp",
-    alt: "Цялостно оформление на гроб от бял мрамор",
-    description: "Комплексно решение включващо паметник, бордюри, плоча и декоративни елементи от бял мрамор.",
-    specs: { material: 'Бял мрамор', color: 'Бял', features: ['Комплексно', 'Бордюри', 'Плоча'] }
+    image: "/assets/monuments/grobno-oformlenie-kafev-granit-zatvoren-tip-vryazan-krast.webp",
+    alt: "Гробно оформление от кафяв гранит с цялостна покривна плоча и паметник с врязан кръст",
+    description: "Това цялостно гробно оформление се отличава с топлите нюанси на полирания кафяв гранит и изчистена, монументална визия. Конструкцията е от затворен тип с масивна цялостна покривна плоча, което осигурява максимална чистота, дълговечност и изключително лесна поддръжка през всички сезони.",
+    specs: { material: 'Кафяв гранит', color: 'Кафяв', features: ['Врязан кръст', 'Цялостна покривна плоча', 'Масивни бордюри', 'Керамична снимка', 'Затворен тип'] }
   },
   {
-    id: 'oformlenie-bordyuri-granit',
-    title: "Гранитни бордюри и плочи",
-    seoTitle: "Гранитни бордюри за гроб | Кипарис",
+    id: 'white-marble-double-grave-full-cover-layout',
+    title: "Цялостно оформление на двоен гроб от бял мрамор",
+    seoTitle: "Семеен гроб от бял мрамор - затворен тип с плочи | Кипарис",
     category: "oformlenie",
-    image: "/assets/monuments/nadgroben-pametnik-cheren-granit-byal-mramor-forma-krast.webp",
-    alt: "Гранитни бордюри и плочи за гробно оформление",
-    description: "Изработка и монтаж на гранитни бордюри, плочи и пътеки за цялостно оформление на гробното място.",
-    specs: { material: 'Гранит', color: 'Черен/Сив', features: ['Бордюри', 'Плочи', 'Пътеки'] }
+    image: "/assets/monuments/grobno-oformlenie-byal-mramor-dvoen-zatvoren-plochi.webp",
+    alt: "Двоен семеен гроб от бял мрамор с две покривни плочи и два паметника",
+    description: "Това представително гробно оформление е проектирано специално за семеен гроб (двойно място), изпълнено изцяло от висококачествен бял мрамор. Конструкцията е от затворен тип, което осигурява безупречна чистота и изключително лесна поддръжка.",
+    specs: { material: 'Бял мрамор', color: 'Бял', features: ['Два паметника', 'Покривни плочи', 'Мраморна облицовка', 'Семеен/двоен гроб', 'Затворен тип'] }
   },
   {
-    id: 'oformlenie-kombiniran',
-    title: "Комбинирано оформление гранит и мрамор",
-    seoTitle: "Комбинирано гробно оформление | Кипарис",
+    id: 'white-marble-full-cover-layout-bench',
+    title: "Луксозно гробно оформление от бял мрамор с цялостно покритие",
+    seoTitle: "Гробно оформление от бял мрамор - затворен тип | Кипарис",
     category: "oformlenie",
-    image: "/assets/monuments/nadgroben-pametnik-cheren-granit-byal-mramor-forma-krast.webp",
-    alt: "Комбинирано оформление от гранит и мрамор",
-    description: "Уникално съчетание от гранит и мрамор за ефектен контраст и завършен вид на гробното място.",
-    specs: { material: 'Гранит & Мрамор', color: 'Комбиниран', features: ['Контраст', 'Комбинирани', 'Уникален'] }
-  },
-  {
-    id: 'oformlenie-mozaika',
-    title: "Мозаечно оформление",
-    seoTitle: "Мозаечно гробно оформление | Кипарис",
-    category: "oformlenie",
-    image: "/assets/monuments/nadgroben-pametnik-byal-mramor-asimetrichen-s-kolona-i-vaza.webp",
-    alt: "Мозаечно оформление на гроб",
-    description: "Художествено оформление с мозаечни елементи и декоративни камъни за индивидуален вид.",
-    specs: { material: 'Мозайка', color: 'Различни', features: ['Художествено', 'Мозаечни елементи', 'Индивидуален'] }
-  },
-  {
-    id: 'oformlenie-cvetarnik',
-    title: "Оформление с цветарник",
-    seoTitle: "Гробно оформление с цветарник | Кипарис",
-    category: "oformlenie",
-    image: "/assets/monuments/nadgroben-pametnik-byal-mramor-asimetrichen-s-kolona-i-vaza.webp",
-    alt: "Гробно оформление с вграден цветарник",
-    description: "Практично оформление с вграден цветарник за засаждане на живи цветя и зеленина.",
-    specs: { material: 'Мрамор/Гранит', color: 'По избор', features: ['Цветарник', 'Практично', 'Зеленина'] }
-  },
-  {
-    id: 'oformlenie-semeen-kompleks',
-    title: "Семеен комплекс - пълно оформление",
-    seoTitle: "Семеен гробен комплекс | Кипарис",
-    category: "oformlenie",
-    image: "/assets/monuments/nadgroben-pametnik-siv-mramor-dvoin-s-razrez-tri-snimki.webp",
-    alt: "Цялостно оформление на семеен гроб",
-    description: "Пълно оформление на фамилно гробно място с няколко паметника, обща рамка и декоративни елементи.",
-    specs: { material: 'По избор', color: 'По избор', features: ['Семеен', 'Няколко паметника', 'Обща рамка'] }
+    image: "/assets/monuments/grobno-oformlenie-byal-mramor-cyalosno-pokritie-peika.webp",
+    alt: "Луксозен гроб от бял мрамор с масивна паметна плоча, странични надписи и каменна пейка за сядане",
+    description: "Това изящно гробно оформление е изпълнено от висококачествен бял мрамор, символизиращ светлина и покой. Конструкцията е от затворен тип с масивни покривни плочи, което гарантира изключително лесна поддръжка и устойчивост на атмосферни влияния.",
+    specs: { material: 'Бял мрамор', color: 'Бял', features: ['Масивен паметник', 'Покривни плочи', 'Страничен надпис', 'Каменна пейка', 'Затворен тип'] }
   }
 ];
 
