@@ -20,7 +20,7 @@ const TraurniStoki = () => {
       title: "Ковчези",
       description: "Богат избор на ковчези от масив и ПДЧ - от икономични до луксозни модели.",
       image: coffinLuxury,
-      link: null,
+      link: "/traurni-stoki/kovchezi",
     },
     {
       id: "draperii",

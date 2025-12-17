@@ -50,6 +50,11 @@ All colors MUST be HSL.
     --sidebar-border: 100 20% 25%;
     --sidebar-ring: 45 85% 50%;
     
+    /* Coffin Gallery Theme - Solemn Premium */
+    --coffin-bg: 150 30% 15%;
+    --coffin-text: 0 0% 100%;
+    --coffin-gold: 45 75% 65%;
+    
     /* Custom design tokens */
     --gradient-hero: linear-gradient(135deg, hsl(100 35% 15%), hsl(100 25% 20%));
     --gradient-overlay: linear-gradient(180deg, hsl(100 35% 10% / 0.9), hsl(100 25% 15% / 0.95));

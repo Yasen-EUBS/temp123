@@ -32,7 +32,7 @@ export const Navigation = () => {
   ];
 
   const stokiSubItems = [
-    { label: "Ковчези", href: "/traurni-stoki#kovchezi" },
+    { label: "Ковчези", href: "/traurni-stoki/kovchezi" },
     { label: "Драперии", href: "/traurni-stoki#draperii" },
     { label: "Урни", href: "/traurni-stoki#urni" },
     { label: "Венци и Пиафлори", href: "/traurni-stoki#venci" },

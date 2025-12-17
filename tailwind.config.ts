@@ -61,6 +61,11 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        coffin: {
+          bg: "hsl(var(--coffin-bg))",
+          text: "hsl(var(--coffin-text))",
+          gold: "hsl(var(--coffin-gold))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
