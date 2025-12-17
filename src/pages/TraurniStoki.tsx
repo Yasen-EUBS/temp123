@@ -5,6 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { MapPin, Truck } from "lucide-react";
+import { ProductCard } from "@/components/ProductCard";
+import { coffinCatalog } from "@/data/coffins";
 
 import coffinLuxury from "@/assets/coffin-luksozen.jpg";
 import coffinEconomy from "@/assets/coffin-ekonomichen.jpg";
@@ -143,6 +145,36 @@ const TraurniStoki = () => {
                   </div>
                 );
               })}
+            </div>
+          </div>
+        </section>
+
+        {/* Coffin Catalog Section */}
+        <section id="kovchezi" className="py-12 md:py-16 bg-primary">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground mb-2">
+                Каталог: Ковчези
+              </h2>
+              <p className="text-primary-foreground/80">
+                Голям избор от икономични до луксозни модели
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5 max-w-6xl mx-auto">
+              {coffinCatalog.map((coffin) => (
+                <ProductCard
+                  key={coffin.id}
+                  id={coffin.id}
+                  title={coffin.title}
+                  image={coffin.image}
+                  alt={coffin.alt}
+                  material={coffin.specs.material}
+                  color={coffin.specs.color}
+                  priceEur={coffin.price.eur}
+                  availability={coffin.availability}
+                />
+              ))}
             </div>
           </div>
         </section>
