@@ -17,6 +17,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import Polezno from "./pages/Polezno";
 import TraurniStoki from "./pages/TraurniStoki";
+import CoffinsGallery from "./pages/CoffinsGallery";
+import CoffinDetail from "./pages/CoffinDetail";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,8 @@ const App = () => (
             <Route path="/transport-na-pokojnik" element={<TransportNaPokojnik />} />
             <Route path="/nadgrobni-pametnici" element={<Monuments />} />
             <Route path="/traurni-stoki" element={<TraurniStoki />} />
+            <Route path="/traurni-stoki/kovchezi" element={<CoffinsGallery />} />
+            <Route path="/traurni-stoki/kovchezi/:id" element={<CoffinDetail />} />
             
             {/* Other pages */}
             <Route path="/kontakti" element={<ContactPage />} />
