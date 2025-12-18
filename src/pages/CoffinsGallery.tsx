@@ -28,10 +28,10 @@ const CoffinsGallery = () => {
   const selectedCoffin = selectedIndex !== null ? filteredProducts[selectedIndex] : null;
 
   const categoryLabels: Record<string, string> = {
-    economy: "Икономични",
-    standard: "Стандартни",
+    economical: "Икономичен",
+    standard: "Стандартен",
     premium: "Премиум",
-    luxury: "Луксозни",
+    elite: "Елитен",
   };
 
   const specLabels: Record<string, string> = {
