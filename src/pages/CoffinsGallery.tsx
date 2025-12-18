@@ -51,14 +51,18 @@ const CoffinsGallery = () => {
   const goToNext = useCallback(() => {
     if (selectedIndex !== null && selectedIndex < filteredProducts.length - 1) {
       setSelectedIndex(selectedIndex + 1);
+    } else if (selectedIndex === filteredProducts.length - 1) {
+      setSelectedIndex(0);
     }
   }, [selectedIndex, filteredProducts.length]);
 
   const goToPrevious = useCallback(() => {
     if (selectedIndex !== null && selectedIndex > 0) {
       setSelectedIndex(selectedIndex - 1);
+    } else if (selectedIndex === 0) {
+      setSelectedIndex(filteredProducts.length - 1);
     }
-  }, [selectedIndex]);
+  }, [selectedIndex, filteredProducts.length]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -97,8 +101,6 @@ const CoffinsGallery = () => {
     touchEndX.current = null;
   };
 
-  const canGoPrevious = selectedIndex !== null && selectedIndex > 0;
-  const canGoNext = selectedIndex !== null && selectedIndex < filteredProducts.length - 1;
 
   return (
     <>
@@ -201,77 +203,78 @@ const CoffinsGallery = () => {
       {/* Product Modal with Gallery Navigation */}
       <Dialog open={selectedIndex !== null} onOpenChange={(open) => !open && setSelectedIndex(null)}>
         <DialogContent 
-          className="w-[95vw] md:max-w-5xl p-0 overflow-hidden border border-[#E3C86B]"
+          className="max-w-[98vw] md:max-w-6xl max-h-[95vh] p-0 overflow-hidden border border-[#E3C86B]"
           style={{ backgroundColor: "#1A2F1E" }}
-          onPointerDownOutside={(e) => e.preventDefault()}
         >
-          {/* Close Button */}
-          <button
-            onClick={() => setSelectedIndex(null)}
-            className="absolute right-3 top-3 z-50 rounded-full p-1.5 bg-black/50 hover:bg-black/70 transition-colors"
-          >
-            <X className="h-5 w-5 text-white" />
-          </button>
-
-          {/* Counter Badge */}
-          {selectedIndex !== null && (
-            <div className="absolute left-3 top-3 z-50 bg-black/50 text-white text-xs px-3 py-1.5 rounded-full">
-              {selectedIndex + 1} от {filteredProducts.length}
-            </div>
-          )}
-
           {selectedCoffin && (
-            <div className="flex flex-col md:flex-row">
-              {/* Image Container with Navigation */}
+            <div className="relative flex flex-col md:flex-row h-full max-h-[95vh]">
+              {/* Close button */}
+              <button
+                onClick={() => setSelectedIndex(null)}
+                className="absolute top-2 right-2 md:top-4 md:right-4 z-50 p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
+                aria-label="Затвори"
+              >
+                <X className="w-5 h-5 md:w-6 md:h-6 text-white" />
+              </button>
+
+              {/* Desktop: Navigation arrows on sides */}
+              <button
+                onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
+                className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-black/40 hover:bg-black/60 transition-colors items-center justify-center"
+                aria-label="Предишен"
+              >
+                <ChevronLeft className="w-8 h-8 text-white" />
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); goToNext(); }}
+                className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-black/40 hover:bg-black/60 transition-colors items-center justify-center"
+                aria-label="Следващ"
+              >
+                <ChevronRight className="w-8 h-8 text-white" />
+              </button>
+
+              {/* Left: Image Section */}
               <div 
-                className="relative w-full md:w-3/5 overflow-hidden rounded-t-lg md:rounded-l-lg md:rounded-tr-none bg-black/5"
-                onClick={(e) => e.stopPropagation()}
+                className="relative flex-shrink-0 w-full md:w-[65%] bg-black flex items-center justify-center"
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
               >
-                {/* Previous Button - Desktop */}
-                <button
-                  onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
-                  disabled={!canGoPrevious}
-                  className={`hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-40 items-center justify-center w-12 h-12 rounded-full bg-black/40 hover:bg-black/60 transition-all ${
-                    canGoPrevious ? "text-[#E3C86B] cursor-pointer" : "text-white/30 cursor-not-allowed"
-                  }`}
-                >
-                  <ChevronLeft className="h-8 w-8" />
-                </button>
+                <img
+                  key={selectedCoffin.id}
+                  src={`/assets/coffins/${selectedCoffin.image}`}
+                  alt={selectedCoffin.alt}
+                  className="w-full h-full max-h-[50vh] md:max-h-[85vh] object-contain"
+                />
 
-                {/* Next Button - Desktop */}
-                <button
-                  onClick={(e) => { e.stopPropagation(); goToNext(); }}
-                  disabled={!canGoNext}
-                  className={`hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-40 items-center justify-center w-12 h-12 rounded-full bg-black/40 hover:bg-black/60 transition-all ${
-                    canGoNext ? "text-[#E3C86B] cursor-pointer" : "text-white/30 cursor-not-allowed"
-                  }`}
-                >
-                  <ChevronRight className="h-8 w-8" />
-                </button>
-
-                {/* Image with smooth transition */}
-                <div className="transition-opacity duration-300 ease-in-out">
-                  <img
-                    key={selectedCoffin.id}
-                    src={`/assets/coffins/${selectedCoffin.image}`}
-                    alt={selectedCoffin.alt}
-                    className="w-full h-auto block object-contain animate-fade-in"
-                  />
+                {/* Counter overlay */}
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/60 px-3 py-1 rounded-full">
+                  <span className="text-white/80 text-sm">
+                    {selectedIndex !== null ? selectedIndex + 1 : 0} / {filteredProducts.length}
+                  </span>
                 </div>
 
-                {/* Mobile Swipe Hint */}
-                <div className="md:hidden absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 text-white/60 text-xs bg-black/40 px-3 py-1.5 rounded-full">
-                  <ChevronLeft className="h-4 w-4" />
-                  <span>Плъзнете</span>
-                  <ChevronRight className="h-4 w-4" />
+                {/* Mobile: Navigation arrows at bottom */}
+                <div className="md:hidden absolute bottom-10 left-0 right-0 flex justify-between px-4">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
+                    className="p-3 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
+                    aria-label="Предишен"
+                  >
+                    <ChevronLeft className="w-6 h-6 text-white" />
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); goToNext(); }}
+                    className="p-3 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
+                    aria-label="Следващ"
+                  >
+                    <ChevronRight className="w-6 h-6 text-white" />
+                  </button>
                 </div>
               </div>
 
-              {/* Details Panel */}
-              <div className="w-full md:w-2/5 p-4 md:p-6 flex flex-col">
+              {/* Right: Details Sidebar */}
+              <div className="flex-1 overflow-y-auto p-4 md:p-5 flex flex-col">
                 <DialogTitle className="sr-only">{selectedCoffin.title}</DialogTitle>
                 
                 {/* Category Badge */}
