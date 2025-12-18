@@ -418,30 +418,15 @@ const CoffinsGallery = () => {
                       </div>
                     </div>
                     <CardContent className="p-2 md:p-4">
-                    {/* Category & Origin Badges */}
-                      <div className="flex items-center gap-2 mb-1 md:mb-2">
-                        {(() => {
-                          const tier = getTier(coffin.priceEUR);
-                          return (
-                            <span className={`inline-block text-[10px] md:text-xs px-2 py-0.5 rounded border ${tierColors[tier.color]}`}>
-                              {tier.label}
-                            </span>
-                          );
-                        })()}
-                        {/* Italian Origin Badge */}
-                        {coffin.brand?.origin === "IT" && (
-                          <span className="inline-flex items-center gap-1 text-[10px] md:text-xs text-[#F0F0F0]">
-                            <span className="w-3.5 h-3.5 md:w-4 md:h-4 rounded-full overflow-hidden flex-shrink-0 border border-white/20">
-                              <svg viewBox="0 0 3 2" className="w-full h-full">
-                                <rect width="1" height="2" x="0" fill="#009246"/>
-                                <rect width="1" height="2" x="1" fill="#FFFFFF"/>
-                                <rect width="1" height="2" x="2" fill="#CE2B37"/>
-                              </svg>
-                            </span>
-                            Италия
+                      {/* Category Badge */}
+                      {(() => {
+                        const tier = getTier(coffin.priceEUR);
+                        return (
+                          <span className={`inline-block text-[10px] md:text-xs px-2 py-0.5 mb-1 md:mb-2 rounded border ${tierColors[tier.color]}`}>
+                            {tier.label}
                           </span>
-                        )}
-                      </div>
+                        );
+                      })()}
                       {/* Title */}
                       <h2 className="text-xs md:text-base font-semibold text-coffin-text mb-0.5 md:mb-1 line-clamp-2 group-hover:text-coffin-gold transition-colors">
                         {coffin.title}
