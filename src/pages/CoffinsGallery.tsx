@@ -125,14 +125,21 @@ const CoffinsGallery = () => {
 
       <main className="min-h-screen bg-coffin-bg">
         {/* Hero Section - Dark Green Theme */}
-        <section className="relative py-16 md:py-24 bg-coffin-bg">
+        <section className="relative py-12 md:py-20 bg-coffin-bg">
           <div className="absolute inset-0 bg-[url('/placeholder.svg')] opacity-5 bg-repeat" />
-          <div className="container mx-auto px-4 relative z-10 text-center">
+          <div className="container mx-auto px-4 relative z-10 text-left md:text-center">
             <h1 className="text-3xl md:text-5xl font-bold text-coffin-text mb-4">
               Ковчези
             </h1>
-            <p className="text-lg md:text-xl text-coffin-text/80 max-w-2xl mx-auto">
-              Богат избор на ковчези от масив и ПДЧ - от икономични до луксозни модели
+            {/* SEO Intro */}
+            <p className="text-base md:text-lg text-coffin-text/90 max-w-3xl md:mx-auto leading-relaxed">
+              Траурна агенция Кипарис предлага богата гама от висококачествени български ковчези с марка{" "}
+              <span className="text-[#E3C86B] font-semibold">ОСОГОВО</span> и луксозни{" "}
+              <span className="text-[#E3C86B] font-semibold">ИТАЛИАНСКИ</span> модели.
+            </p>
+            {/* Materials SEO Block */}
+            <p className="text-sm md:text-base text-coffin-text/70 max-w-3xl md:mx-auto mt-3 leading-relaxed">
+              Изработка от масивно дърво (бук, чам), MDF, ПДЧ, фазер и талашит. Всеки модел включва специфичен обков и възможност за избор на вътрешна драперия.
             </p>
             <p className="text-coffin-gold font-semibold mt-4">
               Крайна цена без скрити такси

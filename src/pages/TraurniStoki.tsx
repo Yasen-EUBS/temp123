@@ -18,7 +18,7 @@ const TraurniStoki = () => {
     {
       id: "kovchezi",
       title: "Ковчези",
-      description: "Богат избор на ковчези от масив и ПДЧ - партньор на завод 'Осогово' и италиански вносители.",
+      description: "Премиум български (ОСОГОВО) и луксозни италиански модели. Масив, MDF, ПДЧ.",
       image: coffinLuxury,
       link: "/traurni-stoki/kovchezi",
     },
