@@ -20,6 +20,7 @@ const CoffinDetail = () => {
     handles: "Дръжки",
     lining: "Тапицерия",
     dimensions: "Размери",
+    finish: "Завършек",
   };
 
   const categoryLabels: Record<string, string> = {
