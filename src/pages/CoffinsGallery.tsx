@@ -27,11 +27,18 @@ const CoffinsGallery = () => {
   const filteredProducts = coffinsData;
   const selectedCoffin = selectedIndex !== null ? filteredProducts[selectedIndex] : null;
 
-  const categoryLabels: Record<string, string> = {
-    economy: "Икономични",
-    standard: "Стандартни",
-    premium: "Премиум",
-    luxury: "Луксозни",
+  const getTier = (price: number) => {
+    if (price < 300) return { label: "Икономичен", color: "gray" };
+    if (price < 1100) return { label: "Стандартен", color: "blue" };
+    if (price < 2000) return { label: "Премиум", color: "gold" };
+    return { label: "Елитен", color: "purple" };
+  };
+
+  const tierColors: Record<string, string> = {
+    gray: "bg-gray-500/20 text-gray-300 border-gray-500/30",
+    blue: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+    gold: "bg-coffin-gold/20 text-coffin-gold border-coffin-gold/30",
+    purple: "bg-purple-500/20 text-purple-300 border-purple-500/30",
   };
 
   const specLabels: Record<string, string> = {
@@ -157,9 +164,14 @@ const CoffinsGallery = () => {
                     </div>
                     <CardContent className="p-2 md:p-4">
                       {/* Category Badge */}
-                      <span className="inline-block text-[10px] md:text-xs px-2 py-0.5 mb-1 md:mb-2 rounded bg-coffin-gold/20 text-coffin-gold border border-coffin-gold/30">
-                        {categoryLabels[coffin.category]}
-                      </span>
+                      {(() => {
+                        const tier = getTier(coffin.priceEUR);
+                        return (
+                          <span className={`inline-block text-[10px] md:text-xs px-2 py-0.5 mb-1 md:mb-2 rounded border ${tierColors[tier.color]}`}>
+                            {tier.label}
+                          </span>
+                        );
+                      })()}
                       {/* Title */}
                       <h2 className="text-xs md:text-base font-semibold text-coffin-text mb-1 md:mb-2 line-clamp-2 group-hover:text-coffin-gold transition-colors">
                         {coffin.title}
@@ -278,9 +290,14 @@ const CoffinsGallery = () => {
                 <DialogTitle className="sr-only">{selectedCoffin.title}</DialogTitle>
                 
                 {/* Category Badge */}
-                <span className="inline-block self-start text-xs px-3 py-1 mb-3 rounded bg-[#E3C86B]/20 text-[#E3C86B] border border-[#E3C86B]/30">
-                  {categoryLabels[selectedCoffin.category]}
-                </span>
+                {(() => {
+                  const tier = getTier(selectedCoffin.priceEUR);
+                  return (
+                    <span className={`inline-block self-start text-xs px-3 py-1 mb-3 rounded border ${tierColors[tier.color]}`}>
+                      {tier.label}
+                    </span>
+                  );
+                })()}
 
                 {/* Title */}
                 <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
