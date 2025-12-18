@@ -173,9 +173,13 @@ const CoffinsGallery = () => {
                         );
                       })()}
                       {/* Title */}
-                      <h2 className="text-xs md:text-base font-semibold text-coffin-text mb-1 md:mb-2 line-clamp-2 group-hover:text-coffin-gold transition-colors">
+                      <h2 className="text-xs md:text-base font-semibold text-coffin-text mb-0.5 md:mb-1 line-clamp-2 group-hover:text-coffin-gold transition-colors">
                         {coffin.title}
                       </h2>
+                      {/* Material Badge */}
+                      <p className="text-[9px] md:text-xs text-[#E3C86B] underline underline-offset-2 mb-1 md:mb-2 truncate">
+                        {coffin.specs.material}
+                      </p>
                       {/* Price */}
                       <p className="text-sm md:text-lg font-bold text-coffin-gold">
                         {coffin.priceEUR} EUR
@@ -300,9 +304,13 @@ const CoffinsGallery = () => {
                 })()}
 
                 {/* Title */}
-                <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
+                <h2 className="text-xl md:text-2xl font-bold text-white mb-1">
                   {selectedCoffin.title}
                 </h2>
+                {/* Material Badge */}
+                <p className="text-sm text-[#E3C86B] underline underline-offset-2 mb-4">
+                  {selectedCoffin.specs.material}
+                </p>
 
                 {/* Price Section */}
                 <div className="mb-4 p-3 rounded-lg bg-black/20 border border-[#E3C86B]/30">
