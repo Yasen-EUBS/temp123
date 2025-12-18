@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { coffinsData, Coffin } from "@/data/coffinsData";
-import { Phone, X, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { Phone, X, Check, ChevronLeft, ChevronRight, Filter } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -19,13 +19,151 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 
+// Helper to extract unique materials from data
+const getUniqueMaterials = (data: Coffin[]) => {
+  const materials = new Set<string>();
+  data.forEach((coffin) => {
+    if (coffin.specs.material) {
+      // Simplify material names for filtering
+      const material = coffin.specs.material;
+      if (material.toLowerCase().includes("масив")) materials.add("Масивно дърво");
+      else if (material.toLowerCase().includes("mdf") || material.toLowerCase().includes("фазер")) materials.add("Фазер / MDF");
+      else if (material.toLowerCase().includes("пдч")) materials.add("ПДЧ");
+      else if (material.toLowerCase().includes("метал")) materials.add("Метал");
+      else if (material.toLowerCase().includes("месинг")) materials.add("Месинг");
+      else materials.add(material.split(" ")[0]); // First word as fallback
+    }
+  });
+  return Array.from(materials);
+};
+
+// Helper to get origin display name
+const getOriginLabel = (origin: string | undefined) => {
+  if (!origin) return "Български";
+  return origin === "BG" ? "Български" : "Италиански";
+};
+
+// Filter options types
+type FilterCategory = "material" | "origin" | "class";
+type ActiveFilters = {
+  material: string[];
+  origin: string[];
+  class: string[];
+};
+
 const CoffinsGallery = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [activeFilters, setActiveFilters] = useState<ActiveFilters>({
+    material: [],
+    origin: [],
+    class: [],
+  });
+  const [showFilters, setShowFilters] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
-  const filteredProducts = coffinsData;
+  // Calculate filter options with counts
+  const filterOptions = useMemo(() => {
+    // Material filters
+    const materialCounts: Record<string, number> = {};
+    coffinsData.forEach((coffin) => {
+      const material = coffin.specs.material.toLowerCase();
+      let key = "";
+      if (material.includes("масив")) key = "Масивно дърво";
+      else if (material.includes("mdf") || material.includes("фазер")) key = "Фазер / MDF";
+      else if (material.includes("пдч")) key = "ПДЧ";
+      else if (material.includes("метал")) key = "Метал";
+      else if (material.includes("месинг")) key = "Месинг";
+      else key = "Друг";
+      
+      materialCounts[key] = (materialCounts[key] || 0) + 1;
+    });
+
+    // Origin filters
+    const originCounts: Record<string, number> = { "Български": 0, "Италиански": 0 };
+    coffinsData.forEach((coffin) => {
+      const origin = getOriginLabel(coffin.brand?.origin);
+      originCounts[origin] = (originCounts[origin] || 0) + 1;
+    });
+
+    // Class filters (category mapping)
+    const classCounts: Record<string, number> = {
+      "Икономичен": 0,
+      "Стандартен": 0,
+      "Луксозен": 0,
+    };
+    coffinsData.forEach((coffin) => {
+      if (coffin.category === "economy") classCounts["Икономичен"]++;
+      else if (coffin.category === "standard") classCounts["Стандартен"]++;
+      else if (["luxury", "premium", "italian"].includes(coffin.category)) classCounts["Луксозен"]++;
+    });
+
+    return {
+      material: Object.entries(materialCounts).filter(([_, count]) => count > 0),
+      origin: Object.entries(originCounts).filter(([_, count]) => count > 0),
+      class: Object.entries(classCounts).filter(([_, count]) => count > 0),
+    };
+  }, []);
+
+  // Apply filters to products
+  const filteredProducts = useMemo(() => {
+    return coffinsData.filter((coffin) => {
+      // Material filter
+      if (activeFilters.material.length > 0) {
+        const material = coffin.specs.material.toLowerCase();
+        const matchesMaterial = activeFilters.material.some((filter) => {
+          if (filter === "Масивно дърво") return material.includes("масив");
+          if (filter === "Фазер / MDF") return material.includes("mdf") || material.includes("фазер");
+          if (filter === "ПДЧ") return material.includes("пдч");
+          if (filter === "Метал") return material.includes("метал");
+          if (filter === "Месинг") return material.includes("месинг");
+          return false;
+        });
+        if (!matchesMaterial) return false;
+      }
+
+      // Origin filter
+      if (activeFilters.origin.length > 0) {
+        const origin = getOriginLabel(coffin.brand?.origin);
+        if (!activeFilters.origin.includes(origin)) return false;
+      }
+
+      // Class filter (category mapping)
+      if (activeFilters.class.length > 0) {
+        const matchesClass = activeFilters.class.some((filter) => {
+          if (filter === "Икономичен") return coffin.category === "economy";
+          if (filter === "Стандартен") return coffin.category === "standard";
+          if (filter === "Луксозен") return ["luxury", "premium", "italian"].includes(coffin.category);
+          return false;
+        });
+        if (!matchesClass) return false;
+      }
+
+      return true;
+    });
+  }, [activeFilters]);
+
   const selectedCoffin = selectedIndex !== null ? filteredProducts[selectedIndex] : null;
+
+  // Toggle filter
+  const toggleFilter = (category: FilterCategory, value: string) => {
+    setActiveFilters((prev) => {
+      const current = prev[category];
+      const updated = current.includes(value)
+        ? current.filter((v) => v !== value)
+        : [...current, value];
+      return { ...prev, [category]: updated };
+    });
+    setSelectedIndex(null); // Reset selection when filters change
+  };
+
+  // Clear all filters
+  const clearFilters = () => {
+    setActiveFilters({ material: [], origin: [], class: [] });
+    setSelectedIndex(null);
+  };
+
+  const hasActiveFilters = Object.values(activeFilters).some((arr) => arr.length > 0);
 
   const getTier = (price: number | string) => {
     if (typeof price === "string") return { label: "Италиански", color: "italian" };
@@ -149,10 +287,118 @@ const CoffinsGallery = () => {
           </div>
         </section>
 
+        {/* Filter Section */}
+        <section className="py-6 md:py-8 bg-coffin-bg border-b border-coffin-gold/20">
+          <div className="container mx-auto px-4">
+            {/* Mobile Filter Toggle */}
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="md:hidden flex items-center gap-2 text-coffin-text mb-4 px-3 py-2 border border-coffin-gold/30 rounded-lg hover:border-coffin-gold/60 transition-colors"
+            >
+              <Filter className="h-4 w-4 text-coffin-gold" />
+              <span>Филтри</span>
+              {hasActiveFilters && (
+                <span className="ml-2 px-2 py-0.5 text-xs bg-coffin-gold text-coffin-bg rounded-full">
+                  {Object.values(activeFilters).flat().length}
+                </span>
+              )}
+            </button>
+
+            {/* Filter Groups */}
+            <div className={`${showFilters ? "block" : "hidden"} md:block space-y-4`}>
+              {/* Material Filters */}
+              <div>
+                <h3 className="text-sm font-semibold text-coffin-text/80 mb-2">Материал</h3>
+                <div className="flex flex-wrap gap-2">
+                  {filterOptions.material.map(([label, count]) => (
+                    <button
+                      key={label}
+                      onClick={() => toggleFilter("material", label)}
+                      className={`px-3 py-1.5 text-xs md:text-sm rounded-full border transition-all duration-200 ${
+                        activeFilters.material.includes(label)
+                          ? "bg-[#E3C86B] text-[#1A2F1E] border-[#E3C86B] font-semibold"
+                          : "border-coffin-gold/30 text-coffin-text/80 hover:border-coffin-gold/60 hover:text-coffin-text"
+                      }`}
+                    >
+                      {label} ({count})
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Origin Filters */}
+              <div>
+                <h3 className="text-sm font-semibold text-coffin-text/80 mb-2">Произход</h3>
+                <div className="flex flex-wrap gap-2">
+                  {filterOptions.origin.map(([label, count]) => (
+                    <button
+                      key={label}
+                      onClick={() => toggleFilter("origin", label)}
+                      className={`px-3 py-1.5 text-xs md:text-sm rounded-full border transition-all duration-200 ${
+                        activeFilters.origin.includes(label)
+                          ? "bg-[#E3C86B] text-[#1A2F1E] border-[#E3C86B] font-semibold"
+                          : "border-coffin-gold/30 text-coffin-text/80 hover:border-coffin-gold/60 hover:text-coffin-text"
+                      }`}
+                    >
+                      {label} ({count})
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Class Filters */}
+              <div>
+                <h3 className="text-sm font-semibold text-coffin-text/80 mb-2">Клас</h3>
+                <div className="flex flex-wrap gap-2">
+                  {filterOptions.class.map(([label, count]) => (
+                    <button
+                      key={label}
+                      onClick={() => toggleFilter("class", label)}
+                      className={`px-3 py-1.5 text-xs md:text-sm rounded-full border transition-all duration-200 ${
+                        activeFilters.class.includes(label)
+                          ? "bg-[#E3C86B] text-[#1A2F1E] border-[#E3C86B] font-semibold"
+                          : "border-coffin-gold/30 text-coffin-text/80 hover:border-coffin-gold/60 hover:text-coffin-text"
+                      }`}
+                    >
+                      {label} ({count})
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Clear Filters & Results Count */}
+              <div className="flex items-center justify-between pt-2">
+                <p className="text-sm text-coffin-text/60">
+                  Показани: <span className="text-coffin-gold font-semibold">{filteredProducts.length}</span> от {coffinsData.length} продукта
+                </p>
+                {hasActiveFilters && (
+                  <button
+                    onClick={clearFilters}
+                    className="text-sm text-coffin-gold hover:underline"
+                  >
+                    Изчисти филтрите
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Coffins Grid */}
         <section className="py-12 md:py-16 bg-coffin-bg">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 max-w-7xl mx-auto">
+            {filteredProducts.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-coffin-text/60 text-lg mb-4">Няма намерени продукти с избраните филтри.</p>
+                <button
+                  onClick={clearFilters}
+                  className="px-6 py-2 bg-coffin-gold text-coffin-bg rounded-lg font-semibold hover:bg-coffin-gold/90 transition-colors"
+                >
+                  Изчисти филтрите
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 max-w-7xl mx-auto">
               {filteredProducts.map((coffin, index) => (
                 <div
                   key={coffin.id}
@@ -201,7 +447,8 @@ const CoffinsGallery = () => {
                   </Card>
                 </div>
               ))}
-            </div>
+              </div>
+            )}
           </div>
         </section>
 
