@@ -4,7 +4,7 @@ import { SEO } from "@/components/SEO";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { MapPin, Truck, Award, ShieldCheck, Leaf } from "lucide-react";
+import { MapPin, Truck } from "lucide-react";
 
 import coffinLuxury from "@/assets/coffin-luksozen.jpg";
 import coffinEconomy from "@/assets/coffin-ekonomichen.jpg";
@@ -18,7 +18,7 @@ const TraurniStoki = () => {
     {
       id: "kovchezi",
       title: "Ковчези",
-      description: "Богат избор на ковчези от масив и ПДЧ - партньор на завод 'Осогово' и италиански вносители.",
+      description: "Богат избор на ковчези от масив и ПДЧ - от икономични до луксозни модели.",
       image: coffinLuxury,
       link: "/traurni-stoki/kovchezi",
     },
@@ -34,7 +34,7 @@ const TraurniStoki = () => {
       title: "Урни",
       description: "Висококачествени урни от керамика, метал, камък и дърво.",
       image: urnImage,
-      link: "/kremacia",
+      link: null,
     },
     {
       id: "venci",
@@ -91,45 +91,12 @@ const TraurniStoki = () => {
         >
           <div className="absolute inset-0 bg-[url('/placeholder.svg')] opacity-5 bg-repeat" />
           <div className="container mx-auto px-4 relative z-10 text-center">
-            {/* Trust Badge */}
-            <div className="inline-flex items-center gap-2 bg-secondary/20 border border-secondary/40 rounded-full px-4 py-2 mb-6">
-              <ShieldCheck className="h-4 w-4 text-secondary" />
-              <span className="text-sm text-primary-foreground/90">
-                Гарантиран произход и качество
-              </span>
-            </div>
-
             <h1 className="text-3xl md:text-5xl font-bold text-primary-foreground mb-4">
               Траурни стоки и атрибути
             </h1>
             <p className="text-lg md:text-xl text-primary-foreground/90 max-w-2xl mx-auto">
               Пълен каталог с всичко необходимо за достойно изпращане.
             </p>
-          </div>
-        </section>
-
-        {/* Trust Banner */}
-        <section className="py-6 bg-muted/50 border-b border-border">
-          <div className="container mx-auto px-4">
-            <p className="text-center text-xs text-muted-foreground mb-3 uppercase tracking-wider">
-              Партньори и стандарти
-            </p>
-            <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12">
-              <div className="flex items-center gap-2 text-sm text-foreground/80">
-                <Award className="h-5 w-5 text-secondary" />
-                Ковчези "Осогово" (БГ Стандарт)
-              </div>
-              <div className="hidden md:block w-px h-6 bg-border" />
-              <div className="flex items-center gap-2 text-sm text-foreground/80">
-                <ShieldCheck className="h-5 w-5 text-secondary" />
-                Италиански дизайн и обков
-              </div>
-              <div className="hidden md:block w-px h-6 bg-border" />
-              <div className="flex items-center gap-2 text-sm text-foreground/80">
-                <Leaf className="h-5 w-5 text-secondary" />
-                Екологични материали
-              </div>
-            </div>
           </div>
         </section>
 
@@ -143,18 +110,12 @@ const TraurniStoki = () => {
                     id={category.id}
                     className={`h-full overflow-hidden border-border bg-card hover:shadow-lg transition-all duration-300 ${category.link ? "group-hover:border-secondary" : ""}`}
                   >
-                    <div className="aspect-[4/3] overflow-hidden relative">
+                    <div className="aspect-[4/3] overflow-hidden">
                       <img
                         src={category.image}
                         alt={category.title}
                         className={`w-full h-full object-cover ${category.link ? "group-hover:scale-105 transition-transform duration-500" : ""}`}
                       />
-                      {/* "Виж моделите" label for clickable cards */}
-                      {category.link && (
-                        <div className="absolute bottom-2 right-2 bg-secondary/90 text-secondary-foreground text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                          Виж моделите
-                        </div>
-                      )}
                     </div>
                     <CardHeader className="p-2 md:p-6 pb-1 md:pb-2">
                       <CardTitle className={`text-sm md:text-xl ${category.link ? "group-hover:text-secondary transition-colors" : ""}`}>
@@ -221,20 +182,6 @@ const TraurniStoki = () => {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-
-            {/* SEO Text Block */}
-            <div className="mt-10 pt-8 border-t border-border text-sm text-muted-foreground space-y-4">
-              <h3 className="text-base font-semibold text-foreground">Защо е важно качеството на траурните стоки?</h3>
-              <p>
-                Изборът на ковчег и траурни атрибути е важна част от ритуала. Траурна агенция Кипарис работи директно с утвърдени производители като 
-                <strong className="text-foreground"> завод "Осогово"</strong>, за да гарантира, че продуктите отговарят на държавните стандарти за здравина и екологичност. 
-                Това е от съществено значение при полагане в гробни места в натоварени паркове като Малашевци и Бакърена фабрика.
-              </p>
-              <p>
-                Независимо дали търсите икономичен вариант от фазер или луксозен модел от масивно дърво (дъб, махагон), 
-                ние предлагаме прозрачни цени без скрити такси.
-              </p>
-            </div>
 
             {/* CTA */}
             <div className="mt-8 text-center">
