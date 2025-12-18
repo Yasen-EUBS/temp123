@@ -27,7 +27,8 @@ const CoffinsGallery = () => {
   const filteredProducts = coffinsData;
   const selectedCoffin = selectedIndex !== null ? filteredProducts[selectedIndex] : null;
 
-  const getTier = (price: number) => {
+  const getTier = (price: number | string) => {
+    if (typeof price === "string") return { label: "Италиански", color: "italian" };
     if (price < 300) return { label: "Икономичен", color: "gray" };
     if (price < 1100) return { label: "Стандартен", color: "blue" };
     if (price < 2000) return { label: "Премиум", color: "gold" };
@@ -39,6 +40,7 @@ const CoffinsGallery = () => {
     blue: "bg-blue-500/20 text-blue-300 border-blue-500/30",
     gold: "bg-coffin-gold/20 text-coffin-gold border-coffin-gold/30",
     purple: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+    italian: "bg-amber-500/20 text-amber-300 border-amber-500/30",
   };
 
   const specLabels: Record<string, string> = {
@@ -189,7 +191,7 @@ const CoffinsGallery = () => {
                       </p>
                       {/* Price */}
                       <p className="text-sm md:text-lg font-bold text-coffin-gold">
-                        {coffin.priceEUR} EUR
+                        {typeof coffin.priceEUR === "number" ? `${coffin.priceEUR} EUR` : coffin.priceEUR}
                       </p>
                       {/* View Details */}
                       <p className="text-[10px] md:text-xs text-coffin-text/60 mt-1 md:mt-2 group-hover:text-coffin-gold/80 transition-colors">
@@ -322,11 +324,11 @@ const CoffinsGallery = () => {
                 {/* Price Section */}
                 <div className="mb-4 p-3 rounded-lg bg-black/20 border border-[#E3C86B]/30">
                   <p className="text-2xl md:text-3xl font-bold text-[#E3C86B]">
-                    {selectedCoffin.priceEUR} EUR
+                    {typeof selectedCoffin.priceEUR === "number" ? `${selectedCoffin.priceEUR} EUR` : selectedCoffin.priceEUR}
                   </p>
                   <p className="text-xs text-white/60 mt-1 flex items-center gap-1">
                     <Check className="h-3 w-3 text-[#E3C86B]" />
-                    Крайна цена без скрити такси
+                    {typeof selectedCoffin.priceEUR === "number" ? "Крайна цена без скрити такси" : "Обадете се за персонална оферта"}
                   </p>
                 </div>
 

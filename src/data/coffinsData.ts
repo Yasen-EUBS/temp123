@@ -13,8 +13,12 @@ export interface Coffin {
   title: string;
   seoTitle: string;
   metaDescription: string;
-  priceEUR: number;
-  category: "economy" | "standard" | "premium" | "luxury";
+  priceEUR: number | string; // number for fixed prices, string for "Попитайте за цена"
+  category: "economy" | "standard" | "premium" | "luxury" | "italian";
+  brand?: {
+    name: string;
+    origin: string;
+  };
   image: string;
   alt: string;
   description: string;
@@ -975,6 +979,139 @@ export const coffinsData: Coffin[] = [
       color: "Тъмен махагон и черен градиент",
       handles: "Златисти месингови орнаменти",
       finish: "Гланц"
+    }
+  },
+  // Italian Products
+  {
+    id: "italianski-obkov-mesing-model-1",
+    internalModel: "1",
+    title: "Италиански обков за ковчези - Модел № 1",
+    seoTitle: "Луксозен италиански обков за ковчези (Italian Design) - № 1 | Кипарис",
+    metaDescription: "Ексклузивен комплект луксозен италиански обков (разпятия и кръстове). Прецизна италианска изработка с позлатен финиш. Денонощно обслужване в София от траурна агенция Кипарис.",
+    priceEUR: "Свържете се за детайли",
+    category: "italian",
+    brand: {
+      name: "Italian Design",
+      origin: "IT"
+    },
+    image: "italianski-obkov-mesing-model-1.webp",
+    alt: "Луксозен италиански обков Italian Design от месинг в златист цвят - Модел 1",
+    description: "Ексклузивен комплект луксозен италиански обков с разпятия и кръстове. Прецизна италианска изработка с позлатен финиш.",
+    specs: {
+      material: "Висококачествен месинг / Метал",
+      color: "Златист",
+      handles: "N/A (Декоративни елементи и разпятия)",
+      finish: "Гланц / Полиран"
+    }
+  },
+  {
+    id: "italianski-kovcheg-masiv-model-venus",
+    internalModel: "Venus",
+    title: "Италиански ковчег - Модел № Venus",
+    seoTitle: "Луксозен италиански ковчег от масив (Italian Design) - № Venus | Кипарис",
+    metaDescription: "Ексклузивен луксозен италиански ковчег Модел Venus. Изработка от благороден масив с изящни детайли. Попитайте за цена. Денонощна доставка и обслужване в София от траурна агенция Кипарис.",
+    priceEUR: "Попитайте за цена",
+    category: "italian",
+    brand: {
+      name: "Italian Design",
+      origin: "IT"
+    },
+    image: "italianski-kovcheg-masiv-model-venus.webp",
+    alt: "Луксозен италиански ковчег Italian Design от масив цвят топъл орех - Модел Venus",
+    description: "Ексклузивен луксозен италиански ковчег Модел Venus. Изработка от благороден масив с изящни детайли.",
+    specs: {
+      material: "Висококачествен масив",
+      color: "Топъл орех / Меден кестен",
+      handles: "Дървена дръжка-багет с месингови елементи",
+      finish: "Сатенен гланц"
+    }
+  },
+  {
+    id: "italianski-kovcheg-masiv-model-98",
+    internalModel: "98",
+    title: "Италиански ковчег - Модел № 98",
+    seoTitle: "Луксозен италиански ковчег от масив (Italian Design) - № 98 | Кипарис",
+    metaDescription: "Ексклузивен луксозен италиански ковчег Модел 98. Изработка от масивно дърво с изящни детайли. Попитайте за цена. Денонощна доставка и обслужване в София от траурна агенция Кипарис.",
+    priceEUR: "Попитайте за цена",
+    category: "italian",
+    brand: {
+      name: "Italian Design",
+      origin: "IT"
+    },
+    image: "italianski-kovcheg-masiv-model-98.webp",
+    alt: "Луксозен италиански ковчег Italian Design от масивно дърво цвят натурален - Модел 98",
+    description: "Ексклузивен луксозен италиански ковчег Модел 98. Изработка от масивно дърво с изящни детайли.",
+    specs: {
+      material: "Масивно дърво (Бук/Светъл Орех)",
+      color: "Натурален дървесен цвят",
+      handles: "Възможност за монтаж на месингови или дървени дръжки",
+      finish: "Матов сатен"
+    }
+  },
+  {
+    id: "italianski-kovcheg-oreh-model-87",
+    internalModel: "87",
+    title: "Италиански ковчег - Модел № 87",
+    seoTitle: "Луксозен италиански ковчег от орех (Italian Design) - № 87 | Кипарис",
+    metaDescription: "Ексклузивен луксозен италиански ковчег Модел 87. Изработка от орех с уникални резбовани орнаменти. Попитайте за цена. Денонощна доставка и обслужване в София от траурна агенция Кипарис.",
+    priceEUR: "Попитайте за цена",
+    category: "italian",
+    brand: {
+      name: "Italian Design",
+      origin: "IT"
+    },
+    image: "italianski-kovcheg-oreh-model-87.webp",
+    alt: "Луксозен италиански ковчег Italian Design от орех цвят кафяв с орнаменти - Модел 87",
+    description: "Ексклузивен луксозен италиански ковчег Модел 87. Изработка от орех с уникални резбовани орнаменти.",
+    specs: {
+      material: "Масивен орех",
+      color: "Топло кафяв / Орех",
+      handles: "Възможност за монтаж на луксозни месингови дръжки",
+      finish: "Сатенен гланц"
+    }
+  },
+  {
+    id: "italianski-kovcheg-oreh-model-86",
+    internalModel: "86",
+    title: "Италиански ковчег - Модел № 86",
+    seoTitle: "Луксозен италиански ковчег от орех (Italian Design) - № 86 | Кипарис",
+    metaDescription: "Ексклузивен луксозен италиански ковчег Модел 86. Изработка от орех с класически и изчистен дизайн. Попитайте за цена. Денонощна доставка и обслужване в София от траурна агенция Кипарис.",
+    priceEUR: "Попитайте за цена",
+    category: "italian",
+    brand: {
+      name: "Italian Design",
+      origin: "IT"
+    },
+    image: "italianski-kovcheg-oreh-model-86.webp",
+    alt: "Луксозен италиански ковчег Italian Design от орех цвят тъмен орех - Модел 86",
+    description: "Ексклузивен луксозен италиански ковчег Модел 86. Изработка от орех с класически и изчистен дизайн.",
+    specs: {
+      material: "Масивен орех",
+      color: "Тъмен орех",
+      handles: "Изчистен дизайн без външни дръжки",
+      finish: "Сатен / Гланц"
+    }
+  },
+  {
+    id: "italianski-kovcheg-dab-model-74",
+    internalModel: "74",
+    title: "Италиански ковчег - Модел № 74",
+    seoTitle: "Луксозен италиански ковчег от дъб (Italian Design) - № 74 | Кипарис",
+    metaDescription: "Ексклузивен луксозен италиански ковчег Модел 74. Изработка от дъб с богата резба и орнаменти. Попитайте за цена. Денонощна доставка и обслужване в София от траурна агенция Кипарис.",
+    priceEUR: "Попитайте за цена",
+    category: "italian",
+    brand: {
+      name: "Italian Design",
+      origin: "IT"
+    },
+    image: "italianski-kovcheg-dab-model-74.webp",
+    alt: "Луксозен италиански ковчег Italian Design от дъб с богата резба - Модел 74",
+    description: "Ексклузивен луксозен италиански ковчег Модел 74. Изработка от дъб с богата резба и флорални орнаменти.",
+    specs: {
+      material: "Масивен дъб",
+      color: "Светъл дъб",
+      handles: "Луксозни месингови дръжки",
+      finish: "Гланц с резбовани орнаменти"
     }
   }
 ];

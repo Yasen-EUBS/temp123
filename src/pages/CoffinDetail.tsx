@@ -28,6 +28,7 @@ const CoffinDetail = () => {
     standard: "Стандартен",
     premium: "Премиум",
     luxury: "Луксозен",
+    italian: "Италиански",
   };
 
   return (
@@ -88,10 +89,10 @@ const CoffinDetail = () => {
                 {/* Price */}
                 <div className="mb-6">
                   <p className="text-3xl md:text-4xl font-bold text-coffin-gold">
-                    {coffin.priceEUR} EUR
+                    {typeof coffin.priceEUR === "number" ? `${coffin.priceEUR} EUR` : coffin.priceEUR}
                   </p>
                   <p className="text-sm text-coffin-text/60 mt-1">
-                    Крайна цена без скрити такси
+                    {typeof coffin.priceEUR === "number" ? "Крайна цена без скрити такси" : "Обадете се за персонална оферта"}
                   </p>
                 </div>
 
