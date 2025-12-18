@@ -165,38 +165,21 @@ const CoffinsGallery = () => {
 
   const hasActiveFilters = Object.values(activeFilters).some((arr) => arr.length > 0);
 
-  // Get class tier based on category (not price)
-  const getClassTier = (category: string) => {
-    switch (category) {
-      case "economy": return { label: "Икономичен", color: "gray" };
-      case "standard": return { label: "Стандартен", color: "blue" };
-      case "premium": return { label: "Премиум", color: "gold" };
-      case "luxury": return { label: "Луксозен", color: "gold" };
-      case "italian": return { label: "Елит", color: "gold" };
-      default: return { label: "Стандартен", color: "blue" };
-    }
+  const getTier = (price: number | string) => {
+    if (typeof price === "string") return { label: "Италиански", color: "italian" };
+    if (price < 300) return { label: "Икономичен", color: "gray" };
+    if (price < 1100) return { label: "Стандартен", color: "blue" };
+    if (price < 2000) return { label: "Премиум", color: "gold" };
+    return { label: "Елитен", color: "purple" };
   };
 
   const tierColors: Record<string, string> = {
     gray: "bg-gray-500/20 text-gray-300 border-gray-500/30",
     blue: "bg-blue-500/20 text-blue-300 border-blue-500/30",
-    gold: "bg-[#E3C86B] text-[#1A2F1E] border-[#E3C86B]",
+    gold: "bg-coffin-gold/20 text-coffin-gold border-coffin-gold/30",
+    purple: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+    italian: "bg-amber-500/20 text-amber-300 border-amber-500/30",
   };
-
-  // Italian flag SVG component (small, slightly desaturated)
-  const ItalianFlagIcon = () => (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 512 512"
-      className="rounded-full opacity-80"
-      style={{ filter: "saturate(0.7)" }}
-    >
-      <circle cx="256" cy="256" r="256" fill="#F0F0F0" />
-      <path d="M512 256c0-110.071-69.472-203.906-166.957-240.077v480.155C442.528 459.906 512 366.071 512 256z" fill="#D80027" style={{ filter: "saturate(0.8)" }} />
-      <path d="M0 256c0 110.071 69.472 203.906 166.957 240.077V15.923C69.472 52.094 0 145.929 0 256z" fill="#6DA544" style={{ filter: "saturate(0.8)" }} />
-    </svg>
-  );
 
   const specLabels: Record<string, string> = {
     material: "Материал",
@@ -435,26 +418,15 @@ const CoffinsGallery = () => {
                       </div>
                     </div>
                     <CardContent className="p-2 md:p-4">
-                      {/* Badges Row: Class + Origin */}
-                      <div className="flex items-center gap-1.5 mb-1 md:mb-2 flex-wrap">
-                        {/* Class Badge */}
-                        {(() => {
-                          const tier = getClassTier(coffin.category);
-                          return (
-                            <span className={`inline-block text-[10px] md:text-xs px-2 py-0.5 rounded border font-semibold ${tierColors[tier.color]}`}>
-                              {tier.label}
-                            </span>
-                          );
-                        })()}
-                        
-                        {/* Origin Indicator (Italian) */}
-                        {coffin.brand?.origin === "IT" && (
-                          <span className="inline-flex items-center gap-1 text-[10px] md:text-xs text-[#F0F0F0]/90">
-                            <ItalianFlagIcon />
-                            <span>Италия</span>
+                      {/* Category Badge */}
+                      {(() => {
+                        const tier = getTier(coffin.priceEUR);
+                        return (
+                          <span className={`inline-block text-[10px] md:text-xs px-2 py-0.5 mb-1 md:mb-2 rounded border ${tierColors[tier.color]}`}>
+                            {tier.label}
                           </span>
-                        )}
-                      </div>
+                        );
+                      })()}
                       {/* Title */}
                       <h2 className="text-xs md:text-base font-semibold text-coffin-text mb-0.5 md:mb-1 line-clamp-2 group-hover:text-coffin-gold transition-colors">
                         {coffin.title}
@@ -577,26 +549,15 @@ const CoffinsGallery = () => {
               <div className="flex-1 overflow-y-auto p-4 md:p-5 flex flex-col">
                 <DialogTitle className="sr-only">{selectedCoffin.title}</DialogTitle>
                 
-                {/* Badges Row: Class + Origin */}
-                <div className="flex items-center gap-2 mb-3 flex-wrap">
-                  {/* Class Badge */}
-                  {(() => {
-                    const tier = getClassTier(selectedCoffin.category);
-                    return (
-                      <span className={`inline-block text-xs px-3 py-1 rounded border font-semibold ${tierColors[tier.color]}`}>
-                        {tier.label}
-                      </span>
-                    );
-                  })()}
-                  
-                  {/* Origin Indicator (Italian) */}
-                  {selectedCoffin.brand?.origin === "IT" && (
-                    <span className="inline-flex items-center gap-1.5 text-xs text-[#F0F0F0]/90">
-                      <ItalianFlagIcon />
-                      <span>Италия</span>
+                {/* Category Badge */}
+                {(() => {
+                  const tier = getTier(selectedCoffin.priceEUR);
+                  return (
+                    <span className={`inline-block self-start text-xs px-3 py-1 mb-3 rounded border ${tierColors[tier.color]}`}>
+                      {tier.label}
                     </span>
-                  )}
-                </div>
+                  );
+                })()}
 
                 {/* Title */}
                 <h2 className="text-xl md:text-2xl font-bold text-white mb-1">
