@@ -62,11 +62,14 @@ const CoffinDetail = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6 md:gap-10">
               {/* Image */}
-              <div className="aspect-[4/3] md:aspect-square overflow-hidden rounded-lg border-2 border-coffin-gold/50 p-2 bg-coffin-bg">
+              <div 
+                className="min-h-[300px] md:min-h-[450px] overflow-hidden rounded-lg border-2 border-coffin-gold/30 bg-black/20 flex items-center justify-center p-4"
+                style={{ backgroundColor: "#1A2F1E" }}
+              >
                 <img
                   src={`/assets/coffins/${coffin.image}`}
                   alt={coffin.alt}
-                  className="w-full h-full object-cover rounded"
+                  className="w-full h-auto max-h-[70vh] object-contain rounded"
                 />
               </div>
 
