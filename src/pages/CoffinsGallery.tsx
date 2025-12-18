@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { coffinsData, Coffin } from "@/data/coffinsData";
-import { Phone, X, Check, ChevronDown } from "lucide-react";
+import { Phone, X, Check, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -20,7 +20,12 @@ import {
 import { Button } from "@/components/ui/button";
 
 const CoffinsGallery = () => {
-  const [selectedCoffin, setSelectedCoffin] = useState<Coffin | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const filteredProducts = coffinsData;
+  const selectedCoffin = selectedIndex !== null ? filteredProducts[selectedIndex] : null;
 
   const categoryLabels: Record<string, string> = {
     economy: "Икономични",
@@ -38,10 +43,62 @@ const CoffinsGallery = () => {
     finish: "Завършек",
   };
 
-  const handleCardClick = (coffin: Coffin, e: React.MouseEvent) => {
+  const handleCardClick = (index: number, e: React.MouseEvent) => {
     e.preventDefault();
-    setSelectedCoffin(coffin);
+    setSelectedIndex(index);
   };
+
+  const goToNext = useCallback(() => {
+    if (selectedIndex !== null && selectedIndex < filteredProducts.length - 1) {
+      setSelectedIndex(selectedIndex + 1);
+    }
+  }, [selectedIndex, filteredProducts.length]);
+
+  const goToPrevious = useCallback(() => {
+    if (selectedIndex !== null && selectedIndex > 0) {
+      setSelectedIndex(selectedIndex - 1);
+    }
+  }, [selectedIndex]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedIndex === null) return;
+      if (e.key === "ArrowRight") goToNext();
+      if (e.key === "ArrowLeft") goToPrevious();
+      if (e.key === "Escape") setSelectedIndex(null);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedIndex, goToNext, goToPrevious]);
+
+  // Touch swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const distance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+
+    if (distance > minSwipeDistance) {
+      goToNext();
+    } else if (distance < -minSwipeDistance) {
+      goToPrevious();
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
+  const canGoPrevious = selectedIndex !== null && selectedIndex > 0;
+  const canGoNext = selectedIndex !== null && selectedIndex < filteredProducts.length - 1;
 
   return (
     <>
@@ -78,10 +135,10 @@ const CoffinsGallery = () => {
         <section className="py-12 md:py-16 bg-coffin-bg">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 max-w-7xl mx-auto">
-              {coffinsData.map((coffin) => (
+              {filteredProducts.map((coffin, index) => (
                 <div
                   key={coffin.id}
-                  onClick={(e) => handleCardClick(coffin, e)}
+                  onClick={(e) => handleCardClick(index, e)}
                   className="block group cursor-pointer"
                 >
                   <Card className="h-full overflow-hidden bg-coffin-bg border-coffin-gold/30 hover:border-coffin-gold transition-all duration-300 group-hover:shadow-lg group-hover:shadow-coffin-gold/10">
@@ -141,8 +198,8 @@ const CoffinsGallery = () => {
         </section>
       </main>
 
-      {/* Product Modal */}
-      <Dialog open={!!selectedCoffin} onOpenChange={(open) => !open && setSelectedCoffin(null)}>
+      {/* Product Modal with Gallery Navigation */}
+      <Dialog open={selectedIndex !== null} onOpenChange={(open) => !open && setSelectedIndex(null)}>
         <DialogContent 
           className="w-[95vw] md:max-w-5xl p-0 overflow-hidden border border-[#E3C86B]"
           style={{ backgroundColor: "#1A2F1E" }}
@@ -150,24 +207,67 @@ const CoffinsGallery = () => {
         >
           {/* Close Button */}
           <button
-            onClick={() => setSelectedCoffin(null)}
+            onClick={() => setSelectedIndex(null)}
             className="absolute right-3 top-3 z-50 rounded-full p-1.5 bg-black/50 hover:bg-black/70 transition-colors"
           >
             <X className="h-5 w-5 text-white" />
           </button>
 
+          {/* Counter Badge */}
+          {selectedIndex !== null && (
+            <div className="absolute left-3 top-3 z-50 bg-black/50 text-white text-xs px-3 py-1.5 rounded-full">
+              {selectedIndex + 1} от {filteredProducts.length}
+            </div>
+          )}
+
           {selectedCoffin && (
             <div className="flex flex-col md:flex-row">
-              {/* Image Container - No fixed height, adapts to image */}
+              {/* Image Container with Navigation */}
               <div 
-                className="w-full md:w-3/5 overflow-hidden rounded-t-lg md:rounded-l-lg md:rounded-tr-none bg-black/5"
+                className="relative w-full md:w-3/5 overflow-hidden rounded-t-lg md:rounded-l-lg md:rounded-tr-none bg-black/5"
                 onClick={(e) => e.stopPropagation()}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
               >
-                <img
-                  src={`/assets/coffins/${selectedCoffin.image}`}
-                  alt={selectedCoffin.alt}
-                  className="w-full h-auto block object-contain"
-                />
+                {/* Previous Button - Desktop */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
+                  disabled={!canGoPrevious}
+                  className={`hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-40 items-center justify-center w-12 h-12 rounded-full bg-black/40 hover:bg-black/60 transition-all ${
+                    canGoPrevious ? "text-[#E3C86B] cursor-pointer" : "text-white/30 cursor-not-allowed"
+                  }`}
+                >
+                  <ChevronLeft className="h-8 w-8" />
+                </button>
+
+                {/* Next Button - Desktop */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); goToNext(); }}
+                  disabled={!canGoNext}
+                  className={`hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-40 items-center justify-center w-12 h-12 rounded-full bg-black/40 hover:bg-black/60 transition-all ${
+                    canGoNext ? "text-[#E3C86B] cursor-pointer" : "text-white/30 cursor-not-allowed"
+                  }`}
+                >
+                  <ChevronRight className="h-8 w-8" />
+                </button>
+
+                {/* Image with smooth transition */}
+                <div className="transition-opacity duration-300 ease-in-out">
+                  <img
+                    key={selectedCoffin.id}
+                    src={`/assets/coffins/${selectedCoffin.image}`}
+                    alt={selectedCoffin.alt}
+                    className="w-full h-auto block object-contain animate-fade-in"
+                  />
+                </div>
+
+                {/* Mobile Swipe Hint */}
+                <div className="md:hidden absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 text-white/60 text-xs bg-black/40 px-3 py-1.5 rounded-full">
+                  <ChevronLeft className="h-4 w-4" />
+                  <span>Плъзнете</span>
+                  <ChevronRight className="h-4 w-4" />
+                </div>
               </div>
 
               {/* Details Panel */}
