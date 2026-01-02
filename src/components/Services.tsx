@@ -59,6 +59,7 @@ export const Services = () => {
                 <div className="p-4 md:p-6 flex-1 flex flex-col">
                   <h3 className="text-lg md:text-xl font-semibold mb-2 text-card-foreground group-hover:text-primary transition-colors">
                     {service.title}
+                    <span className="ml-1 md:ml-2 text-secondary">→</span>
                   </h3>
                   <p className="text-muted-foreground text-sm md:text-base">
                     {service.description}
