@@ -24,7 +24,7 @@ export const Navigation = () => {
     { label: "Начало", href: "/" },
     { label: "Погребение", href: "/pogrebenie" },
     { label: "Кремация", href: "/kremacia" },
-    { label: "Превоз на Покойник", href: "/transport-na-pokojnik" },
+    { label: "Превоз на Покойник", href: "/prevoz-na-pokoinik" },
     { label: "Надгробни Паметници", href: "/nadgrobni-pametnici", hasSubmenu: "pametnitsi" },
     { label: "Траурни стоки", href: "/traurni-stoki", hasSubmenu: "stoki" },
     { label: "Полезно", href: "/polezno" },

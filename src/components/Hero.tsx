@@ -35,7 +35,7 @@ export const Hero = () => {
               className="w-full sm:w-auto sm:min-w-[200px]"
               asChild
             >
-              <a href="/transport-na-pokojnik" aria-label="Разгледайте цени за международно репатриране и превоз на покойник">
+              <a href="/prevoz-na-pokoinik" aria-label="Разгледайте цени за международно репатриране и превоз на покойник">
                 Разгледайте цени за репатриране
               </a>
             </Button>

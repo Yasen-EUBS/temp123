@@ -122,7 +122,7 @@ const TransportNaPokojnik = () => {
         <title>Превоз на покойник от чужбина | Транспорт от Германия, Англия | Кипарис</title>
         <meta name="description" content="Международен превоз на покойник от Германия, Англия, Италия, Гърция до България. Лицензиран транспорт с хладилни автомобили. Денонощно: 02 846 55 24." />
         <meta name="keywords" content="превоз на покойник, транспорт на покойник, репатриране, транспорт от Германия, транспорт от Англия, международен превоз" />
-        <link rel="canonical" href="https://kiparis-sofia.bg/transport-na-pokojnik" />
+        <link rel="canonical" href="https://kiparis-sofia.bg/prevoz-na-pokoinik" />
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       </Helmet>
