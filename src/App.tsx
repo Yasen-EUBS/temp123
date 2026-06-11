@@ -36,7 +36,8 @@ const App = () => (
             {/* Main service pages with BG slugs */}
             <Route path="/pogrebenie" element={<Pogrebenie />} />
             <Route path="/kremacia" element={<Kremacia />} />
-            <Route path="/transport-na-pokojnik" element={<TransportNaPokojnik />} />
+            <Route path="/prevoz-na-pokoinik" element={<TransportNaPokojnik />} />
+            <Route path="/transport-na-pokojnik" element={<Navigate to="/prevoz-na-pokoinik" replace />} />
             <Route path="/nadgrobni-pametnici" element={<Monuments />} />
             <Route path="/traurni-stoki" element={<TraurniStoki />} />
             <Route path="/traurni-stoki/kovchezi" element={<CoffinsGallery />} />
@@ -55,6 +56,7 @@ const App = () => (
             
             {/* 301 Redirects from old English slugs to BG slugs */}
             <Route path="/funeral-services" element={<Navigate to="/pogrebenie" replace />} />
+            <Route path="/prevoz" element={<Navigate to="/prevoz-na-pokoinik" replace />} />
             <Route path="/monuments" element={<Navigate to="/nadgrobni-pametnici" replace />} />
             <Route path="/wreaths" element={<Navigate to="/traurni-stoki" replace />} />
             <Route path="/flowers" element={<Navigate to="/traurni-stoki" replace />} />

@@ -59,7 +59,7 @@ export const Footer = () => {
               <Link to="/kremacia" className="text-muted-foreground hover:text-secondary transition-colors">
                 Кремация
               </Link>
-              <Link to="/transport-na-pokojnik" className="text-muted-foreground hover:text-secondary transition-colors">
+              <Link to="/prevoz-na-pokoinik" className="text-muted-foreground hover:text-secondary transition-colors">
                 Превоз на покойник
               </Link>
               <Link to="/nadgrobni-pametnici" className="text-muted-foreground hover:text-secondary transition-colors">
