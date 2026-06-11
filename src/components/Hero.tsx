@@ -22,11 +22,11 @@ export const Hero = () => {
       <div className="relative z-10 container mx-auto px-4 text-center py-12 md:py-0">
         <div className="max-w-4xl mx-auto space-y-4 md:space-y-6">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight animate-fade-in">
-            Траурна Агенция Кипарис 2000 | Денонощно Международно Репатриране и Премиум Услуги
+            Кипарис 2000 | Денонощно Международно Репатриране и Траурни Услуги
           </h1>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed px-4">
-            Премиум траурна агенция в София с дългогодишни традиции. Денонощно международно репатриране на тленни останки и{" "}
-            <span className="text-secondary font-semibold">достойни погребални услуги</span> с уважение към всяко семейство.
+            Траурна агенция в София – Район Оборище, ул. „Мърфи“ 28. Обслужваме София Център, Подуяне, Гробищен парк Малашевци, Бакърена фабрика и Централни софийски гробища. Денонощно международно репатриране и{" "}
+            <span className="text-secondary font-semibold">достойни траурни услуги</span> с уважение към всяко семейство.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 pt-4 md:pt-6 px-4">
             <Button
@@ -35,8 +35,8 @@ export const Hero = () => {
               className="w-full sm:w-auto sm:min-w-[200px]"
               asChild
             >
-              <a href="/pogrebenie" aria-label="Разгледайте премиум пакети за погребение и кремация">
-                Разгледайте премиум пакети
+              <a href="/transport-na-pokojnik" aria-label="Разгледайте цени за международно репатриране и превоз на покойник">
+                Разгледайте цени за репатриране
               </a>
             </Button>
             <Button
