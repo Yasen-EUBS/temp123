@@ -30,8 +30,8 @@ interface SEOProps {
 
 export const SEO = ({ title, description, serviceName, h1, offers, faqs, breadcrumbs, schemaType = 'Service' }: SEOProps) => {
   const location = useLocation();
-  const defaultTitle = "Траурна Агенция Кипарис - Професионални Траурни Услуги";
-  const defaultDescription = "Траурни услуги в София. Денонощно: 02 846 55 24.";
+  const defaultTitle = "Кипарис 2000 – Международно Репатриране и Премиум Траурни Услуги | София";
+  const defaultDescription = "Денонощна премиум траурна агенция в София. Международно репатриране, погребения и кремация с достойнство. Район Оборище, ул. Мърфи 28. Тел: 02 846 55 24.";
   
   const pageTitle = title || defaultTitle;
   const pageDescription = description || defaultDescription;
@@ -50,14 +50,16 @@ export const SEO = ({ title, description, serviceName, h1, offers, faqs, breadcr
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Траурна агенция Кипарис",
+    "name": "Кипарис 2000 – Международно Репатриране",
     "telephone": "+35928465524",
     "email": "kiparis2000@abv.bg",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "ул. Професор Асен Златаров №8",
+      "streetAddress": "ул. Мърфи № 28",
       "addressLocality": "София",
-      "addressCountry": "България"
+      "postalCode": "1505",
+      "addressRegion": "Район Оборище",
+      "addressCountry": "BG"
     },
     "areaServed": ["София", "Оборище", "Подуяне", "Левски", "Хаджи Димитър"],
     "openingHoursSpecification": openingHoursSpecification
@@ -84,14 +86,16 @@ export const SEO = ({ title, description, serviceName, h1, offers, faqs, breadcr
     "serviceType": serviceName,
     "provider": {
       "@type": "LocalBusiness",
-      "name": "Траурна агенция Кипарис",
+      "name": "Кипарис 2000 – Международно Репатриране",
       "telephone": "+35928465524",
       "email": "kiparis2000@abv.bg",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "ул. Професор Асен Златаров №8",
+        "streetAddress": "ул. Мърфи № 28",
         "addressLocality": "София",
-        "addressCountry": "България"
+        "postalCode": "1505",
+        "addressRegion": "Район Оборище",
+        "addressCountry": "BG"
       }
     },
     "areaServed": ["София", "Оборище", "Подуяне", "Левски", "Хаджи Димитър"],
@@ -145,6 +149,11 @@ export const SEO = ({ title, description, serviceName, h1, offers, faqs, breadcr
       <meta property="og:description" content={pageDescription} />
       <meta property="og:locale" content="bg_BG" />
       <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Кипарис 2000 – Международно Репатриране" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={pageTitle} />
+      <meta name="twitter:description" content={pageDescription} />
       <script type="application/ld+json">
         {JSON.stringify(localBusinessSchema)}
       </script>
