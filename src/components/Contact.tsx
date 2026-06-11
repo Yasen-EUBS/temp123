@@ -17,7 +17,7 @@ export const Contact = () => {
     {
       icon: <MapPin className="w-6 h-6" />,
       title: "Адрес",
-      content: 'ул. "Професор Асен Златаров" №8, София',
+      content: '1505 София, Район Оборище, ул. „Мърфи“ № 28',
     },
     {
       icon: <Mail className="w-6 h-6" />,
@@ -63,15 +63,15 @@ export const Contact = () => {
         <div className="max-w-4xl mx-auto">
           <div className="w-full h-[300px] md:h-[450px] rounded-lg overflow-hidden shadow-xl border border-border">
             <iframe
-              src="https://maps.google.com/maps?q=ul.+Profesor+Asen+Zlatarov+8,+Sofia&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              src="https://maps.google.com/maps?q=ul.+Murfi+28,+Sofia&t=&z=15&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Локация на Траурна Агенция Кипарис"
-              aria-label="Карта с локацията на Траурна Агенция Кипарис"
+              title="Локация на Траурна Агенция Кипарис 2000 – ул. Мърфи 28, София"
+              aria-label="Карта с локацията на Кипарис 2000, ул. Мърфи 28, Район Оборище, София"
             />
           </div>
         </div>
