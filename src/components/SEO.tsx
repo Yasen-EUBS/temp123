@@ -31,7 +31,7 @@ interface SEOProps {
 export const SEO = ({ title, description, serviceName, h1, offers, faqs, breadcrumbs, schemaType = 'Service' }: SEOProps) => {
   const location = useLocation();
   const defaultTitle = "Кипарис 2000 – Международно Репатриране и Премиум Траурни Услуги | София";
-  const defaultDescription = "Денонощна премиум траурна агенция в София. Международно репатриране, погребения и кремация с достойнство. Район Оборище, ул. Мърфи 28. Тел: 02 846 55 24.";
+  const defaultDescription = "Денонощна траурна агенция Кипарис 2000 в София – Район Оборище, ул. Мърфи 28. Международно репатриране, погребения и кремация в София Център, Подуяне, Гробищен парк Малашевци, Бакърена фабрика и Централни софийски гробища. Тел: 02 846 55 24.";
   
   const pageTitle = title || defaultTitle;
   const pageDescription = description || defaultDescription;
@@ -61,7 +61,7 @@ export const SEO = ({ title, description, serviceName, h1, offers, faqs, breadcr
       "addressRegion": "Район Оборище",
       "addressCountry": "BG"
     },
-    "areaServed": ["София", "Оборище", "Подуяне", "Левски", "Хаджи Димитър"],
+    "areaServed": ["София", "Район Оборище", "София Център", "Подуяне", "Гробищен парк Малашевци", "Бакърена фабрика", "Централни софийски гробища"],
     "openingHoursSpecification": openingHoursSpecification
   };
 
@@ -71,7 +71,7 @@ export const SEO = ({ title, description, serviceName, h1, offers, faqs, breadcr
       "@context": "https://schema.org",
       "@type": "Product",
       "name": `${offer.name} ${serviceName}`,
-      "description": `Пълна организация на ${serviceName.toLowerCase()} в София - ${offer.name.toLowerCase()}.`,
+      "description": `Пълна организация на ${serviceName.toLowerCase()} от Кипарис 2000 в София – Район Оборище, Подуяне, Гробищен парк Малашевци и Централни софийски гробища – ${offer.name.toLowerCase()}.`,
       "offers": {
         "@type": "Offer",
         "price": offer.price,
@@ -98,7 +98,7 @@ export const SEO = ({ title, description, serviceName, h1, offers, faqs, breadcr
         "addressCountry": "BG"
       }
     },
-    "areaServed": ["София", "Оборище", "Подуяне", "Левски", "Хаджи Димитър"],
+    "areaServed": ["София", "Район Оборище", "София Център", "Подуяне", "Гробищен парк Малашевци", "Бакърена фабрика", "Централни софийски гробища"],
     ...(offers && offers.length > 0 && {
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
