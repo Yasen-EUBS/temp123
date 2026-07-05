@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "sdk_version": "0.20.0",
+  "path": "/functions/v1/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "kiparis-2000-mcp",
+      "version": "0.1.0",
+      "title": "Кипарис 2000 — Траурна агенция"
+    },
+    "tools": [
+      {
+        "name": "list_services",
+        "title": "List funeral services",
+        "description": "List the funeral services offered by Кипарис 2000 (погребение, кремация, репатриране, паметници, траурни стоки) with URLs and short descriptions.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_contact_info",
+        "title": "Get contact information",
+        "description": "Return contact details for Траурна агенция Кипарис 2000: 24/7 phone line, email, Sofia address, and served districts/cemeteries.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "convert_price",
+        "title": "Convert BGN ↔ EUR",
+        "description": "Convert a price between Bulgarian lev (BGN) and euro (EUR) using the fixed rate 1 EUR = 1.95583 BGN. Rounded to the nearest whole unit, matching how prices are displayed on the site.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Numeric amount to convert."
+            },
+            "from": {
+              "type": "string",
+              "enum": [
+                "BGN",
+                "EUR"
+              ],
+              "description": "Source currency."
+            }
+          },
+          "required": [
+            "amount",
+            "from"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
